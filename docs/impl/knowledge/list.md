@@ -4,6 +4,10 @@
 
 知見共有
 
+## UpdatedAt
+
+2022-08-05
+
 ## 機能を一言で
 
 自分と似ている人が一人暮らしの際にしていくことなどの知見をリスト化、共有できるようにする
@@ -31,4 +35,9 @@
 - 埋め込み→最初からバックエンドなりでリストを保持しておいてそれを提示する。
 - スクレイピング→URL一覧とタイトルを載せておく、上位のものから(レコメンドみたいなもの)。
 
-## Server(ざっくり)
+## Server
+- DB設計
+- GetKnowledgeList
+- AddKnowledgeList
+- UpdateKnowledgeList(優先度低め)
+- DeleteknowledgeList(優先度低め)

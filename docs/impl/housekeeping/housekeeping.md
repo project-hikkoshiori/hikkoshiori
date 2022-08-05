@@ -2,6 +2,10 @@
 
 金額リスト
 
+## UpdatedAt
+
+2022-08-05
+
 ## 機能のグルーピング
 
 家計簿
@@ -23,6 +27,14 @@
 ## Server
 
 - 項目の作成とDB設計
+  - DB
+    - id
+    - name
+    - columns
+      - array
+        - id
+        - name
+        - value
 - GetHousekeeping
 - AddHousekeeping
 - UpdateHousekeeping
