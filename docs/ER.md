@@ -1,6 +1,11 @@
 ```mermaid
 erDiagram
 
+    users ||--|{ knowledge_lists: ""
+    users ||--|{ housekeeps: ""
+    housekeeps ||--o{ housekeep_tables: ""
+    housekeep_tables ||--o{ housekeep_columns: ""
+
     users {
         uuid id PK
         text name
