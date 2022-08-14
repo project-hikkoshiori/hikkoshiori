@@ -1,13 +1,12 @@
-FROM python:3.8-alpine
+FROM python:3.9.13
+
+RUN apt-get update && apt-get install -y \
+    && pip install --upgrade pip
 
 WORKDIR /app
 
 COPY ./requirements.txt /app/requirements.txt
 
-RUN apk add --no-cache build-base \
-    && pip install --no-cache-dir --trusted-host pypi.python.org -r requirements.txt \
-    && apk del build-base
+RUN pip install -r /app/requirements.txt
 
 EXPOSE 8080
-
-CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8080"]
