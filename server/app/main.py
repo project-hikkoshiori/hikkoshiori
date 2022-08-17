@@ -25,7 +25,7 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/db_test")
+@app.get("/db_test")  # dbのテスト用
 def hello_db():
     db_path = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{POSTGRES_PORT}/{POSTGRES_DB_NAME}"
     logger.info(db_path)
