@@ -1,5 +1,11 @@
 ## server-sideで知っていてほしいこととか
 
+### test
+- pytestをつかう
+```
+docker exec server pytest
+```
+
 ### linter/formatter
 - black採用
 - pre-commitでチェックを入れる、以下に導入だけ示してある(git管理してるルートでやること)
