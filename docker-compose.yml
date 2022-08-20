@@ -22,3 +22,13 @@ services:
       - ./db:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
+  front:
+    build: ./front
+    container_name: front
+    env_file:
+      - client.env
+    volumes:
+      - ./front/app/:/usr/src/app
+    ports:
+      - 3000:3000
+    command: /bin/sh -c 'npm install && npm run dev'
