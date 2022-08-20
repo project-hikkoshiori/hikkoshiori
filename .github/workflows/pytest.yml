@@ -15,10 +15,12 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
+        working-directory: ./server
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Test with pytest
-        run: |
           pip install pytest
+      - name: Test with pytest
+      working-directory: ./server/app
+        run: |
           pytest
