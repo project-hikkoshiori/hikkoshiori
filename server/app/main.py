@@ -4,6 +4,7 @@ import logging
 
 from sqlalchemy import create_engine
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -18,6 +19,21 @@ POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_DB_NAME = os.getenv("POSTGRES_DB_NAME")
 POSTGRES_PORT = os.getenv("POSTGRES_PORT")
 HOST = os.getenv("HOST")
+
+# middleware設定
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
