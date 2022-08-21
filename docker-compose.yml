@@ -11,7 +11,7 @@ services:
       - ./server/app/:/app
     ports:
       - 8080:8080
-    command: uvicorn main:app --reload --host 0.0.0.0 --port 8080
+    command: uvicorn setup:app --reload --host 0.0.0.0 --port 8080
   db:
     image: postgres:latest
     container_name: db
