@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import useSWR from "swr";
-import { Fetcher } from "../components/fetcher";
+import { Fetcher } from "../src/utils/fetcher";
 
 const Home: NextPage = () => {
   const { data } = useSWR(`${process.env.NEXT_PUBLIC_SERVER_PATH}`, Fetcher);
