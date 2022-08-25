@@ -11,7 +11,7 @@ const Index: NextPage = () => {
           ブックマークを見る
         </Tab>
       </TabList>
-      <TabPanels>
+      <TabPanels backgroundColor="pink.50">
         <TabPanel>ここにマップとかいろいろ入ります</TabPanel>
         <TabPanel>
           <BookmarkSection />

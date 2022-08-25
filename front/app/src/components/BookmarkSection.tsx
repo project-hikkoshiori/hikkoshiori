@@ -11,7 +11,7 @@ import {
 
 export const BookmarkSection = () => {
   return (
-    <Flex>
+    <Flex mt="100" ml="5" mr="5">
       <Spacer />
       <ButtonGroup gap="2">
         <Button leftIcon={<SettingsIcon />}>編集する</Button>
