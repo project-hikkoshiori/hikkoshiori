@@ -1,16 +1,14 @@
-import { Box, Button, Heading, HStack, Text, VStack } from "@chakra-ui/react";
+import { Button, Heading, HStack, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import HouseKeepList from "../../src/components/HoouseKeepList";
 
 const HouseKeep: NextPage = () => {
   return (
     <VStack>
       <Heading>家計簿試算</Heading>
-      <HStack>
-        <VStack>
-          <Box>ここに家計簿</Box>
-          <Text>合計 ¥400,000</Text>
-        </VStack>
-        <VStack>
+      <HStack align="top">
+        <HouseKeepList />
+        <VStack borderLeft="1px" borderColor="gray.300" p={2}>
           <Button width="210px" colorScheme="brand">
             保存する
           </Button>
