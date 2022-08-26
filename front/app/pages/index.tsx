@@ -1,7 +1,15 @@
 import type { NextPage } from "next";
 import Image from "next/image";
 import useSWR from "swr";
-import { Box, Center, Flex, Heading, HStack, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Flex,
+  Heading,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { Fetcher } from "../src/utils/fetcher";
 import TopPageButton from "../src/components/TopPageButton";
 import topImageSrc from "../public/top.png";
@@ -16,7 +24,18 @@ const Home: NextPage = () => {
     <Box>
       <Image src={topImageSrc} alt="ひっこしおり" />
       <VStack gap={5} my={5}>
-        <TopPageButton link="/properties" text="物件を見る" width="60%" />
+        <Box width="60%">
+          <Text
+            fontSize="2xl"
+            pos="absolute"
+            zIndex="docked"
+            transform="rotate(-9deg) translateX(-0.5em) translateY(-0.2em)"
+            pointerEvents="none"
+          >
+            あなたにおすすめ!
+          </Text>
+          <TopPageButton link="/properties" text="物件を見る" width="100%" />
+        </Box>
         <HStack gap={10} width="80%" justifyContent="center">
           <TopPageButton link="/" text="家計簿試算" width="20%" />
           <TopPageButton link="/" text="レイアウト診断" width="20%" />
