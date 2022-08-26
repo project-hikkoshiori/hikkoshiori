@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { Box, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import { Flex, Heading, SimpleGrid } from "@chakra-ui/react";
 import AdviceCell from "../../src/components/AdviceCell";
 import { Advice } from "../../src/utils/types";
 
@@ -20,10 +20,7 @@ const Advice: NextPage = () => {
   ];
   return (
     <Flex align="center" flexDir="column">
-      <Heading mt={16}>みんなのアドバイス</Heading>
-      <Box width="80%">
-        <Text align="end">{advices.length}件</Text>
-      </Box>
+      <Heading>みんなのアドバイス</Heading>
       <SimpleGrid columns={3}>
         {advices.map((advice) => (
           <AdviceCell key={advice.id} advice={advice} />
