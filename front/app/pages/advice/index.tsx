@@ -7,7 +7,7 @@ const Advice: NextPage = () => {
   return (
     <Flex align="center" flexDir="column">
       <Heading>みんなのアドバイス</Heading>
-      <Flex wrap="wrap">
+      <Flex wrap="wrap" justify="center">
         {advices.map((advice) => (
           <AdviceCell key={advice} />
         ))}
