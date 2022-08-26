@@ -49,7 +49,7 @@ const SideBar = ({ isOpen, onClose }: SideBarProps) => {
             divider={<StackDivider borderColor="gray.500" my={4} />}
           >
             <SideBarItem link="/" text="トップ" />
-            <SideBarItem link="/" text="家計簿" />
+            <SideBarItem link="/housekeep" text="家計簿" />
             <SideBarItem link="/" text="知見共有" />
             <VStack align="start" shouldWrapChildren>
               <SideBarItem link="/" text="提出書類" />
