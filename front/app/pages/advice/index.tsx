@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { Box, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import AdviceCell from "../../src/components/AdviceCell";
 import { Advice } from "../../src/utils/types";
+import AdviceSearchPanel from "../../src/components/AdviceSearchPanel";
 
 const Advice: NextPage = () => {
   const dummyAdvice: Advice = {
@@ -20,7 +21,8 @@ const Advice: NextPage = () => {
   ];
   return (
     <Flex align="center" flexDir="column">
-      <Heading mt={16}>みんなのアドバイス</Heading>
+      <Heading my={16}>みんなのアドバイス</Heading>
+      <AdviceSearchPanel />
       <Box width="80%">
         <Text align="end">{advices.length}件</Text>
       </Box>
