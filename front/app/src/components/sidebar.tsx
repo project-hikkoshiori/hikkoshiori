@@ -50,7 +50,7 @@ const SideBar = ({ isOpen, onClose }: SideBarProps) => {
           >
             <SideBarItem link="/" text="トップ" />
             <SideBarItem link="/" text="家計簿" />
-            <SideBarItem link="/advice" text="知見共有" />
+            <SideBarItem link="/" text="知見共有" />
             <VStack align="start" shouldWrapChildren>
               <SideBarItem link="/" text="提出書類" />
               <SideBarChildItem link="/" text="診断する" />
