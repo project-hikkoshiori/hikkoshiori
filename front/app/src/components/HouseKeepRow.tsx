@@ -1,15 +1,17 @@
 import {
   Checkbox,
   Flex,
+  Input,
   NumberInput,
   NumberInputField,
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-const HouseKeepRow = () => {
+const HouseKeepRow = ({ isEditable = true }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [value, setValue] = useState("10000");
+  const [title, setTitle] = useState("家賃");
 
   const format = (val: string | number) => {
     if (typeof val == "string") {
@@ -27,9 +29,21 @@ const HouseKeepRow = () => {
         colorScheme="brand"
         onChange={() => setIsChecked((prev) => !prev)}
       />
-      <Text width="200px" color={isChecked ? "inherit" : "gray.400"}>
-        家賃
-      </Text>
+      {isEditable ? (
+        <Input
+          width="200px"
+          variant="flushed"
+          isDisabled={!isChecked}
+          focusBorderColor="brand.500"
+          placeholder="項目名"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      ) : (
+        <Text width="200px" color={isChecked ? "inherit" : "gray.400"}>
+          家賃
+        </Text>
+      )}
       <NumberInput
         width="300px"
         variant="flushed"
