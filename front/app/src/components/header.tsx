@@ -1,11 +1,20 @@
-import { Center, Flex, IconButton, Spacer, Text } from "@chakra-ui/react";
+import {
+  Center,
+  Flex,
+  IconButton,
+  Spacer,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 import Image from "next/image";
 import iconSrc from "../../public/icon.png";
 import logoSrc from "../../public/logo.png";
+import SideBar from "./sidebar";
 
 const Header = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const isLoggedIn = true;
   return (
     <Flex
@@ -24,7 +33,9 @@ const Header = () => {
         border="none"
         colorScheme="brand"
         color="black"
+        onClick={onOpen}
       />
+      <SideBar isOpen={isOpen} onClose={onClose} />
       <Center>
         <Image src={iconSrc} alt="hikkoshiori" height={40} width={40} />
       </Center>
