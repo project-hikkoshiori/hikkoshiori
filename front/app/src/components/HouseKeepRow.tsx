@@ -7,11 +7,16 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { HouseKeep } from "../utils/types";
 
-const HouseKeepRow = ({ isEditable = true }) => {
-  const [isChecked, setIsChecked] = useState(false);
-  const [value, setValue] = useState("10000");
-  const [title, setTitle] = useState("家賃");
+type Props = {
+  houseKeepData: HouseKeep;
+};
+
+const HouseKeepRow = ({ houseKeepData }: Props) => {
+  const [isChecked, setIsChecked] = useState(true);
+  const [value, setValue] = useState(houseKeepData.value.toString());
+  const [title, setTitle] = useState(houseKeepData.title);
 
   const format = (val: string | number) => {
     if (typeof val == "string") {
@@ -26,10 +31,11 @@ const HouseKeepRow = ({ isEditable = true }) => {
   return (
     <Flex align="center" gap={4}>
       <Checkbox
+        isChecked={isChecked}
         colorScheme="brand"
         onChange={() => setIsChecked((prev) => !prev)}
       />
-      {isEditable ? (
+      {houseKeepData.isUserAdded ? (
         <Input
           width="200px"
           variant="flushed"

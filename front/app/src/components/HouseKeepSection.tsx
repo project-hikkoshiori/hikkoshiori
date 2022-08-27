@@ -23,7 +23,7 @@ const HouseKeepSection = () => {
         不動産系
       </Heading>
       {houseKeepDatas.map((houseKeepData) => (
-        <HouseKeepRow key={houseKeepData.id} />
+        <HouseKeepRow key={houseKeepData.id} houseKeepData={houseKeepData} />
       ))}
       <IconButton
         aria-label="add row"
