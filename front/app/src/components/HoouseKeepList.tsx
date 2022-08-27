@@ -5,6 +5,7 @@ const HouseKeepList = () => (
   <VStack align="end" p={2}>
     <VStack
       maxW="700px"
+      minW="500px"
       height="calc(100vh - 186px)"
       gap={4}
       align="left"
