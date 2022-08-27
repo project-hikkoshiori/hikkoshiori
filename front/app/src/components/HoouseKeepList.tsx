@@ -3,12 +3,20 @@ import HouseKeepSection from "./HouseKeepSection";
 
 const HouseKeepList = () => (
   <VStack align="end" p={2}>
-    <VStack width="700px" height="75vh" gap={4} align="left">
+    <VStack
+      maxW="700px"
+      height="calc(100vh - 186px)"
+      gap={4}
+      align="left"
+      overflow="auto"
+    >
       <HouseKeepSection />
       <HouseKeepSection />
       <HouseKeepSection />
     </VStack>
-    <Text textAlign="right">合計 ¥400,000</Text>
+    <Text textAlign="right" height="50px">
+      合計 ¥400,000
+    </Text>
   </VStack>
 );
 
