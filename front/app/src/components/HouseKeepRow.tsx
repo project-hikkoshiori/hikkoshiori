@@ -1,6 +1,8 @@
+import { MinusIcon } from "@chakra-ui/icons";
 import {
   Checkbox,
   Flex,
+  IconButton,
   Input,
   NumberInput,
   NumberInputField,
@@ -11,10 +13,12 @@ import { HouseKeep } from "../utils/types";
 
 type Props = {
   houseKeepData: HouseKeep;
+  onDelete: (id: string) => void;
 };
 
-const HouseKeepRow = ({ houseKeepData }: Props) => {
+const HouseKeepRow = ({ houseKeepData, onDelete }: Props) => {
   const [isChecked, setIsChecked] = useState(true);
+  const [isOnHover, setIsOnHover] = useState(true);
   const [value, setValue] = useState(houseKeepData.value.toString());
   const [title, setTitle] = useState(houseKeepData.title);
 
@@ -29,7 +33,14 @@ const HouseKeepRow = ({ houseKeepData }: Props) => {
   };
 
   return (
-    <Flex align="center" gap={4}>
+    <Flex
+      align="center"
+      gap={4}
+      onMouseOver={() => {
+        setIsOnHover(true);
+      }}
+      onMouseLeave={() => setIsOnHover(false)}
+    >
       <Checkbox
         isChecked={isChecked}
         colorScheme="brand"
@@ -63,6 +74,16 @@ const HouseKeepRow = ({ houseKeepData }: Props) => {
       >
         <NumberInputField />
       </NumberInput>
+      <IconButton
+        aria-label="delete"
+        variant="outline"
+        size="xs"
+        colorScheme="red"
+        isRound={true}
+        isDisabled={!isOnHover}
+        icon={<MinusIcon />}
+        onClick={() => onDelete(houseKeepData.id)}
+      />
     </Flex>
   );
 };

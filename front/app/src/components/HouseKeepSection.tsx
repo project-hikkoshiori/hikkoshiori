@@ -17,13 +17,21 @@ const HouseKeepSection = () => {
     setHouseKeepDatas((prev) => [...prev, newHouseKeepData]);
   };
 
+  const deleteHouseKeepData = (id: string) => {
+    setHouseKeepDatas((prev) => [...prev.filter((data) => data.id !== id)]);
+  };
+
   return (
     <VStack align="left">
       <Heading as="h3" fontSize="md">
         不動産系
       </Heading>
       {houseKeepDatas.map((houseKeepData) => (
-        <HouseKeepRow key={houseKeepData.id} houseKeepData={houseKeepData} />
+        <HouseKeepRow
+          key={houseKeepData.id}
+          houseKeepData={houseKeepData}
+          onDelete={deleteHouseKeepData}
+        />
       ))}
       <IconButton
         aria-label="add row"
