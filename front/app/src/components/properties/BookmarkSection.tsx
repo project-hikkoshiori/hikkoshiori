@@ -7,7 +7,7 @@ import {
   Spacer,
   Stack,
 } from "@chakra-ui/react";
-import { Property } from "../utils/types";
+import { Property } from "../../utils/types";
 import { BookmarkWindow } from "./BookmarkWindow";
 
 export const BookmarkSection = () => {

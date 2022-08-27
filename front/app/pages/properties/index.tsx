@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from "@chakra-ui/react";
-import { BookmarkSection } from "../../src/components/BookmarkSection";
+import { BookmarkSection } from "../../src/components/properties/BookmarkSection";
+import { PropertyMap } from "../../src/components/properties/PropertyMap";
 
 const Index: NextPage = () => {
   return (
@@ -12,7 +13,9 @@ const Index: NextPage = () => {
         </Tab>
       </TabList>
       <TabPanels backgroundColor="brand.50">
-        <TabPanel>ここにマップとかいろいろ入ります</TabPanel>
+        <TabPanel>
+          <PropertyMap />
+        </TabPanel>
         <TabPanel>
           <BookmarkSection />
         </TabPanel>
