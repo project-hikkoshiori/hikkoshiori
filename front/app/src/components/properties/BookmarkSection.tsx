@@ -25,7 +25,7 @@ export const BookmarkSection = () => {
       updatedAt: "2022/09/11",
       fromStation: "hoge駅から徒歩5分",
       rent: 40000,
-      address: "東京都千代田区丸の内１丁目",
+      address: "hoge市",
     },
     {
       id: "c572cba2-a0d7-27cf-9429-79e96f594557",
@@ -33,7 +33,7 @@ export const BookmarkSection = () => {
       updatedAt: "2022/09/11",
       fromStation: "hoge駅から徒歩5分",
       rent: 40000,
-      address: "東京都千代田区丸の内１丁目",
+      address: "hoge市",
     },
     {
       id: "d2f8c50f-bb5f-24d2-b2e3-dde9c24fa872",
@@ -41,7 +41,7 @@ export const BookmarkSection = () => {
       updatedAt: "2022/09/11",
       fromStation: "hoge駅から徒歩4分",
       rent: 40000,
-      address: "東京都千代田区丸の内１丁目",
+      address: "hoge市",
     },
     {
       id: "17388364-758b-feb3-b157-4279eb5d0c6e",
@@ -49,7 +49,7 @@ export const BookmarkSection = () => {
       updatedAt: "2022/09/11",
       fromStation: "hoge駅から徒歩3分",
       rent: 40000,
-      address: "東京都千代田区丸の内１丁目",
+      address: "hoge市",
     },
   ];
   return (
