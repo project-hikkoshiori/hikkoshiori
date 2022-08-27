@@ -8,13 +8,19 @@ type Props = {
 
 export const BookmarkWindow = ({ property }: Props) => {
   return (
-    <Stack backgroundColor="brand.50" w="30%" mb="20" p="2">
+    <Stack
+      backgroundColor="white"
+      p="2"
+      border="1px"
+      borderColor="brand.100"
+      borderRadius="4px"
+    >
       <Flex>
         <Spacer />
         <StarIcon color="yellow.300" />
       </Flex>
       <Flex>
-        <Box backgroundColor="brand.300" w="40" h="40" ml="5" mr="5">
+        <Box backgroundColor="brand.300" boxSize="40" ml="5" mr="5">
           ここに画像が入ります
         </Box>
         <VStack align="left">
@@ -23,10 +29,9 @@ export const BookmarkWindow = ({ property }: Props) => {
           <Text>{property.fromStation}</Text>
         </VStack>
       </Flex>
-      <Flex>
-        <Spacer />
-        <Text>データ取得日: {property.updatedAt}</Text>
-      </Flex>
+      <Box>
+        <Text align="end">データ取得日: {property.updatedAt}</Text>
+      </Box>
     </Stack>
   );
 };

@@ -6,12 +6,12 @@ const Index: NextPage = () => {
   return (
     <Tabs isFitted mt="50" ml="10" mr="10">
       <TabList>
-        <Tab _selected={{ color: "white", bg: "brand.300" }}>物件を探す</Tab>
-        <Tab _selected={{ color: "white", bg: "brand.300" }}>
+        <Tab _selected={{ color: "white", bg: "brand.100" }}>物件を探す</Tab>
+        <Tab _selected={{ color: "white", bg: "brand.100" }}>
           ブックマークを見る
         </Tab>
       </TabList>
-      <TabPanels backgroundColor="brand.100">
+      <TabPanels backgroundColor="brand.50">
         <TabPanel>ここにマップとかいろいろ入ります</TabPanel>
         <TabPanel>
           <BookmarkSection />

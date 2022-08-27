@@ -1,5 +1,12 @@
 import { SettingsIcon, ViewIcon } from "@chakra-ui/icons";
-import { Button, ButtonGroup, Flex, Spacer, Stack } from "@chakra-ui/react";
+import {
+  Button,
+  ButtonGroup,
+  Flex,
+  SimpleGrid,
+  Spacer,
+  Stack,
+} from "@chakra-ui/react";
 import { Property } from "../utils/types";
 import { BookmarkWindow } from "./BookmarkWindow";
 
@@ -52,11 +59,11 @@ export const BookmarkSection = () => {
           </Button>
         </ButtonGroup>
       </Flex>
-      <Flex flexWrap="wrap" gap="5%">
+      <SimpleGrid columns={3} spacing={10} p="5">
         {properties.map((p: Property) => (
           <BookmarkWindow key={p.id} property={p} />
         ))}
-      </Flex>
+      </SimpleGrid>
     </Stack>
   );
 };
