@@ -7,10 +7,16 @@ import {
   Spacer,
   Stack,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { Property } from "../../utils/types";
 import { BookmarkWindow } from "./BookmarkWindow";
+import { PropertySearchMap } from "./PropertySearchMap";
 
 export const BookmarkSection = () => {
+  const [mapMode, setMapMode] = useState(false);
+  const toggleMapMode = () => {
+    setMapMode(!mapMode);
+  };
   // mock
   const properties: Property[] = [
     {
@@ -54,16 +60,34 @@ export const BookmarkSection = () => {
           <Button colorScheme="brand" leftIcon={<SettingsIcon />}>
             編集する
           </Button>
-          <Button colorScheme="brand" leftIcon={<ViewIcon />}>
-            マップを表示
-          </Button>
+          {mapMode ? (
+            <Button
+              colorScheme="brand"
+              onClick={toggleMapMode}
+              leftIcon={<ViewIcon />}
+            >
+              リストを表示
+            </Button>
+          ) : (
+            <Button
+              colorScheme="brand"
+              onClick={toggleMapMode}
+              leftIcon={<ViewIcon />}
+            >
+              マップを表示
+            </Button>
+          )}
         </ButtonGroup>
       </Flex>
-      <SimpleGrid columns={3} spacing={10}>
-        {properties.map((p: Property) => (
-          <BookmarkWindow key={p.id} property={p} />
-        ))}
-      </SimpleGrid>
+      {mapMode ? (
+        <PropertySearchMap properties={properties} />
+      ) : (
+        <SimpleGrid columns={3} spacing={10}>
+          {properties.map((p: Property) => (
+            <BookmarkWindow key={p.id} property={p} />
+          ))}
+        </SimpleGrid>
+      )}
     </Stack>
   );
 };
