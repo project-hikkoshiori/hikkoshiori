@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Heading, IconButton, VStack } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import HouseKeepRow from "./HouseKeepRow";
-import { HouseKeep } from "../utils/types";
+import { HouseKeep } from "../../utils/types";
 
 const HouseKeepSection = () => {
   const [houseKeepDatas, setHouseKeepDatas] = useState<HouseKeep[]>([]);

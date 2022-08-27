@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import { Box, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
-import AdviceCell from "../../src/components/AdviceCell";
+import AdviceCell from "../../src/components/advice/AdviceCell";
 import { Advice } from "../../src/utils/types";
-import AdviceSearchPanel from "../../src/components/AdviceSearchPanel";
+import AdviceSearchPanel from "../../src/components/advice/AdviceSearchPanel";
 
 const Advice: NextPage = () => {
   const dummyAdvice: Advice = {

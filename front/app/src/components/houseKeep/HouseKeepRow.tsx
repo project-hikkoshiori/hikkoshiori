@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { HouseKeep } from "../utils/types";
+import { HouseKeep } from "../../utils/types";
 
 type Props = {
   houseKeepData: HouseKeep;
