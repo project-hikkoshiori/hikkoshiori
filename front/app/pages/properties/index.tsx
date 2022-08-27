@@ -4,14 +4,14 @@ import { BookmarkSection } from "../../src/components/BookmarkSection";
 
 const Index: NextPage = () => {
   return (
-    <Tabs isFitted colorScheme="pink" mt="50" ml="10" mr="10">
+    <Tabs isFitted mt="50" ml="10" mr="10">
       <TabList>
-        <Tab _selected={{ color: "white", bg: "pink.300" }}>物件を探す</Tab>
-        <Tab _selected={{ color: "white", bg: "pink.300" }}>
+        <Tab _selected={{ color: "white", bg: "brand.300" }}>物件を探す</Tab>
+        <Tab _selected={{ color: "white", bg: "brand.300" }}>
           ブックマークを見る
         </Tab>
       </TabList>
-      <TabPanels backgroundColor="pink.100">
+      <TabPanels backgroundColor="brand.100">
         <TabPanel>ここにマップとかいろいろ入ります</TabPanel>
         <TabPanel>
           <BookmarkSection />

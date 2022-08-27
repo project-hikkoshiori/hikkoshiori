@@ -8,16 +8,16 @@ type Props = {
 
 export const BookmarkWindow = ({ property }: Props) => {
   return (
-    <Stack backgroundColor="pink.50" w="30%" mb="20">
+    <Stack backgroundColor="brand.50" w="30%" mb="20" p="2">
       <Flex>
         <Spacer />
         <StarIcon color="yellow.300" />
       </Flex>
       <Flex>
-        <Box backgroundColor="pink.300" w="40" h="40" ml="5" mr="5">
+        <Box backgroundColor="brand.300" w="40" h="40" ml="5" mr="5">
           ここに画像が入ります
         </Box>
-        <VStack>
+        <VStack align="left">
           <Text>￥{property.rent}</Text>
           <Text>{property.name}</Text>
           <Text>{property.fromStation}</Text>

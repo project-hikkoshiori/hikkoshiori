@@ -1,14 +1,5 @@
 import { SettingsIcon, ViewIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Flex,
-  HStack,
-  Spacer,
-  Stack,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, ButtonGroup, Flex, Spacer, Stack } from "@chakra-ui/react";
 import { Property } from "../utils/types";
 import { BookmarkWindow } from "./BookmarkWindow";
 
@@ -53,10 +44,10 @@ export const BookmarkSection = () => {
       <Flex mt="100" ml="5" mr="5" mb="10">
         <Spacer />
         <ButtonGroup gap="2">
-          <Button colorScheme="pink" leftIcon={<SettingsIcon />}>
+          <Button colorScheme="brand" leftIcon={<SettingsIcon />}>
             編集する
           </Button>
-          <Button colorScheme="pink" leftIcon={<ViewIcon />}>
+          <Button colorScheme="brand" leftIcon={<ViewIcon />}>
             マップを表示
           </Button>
         </ButtonGroup>
