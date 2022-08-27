@@ -6,7 +6,6 @@ import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
-import { useState } from "react";
 import { Property } from "../../utils/types";
 
 L.Icon.Default.mergeOptions({
@@ -20,19 +19,23 @@ type Props = {
 };
 
 const Map = ({ properties }: Props) => {
-  const [x, setX] = useState(35.68156);
-  const [y, setY] = useState(139.767201);
-  const zoom = 10;
+  const defaultLat = 35.68156;
+  const defaultLng = 139.767201;
+  const defaultZoom = 10;
   return (
-    <MapContainer center={[x, y]} zoom={zoom} style={{ height: "100vh" }}>
+    <MapContainer
+      center={[defaultLat, defaultLng]}
+      zoom={defaultZoom}
+      style={{ height: "100vh" }}
+    >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <>
-        <Marker position={[x, y]} />;
-        <Marker position={[x + 1, y]} />;
-        <Marker position={[x + 2, y]} />;
+        <Marker position={[defaultLat, defaultLng]} />;
+        <Marker position={[defaultLat + 1, defaultLng]} />;
+        <Marker position={[defaultLat + 2, defaultLng]} />;
       </>
     </MapContainer>
   );
