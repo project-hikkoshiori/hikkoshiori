@@ -1,7 +1,12 @@
 import dynamic from "next/dynamic";
 import React from "react";
+import { Property } from "../../utils/types";
 
-export const PropertySearchMap = () => {
+type Props = {
+  properties: Property[];
+};
+
+export const PropertySearchMap = ({ properties }: Props) => {
   const Map = React.useMemo(
     () =>
       dynamic(() => import("./Map"), {
@@ -10,5 +15,5 @@ export const PropertySearchMap = () => {
       }),
     []
   );
-  return <Map />;
+  return <Map properties={properties} />;
 };

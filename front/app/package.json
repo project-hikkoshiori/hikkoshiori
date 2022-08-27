@@ -13,6 +13,7 @@
     "@chakra-ui/react": "^2.2.9",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@geolonia/normalize-japanese-addresses": "^2.5.8",
     "framer-motion": "^7.2.1",
     "leaflet": "^1.8.0",
     "next": "12.2.5",
