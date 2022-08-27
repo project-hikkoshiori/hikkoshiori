@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import React from "react";
 
-export const PropertyMap = () => {
+export const PropertySearchMap = () => {
   const Map = React.useMemo(
     () =>
       dynamic(() => import("./Map"), {
