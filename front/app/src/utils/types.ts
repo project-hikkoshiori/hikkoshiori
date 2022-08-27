@@ -5,4 +5,9 @@ export type Property = {
     fromStation: string
     address: string
     rent: number
-}
+};
+export type Advice = {
+  id: string;
+  text: string;
+  iconSrc: string;
+};
