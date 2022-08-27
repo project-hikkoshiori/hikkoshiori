@@ -1,4 +1,5 @@
-import { Heading, VStack } from "@chakra-ui/react";
+import { Heading, IconButton, VStack } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import HouseKeepRow from "./HouseKeepRow";
 
 const HouseKeepSection = () => (
@@ -9,6 +10,13 @@ const HouseKeepSection = () => (
     <HouseKeepRow />
     <HouseKeepRow />
     <HouseKeepRow />
+    <IconButton
+      aria-label="add row"
+      icon={<AddIcon />}
+      variant="outline"
+      colorScheme="brand"
+      border="none"
+    />
   </VStack>
 );
 
