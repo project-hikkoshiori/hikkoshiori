@@ -1,6 +1,6 @@
 import { Button, Heading, HStack, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import HouseKeepList from "../../src/components/HoouseKeepList";
+import HouseKeepList from "../../src/components/HouseKeepList";
 
 const HouseKeep: NextPage = () => {
   return (
