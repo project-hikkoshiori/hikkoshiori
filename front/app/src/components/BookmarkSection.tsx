@@ -47,8 +47,8 @@ export const BookmarkSection = () => {
     },
   ];
   return (
-    <Stack>
-      <Flex mt="100" ml="5" mr="5" mb="10">
+    <Stack p="5">
+      <Flex mt="50" mb="5">
         <Spacer />
         <ButtonGroup gap="2">
           <Button colorScheme="brand" leftIcon={<SettingsIcon />}>
@@ -59,7 +59,7 @@ export const BookmarkSection = () => {
           </Button>
         </ButtonGroup>
       </Flex>
-      <SimpleGrid columns={3} spacing={10} p="5">
+      <SimpleGrid columns={3} spacing={10}>
         {properties.map((p: Property) => (
           <BookmarkWindow key={p.id} property={p} />
         ))}
