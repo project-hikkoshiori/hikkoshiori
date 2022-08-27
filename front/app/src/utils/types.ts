@@ -1,10 +1,22 @@
+export type HouseKeep = {
+  id: string;
+  title: string;
+  value: number;
+  isUserAdded: boolean;
+};
+
+export type HouseKeeps = {
+  sectionTitle: string;
+  data: HouseKeep[];
+};
+
 export type Property = {
-    id: string
-    name: string
-    updatedAt: string
-    fromStation: string
-    address: string
-    rent: number
+  id: string;
+  name: string;
+  updatedAt: string;
+  fromStation: string;
+  address: string;
+  rent: number;
 };
 export type Advice = {
   id: string;
