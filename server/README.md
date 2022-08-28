@@ -15,11 +15,9 @@ Docker に入る
 docker exec -it server /bin/bash
 ```
 
-コンテナ内 `/opt/poetry/` に local の`server/poetry/` とリンクした poetry定義ファイルが存在するので適宜必要なライブラリを追加する
-
 例:
 ```
-cd /opt/poetry
+cd /server
 poetry add numpy
 poetry add pytest --dev
 poetry remove numpy
