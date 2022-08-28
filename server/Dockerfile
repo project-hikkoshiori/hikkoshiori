@@ -1,26 +1,16 @@
-FROM python:3.9.13-bullseye as builder
+FROM python:3.9.13-bullseye
 
-WORKDIR /app
-
-COPY poetry.lock poetry.toml pyproject.toml ./
+WORKDIR /opt/poetry
+COPY poetry/* /opt/poetry/
 RUN apt-get update && apt-get install -y \
     # For psycopg2 and psycopg2 installation
     libpq-dev 
 
+WORKDIR /opt/poetry
 RUN pip install --upgrade --no-cache-dir pip && \
     pip install --no-cache-dir poetry && \
-    poetry config virtualenvs.in-project true && \
-    poetry install --no-dev --remove-untracked
-
-FROM python:3.9.13-slim-bullseye as runner
+    poetry config virtualenvs.create false && \
+    poetry install
 
 WORKDIR /app
-
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY --from=builder /app/.venv /app/.venv
-
 EXPOSE 8080
