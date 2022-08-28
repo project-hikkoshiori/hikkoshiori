@@ -7,6 +7,7 @@ import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
 import { Property } from "../../utils/types";
+import { BookmarkWindow } from "./BookmarkWindow";
 
 L.Icon.Default.mergeOptions({
   iconUrl: markerIcon.src,
@@ -23,12 +24,15 @@ const Map = ({ properties }: Props) => {
   const defaultLng = 139.767201;
   const defaultZoom = 8;
   // markerつくるやつ、なぜかmapとかで処理すると反映されない
+  // TODO: 常にPopupを出す
   const markers = [];
   for (var i = 0; i < properties.length; i++) {
     const pos = L.latLng([properties[i].lat, properties[i].lng]);
     markers.push(
       <Marker position={pos}>
-        <Popup>ここにWindowがはいります</Popup>
+        <Popup>
+          <BookmarkWindow property={properties[i]} />
+        </Popup>
       </Marker>
     );
   }
