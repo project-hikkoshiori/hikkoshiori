@@ -1,5 +1,5 @@
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 import L from "leaflet";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
@@ -26,7 +26,11 @@ const Map = ({ properties }: Props) => {
   const markers = [];
   for (var i = 0; i < properties.length; i++) {
     const pos = L.latLng([properties[i].lat, properties[i].lng]);
-    markers.push(<Marker position={pos} />);
+    markers.push(
+      <Marker position={pos}>
+        <Popup>ここにWindowがはいります</Popup>
+      </Marker>
+    );
   }
   return (
     <MapContainer
