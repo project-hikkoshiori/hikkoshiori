@@ -19,9 +19,15 @@ type Props = {
 };
 
 const Map = ({ properties }: Props) => {
-  const defaultLat = 35.68156;
+  const defaultLat = 36.68156;
   const defaultLng = 139.767201;
-  const defaultZoom = 10;
+  const defaultZoom = 8;
+  // markerつくるやつ、なぜかmapとかで処理すると反映されない
+  const markers = [];
+  for (var i = 0; i < properties.length; i++) {
+    const pos = L.latLng([properties[i].lat, properties[i].lng]);
+    markers.push(<Marker position={pos} />);
+  }
   return (
     <MapContainer
       center={[defaultLat, defaultLng]}
@@ -32,11 +38,7 @@ const Map = ({ properties }: Props) => {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <>
-        <Marker position={[defaultLat, defaultLng]} />;
-        <Marker position={[defaultLat + 1, defaultLng]} />;
-        <Marker position={[defaultLat + 2, defaultLng]} />;
-      </>
+      <>{markers}</>
     </MapContainer>
   );
 };
