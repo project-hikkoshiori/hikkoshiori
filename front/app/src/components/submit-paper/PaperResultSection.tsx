@@ -1,11 +1,47 @@
-import { Heading, VStack } from "@chakra-ui/react";
+import NextLink from "next/link";
+import { ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Circle,
+  Heading,
+  HStack,
+  Link,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
+import ExternalLink from "../ExternalLink";
 
 const PaperResultSection = () => {
   return (
     <VStack align="left">
-      <Heading as="h3" fontSize="md">
-        区役所
-      </Heading>
+      <HStack>
+        <Circle size={10} bg="brand.100">
+          1
+        </Circle>
+        <Heading as="h3" fontSize="md">
+          区役所
+        </Heading>
+      </HStack>
+      <VStack align="left" pl={12}>
+        <HStack align="left">
+          <StarIcon />
+          <Heading as="h4" fontSize="md">
+            持ち物
+          </Heading>
+        </HStack>
+        <Text pl={7}>印鑑</Text>
+        <HStack align="left" pt={2}>
+          <StarIcon />
+          <Heading as="h4" fontSize="md">
+            やること
+          </Heading>
+        </HStack>
+        <ExternalLink href="" text="転出届" />
+        <ExternalLink
+          href=""
+          text="国民健康保険の資格喪失届国民健康保険の資格喪失届"
+        />
+      </VStack>
     </VStack>
   );
 };
