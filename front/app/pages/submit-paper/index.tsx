@@ -15,7 +15,7 @@ const SubmitPaper: NextPage = () => {
             前回の結果を見る
           </Button>
         </NextLink>
-        <NextLink href="" passHref>
+        <NextLink href="submit-paper/question" passHref>
           <Button as="a" colorScheme="brand" height="64px" width="400px">
             スタート
           </Button>
