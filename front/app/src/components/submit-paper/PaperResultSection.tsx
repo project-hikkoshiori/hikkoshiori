@@ -1,15 +1,4 @@
-import NextLink from "next/link";
-import { ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Circle,
-  Heading,
-  HStack,
-  Icon,
-  Link,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Circle, Heading, HStack, Icon, Text, VStack } from "@chakra-ui/react";
 import { MdWorkOutline, MdOutlineListAlt } from "react-icons/md";
 import ExternalLink from "../ExternalLink";
 
