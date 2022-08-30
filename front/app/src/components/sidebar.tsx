@@ -52,8 +52,8 @@ const SideBar = ({ isOpen, onClose }: SideBarProps) => {
             <SideBarItem link="/housekeep" text="家計簿" />
             <SideBarItem link="/advice" text="知見共有" />
             <VStack align="start" shouldWrapChildren>
-              <SideBarItem link="/" text="提出書類" />
-              <SideBarChildItem link="/" text="診断する" />
+              <SideBarItem link="/submit-paper" text="提出書類" />
+              <SideBarChildItem link="/submit-paper" text="診断する" />
               <SideBarChildItem
                 link="/submit-paper/result"
                 text="前回の結果を見る"
