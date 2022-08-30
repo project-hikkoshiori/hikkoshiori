@@ -1,4 +1,5 @@
-import { Box, Heading, HStack, VStack } from "@chakra-ui/react";
+import NextLink from "next/link";
+import { Button, Heading, HStack, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import Image from "next/image";
 import arrowSrc from "../../../public/Arrow.png";
@@ -12,6 +13,11 @@ const PaperResult: NextPage = () => {
         <Image src={arrowSrc} alt="矢印" />
         <PaperResultList />
       </HStack>
+      <NextLink href="" passHref>
+        <Button as="a" colorScheme="brand" height="64px">
+          フローチャートを再生成する
+        </Button>
+      </NextLink>
     </VStack>
   );
 };
