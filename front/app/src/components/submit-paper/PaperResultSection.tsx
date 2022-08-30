@@ -5,10 +5,12 @@ import {
   Circle,
   Heading,
   HStack,
+  Icon,
   Link,
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { MdWorkOutline, MdOutlineListAlt } from "react-icons/md";
 import ExternalLink from "../ExternalLink";
 
 const PaperResultSection = () => {
@@ -24,14 +26,14 @@ const PaperResultSection = () => {
       </HStack>
       <VStack align="left" pl={12}>
         <HStack align="left">
-          <StarIcon />
+          <Icon as={MdWorkOutline} />
           <Heading as="h4" fontSize="md">
             持ち物
           </Heading>
         </HStack>
         <Text pl={7}>印鑑</Text>
         <HStack align="left" pt={2}>
-          <StarIcon />
+          <Icon as={MdOutlineListAlt} />
           <Heading as="h4" fontSize="md">
             やること
           </Heading>
