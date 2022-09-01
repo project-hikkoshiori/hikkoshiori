@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Property } from "../../utils/types";
+import { PropertyRentHist } from "./PropertyRentHist";
 import { PropertySearchMap } from "./PropertySearchMap";
 import { PropertySearchWindow } from "./PropertySearchWindow";
 
@@ -73,7 +74,7 @@ export const PropertySearchSection = () => {
     <Flex>
       <Box w="45%">
         <Stack alignContent="left">
-          <Text fontWeight="semibold">検索条件</Text>
+          <Text fontWeight="semibold">属性条件</Text>
           <CheckboxGroup colorScheme="brand">
             <Stack direction="row" p="2">
               <Checkbox
@@ -99,6 +100,10 @@ export const PropertySearchSection = () => {
               </Checkbox>
             </Stack>
           </CheckboxGroup>
+          <Box pb="5">
+            <Text fontWeight="semibold">家賃条件</Text>
+            <PropertyRentHist />
+          </Box>
           <Button type="submit" colorScheme="brand" onClick={handleSubmit}>
             検索
           </Button>
