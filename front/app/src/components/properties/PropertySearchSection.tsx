@@ -10,8 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Property } from "../../utils/types";
-import { BookmarkWindow } from "./BookmarkWindow";
 import { PropertySearchMap } from "./PropertySearchMap";
+import { PropertySearchWindow } from "./PropertySearchWindow";
 
 export const PropertySearchSection = () => {
   const [checked, setChecked] = useState<string[]>([]);
@@ -109,7 +109,7 @@ export const PropertySearchSection = () => {
         <Box overflowY="auto" maxH="800">
           {properties.map((p: Property) => (
             <Box key={p.id} p="5">
-              <BookmarkWindow property={p} />
+              <PropertySearchWindow property={p} />
             </Box>
           ))}
         </Box>
