@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import TopPageButton from "./TopPageButton";
-import topImageSrc from "../../public/top.png";
+import topImageSrc from "../../../public/top.png";
 
 const LoggedInTop = () => (
   <Box>

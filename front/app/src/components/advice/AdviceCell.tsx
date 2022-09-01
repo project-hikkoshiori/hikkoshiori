@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import Image from "next/image";
 import { Circle, Flex, VStack, Text, Spacer } from "@chakra-ui/react";
-import { Advice } from "../utils/types";
+import { Advice } from "../../utils/types";
 
 type Props = {
   advice: Advice;

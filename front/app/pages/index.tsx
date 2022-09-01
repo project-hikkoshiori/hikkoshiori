@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import useSWR from "swr";
 import { Fetcher } from "../src/utils/fetcher";
-import LoggedInTop from "../src/components/LoggedInTop";
-import LoggedOutTop from "../src/components/LoggedOutTop";
+import LoggedInTop from "../src/components/top/LoggedInTop";
+import LoggedOutTop from "../src/components/top/LoggedOutTop";
 
 const Home: NextPage = () => {
   const isLoggedIn = false;
