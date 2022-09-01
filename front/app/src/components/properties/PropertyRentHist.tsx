@@ -27,7 +27,11 @@ ChartJS.register(
   Legend
 );
 
-export const PropertyRentHist = () => {
+type Props = {
+  setRentState: (arg: number) => void;
+};
+
+export const PropertyRentHist = ({ setRentState }: Props) => {
   const options = {
     responsive: true,
     plugins: {
@@ -64,7 +68,7 @@ export const PropertyRentHist = () => {
         max={70000}
         step={10000}
         colorScheme="brand"
-        onChangeEnd={(val) => console.log(val)}
+        onChangeEnd={(val) => setRentState(val)}
       >
         <SliderTrack>
           <SliderFilledTrack />
