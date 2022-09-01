@@ -1,12 +1,15 @@
-FROM python:3.9.13
+FROM python:3.9.13-bullseye
 
+WORKDIR /server
+COPY poetry.lock pyproject.toml ./
 RUN apt-get update && apt-get install -y \
-    && pip install --upgrade pip
+    # For psycopg2 and psycopg2 installation
+    libpq-dev 
 
-WORKDIR /app
+RUN pip install --upgrade --no-cache-dir pip && \
+    pip install --no-cache-dir poetry && \
+    poetry config virtualenvs.create false && \
+    poetry install
 
-COPY ./requirements.txt /app/requirements.txt
-
-RUN pip install -r /app/requirements.txt
-
+WORKDIR /server/app
 EXPOSE 8080
