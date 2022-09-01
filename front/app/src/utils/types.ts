@@ -16,6 +16,8 @@ export type Property = {
   updatedAt: string;
   fromStation: string;
   address: string;
+  lat: number;
+  lng: number;
   rent: number;
 };
 export type Advice = {

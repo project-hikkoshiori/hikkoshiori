@@ -1,6 +1,6 @@
 import { StarIcon } from "@chakra-ui/icons";
 import { Box, Flex, Spacer, Stack, Text, VStack } from "@chakra-ui/react";
-import { Property } from "../utils/types";
+import { Property } from "../../utils/types";
 
 type Props = {
   property: Property;
