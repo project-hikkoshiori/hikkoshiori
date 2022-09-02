@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import { Heading, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import WeitingResult from "../../../src/components/submit-paper/WeitingResult";
@@ -6,19 +7,46 @@ import QuestionView from "../../../src/components/submit-paper/Question";
 import { Question } from "../../../src/utils/types";
 
 const PaperQuestion: NextPage = () => {
+  const router = useRouter();
   const [isWaitingResult, setIsWeitingResult] = useState(false);
-  const question: Question = {
-    number: 1,
-    max: 5,
-    text: "なんかいい感じに質問ですか？",
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const questions: Question[] = [
+    {
+      number: 1,
+      max: 3,
+      text: "なんかいい感じに質問ですか？",
+    },
+    {
+      number: 2,
+      max: 3,
+      text: "次の質問に進みます",
+    },
+    {
+      number: 3,
+      max: 3,
+      text: "これで最後です！",
+    },
+  ];
+
+  const onClick = () => {
+    if (questionIndex < questions.length - 1) {
+      // TODO: はいかいいえを記録する
+      setQuestionIndex((prev) => prev + 1);
+    } else {
+      // TODO: 結果をサーバーに送る？
+      setIsWeitingResult(true);
+      // TODO: データが返ってきたら遷移
+      setTimeout(() => router.push("/submit-paper/result"), 1000);
+    }
   };
+
   return (
     <VStack my={4}>
       <Heading my={8}>提出書類フローチャート</Heading>
       {isWaitingResult ? (
         <WeitingResult />
       ) : (
-        <QuestionView question={question} />
+        <QuestionView question={questions[questionIndex]} onClick={onClick} />
       )}
     </VStack>
   );
