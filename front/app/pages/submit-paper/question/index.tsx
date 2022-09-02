@@ -1,40 +1,24 @@
 import type { NextPage } from "next";
-import {
-  Button,
-  Heading,
-  HStack,
-  Progress,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Heading, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import WeitingResult from "../../../src/components/submit-paper/WeitingResult";
+import QuestionView from "../../../src/components/submit-paper/Question";
+import { Question } from "../../../src/utils/types";
 
 const PaperQuestion: NextPage = () => {
   const [isWaitingResult, setIsWeitingResult] = useState(false);
+  const question: Question = {
+    number: 1,
+    max: 5,
+    text: "なんかいい感じに質問ですか？",
+  };
   return (
     <VStack my={4}>
       <Heading my={8}>提出書類フローチャート</Heading>
       {isWaitingResult ? (
         <WeitingResult />
       ) : (
-        <>
-          <Text mb={40}>Q1. なんかいい感じに質問してください？</Text>
-          <HStack>
-            <Button colorScheme="brand" height="64px" width="400px">
-              いいえ
-            </Button>
-            <Button colorScheme="brand" height="64px" width="400px">
-              はい
-            </Button>
-          </HStack>
-          <Progress
-            height="20px"
-            width="500px"
-            value={20}
-            colorScheme="brand"
-          />
-        </>
+        <QuestionView question={question} />
       )}
     </VStack>
   );
