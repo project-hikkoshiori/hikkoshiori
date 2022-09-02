@@ -13,7 +13,7 @@ const PaperResult: NextPage = () => {
         <Image src={arrowSrc} alt="矢印" />
         <PaperResultList />
       </HStack>
-      <NextLink href="" passHref>
+      <NextLink href="/submit-paper" passHref>
         <Button as="a" colorScheme="brand" height="64px">
           フローチャートを再生成する
         </Button>
