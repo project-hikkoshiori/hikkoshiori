@@ -11,10 +11,11 @@ import {
 import { Bar } from "react-chartjs-2";
 import {
   Box,
-  Slider,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderTrack,
+  RangeSlider,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  RangeSliderTrack,
+  Tooltip as TooltipChakra,
 } from "@chakra-ui/react";
 const faker = require("faker");
 
@@ -28,10 +29,14 @@ ChartJS.register(
 );
 
 type Props = {
-  setRentState: (arg: number) => void;
+  rentRangeState: number[];
+  setRentRangeState: (arg: number[]) => void;
 };
 
-export const PropertyRentHist = ({ setRentState }: Props) => {
+export const PropertyRentHist = ({
+  rentRangeState,
+  setRentRangeState,
+}: Props) => {
   const options = {
     responsive: true,
     plugins: {
@@ -40,15 +45,14 @@ export const PropertyRentHist = ({ setRentState }: Props) => {
       },
     },
   };
-  const labels = [
-    "~9999",
-    "~19999",
-    "~29999",
-    "~39999",
-    "~49999",
-    "~59999",
-    "~69999",
-  ];
+
+  const labels = [];
+  const MIN = 0;
+  const MAX = 70000;
+  const RANGE = 1000;
+  for (var i = MIN; i <= MAX - RANGE; i += 1000) {
+    labels.push(i);
+  }
   const data = {
     labels,
     datasets: [
@@ -62,19 +66,27 @@ export const PropertyRentHist = ({ setRentState }: Props) => {
   return (
     <Box>
       <Bar options={options} data={data} />
-      <Slider
-        defaultValue={10000}
-        min={0}
-        max={70000}
-        step={10000}
-        colorScheme="brand"
-        onChangeEnd={(val) => setRentState(val)}
+      <TooltipChakra
+        placement="right"
+        label={String(rentRangeState[0] + "~" + String(rentRangeState[1]))}
       >
-        <SliderTrack>
-          <SliderFilledTrack />
-        </SliderTrack>
-        <SliderThumb />
-      </Slider>
+        <Box pl="5%" pr="2%">
+          <RangeSlider
+            colorScheme="brand"
+            min={MIN}
+            max={MAX}
+            step={RANGE}
+            defaultValue={[MIN, MAX]}
+            onChangeEnd={(val) => setRentRangeState(val)}
+          >
+            <RangeSliderTrack>
+              <RangeSliderFilledTrack />
+            </RangeSliderTrack>
+            <RangeSliderThumb index={0} />
+            <RangeSliderThumb index={1} />
+          </RangeSlider>
+        </Box>
+      </TooltipChakra>
     </Box>
   );
 };

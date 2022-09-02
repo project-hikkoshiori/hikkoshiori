@@ -16,7 +16,7 @@ import { PropertySearchWindow } from "./PropertySearchWindow";
 
 export const PropertySearchSection = () => {
   const [checked, setChecked] = useState<string[]>([]);
-  const [rentState, setRentState] = useState<number>(0);
+  const [rentRangeState, setRentRangeState] = useState<number[]>([0, 70000]);
   const toggleChecked = (value: string) => {
     if (checked.indexOf(value) == -1) {
       setChecked((prev) => [...prev, value]);
@@ -26,7 +26,7 @@ export const PropertySearchSection = () => {
   };
   const handleSubmit = () => {
     // responseがpropertiesになる
-    console.log(`checked: ${checked}, rent: ${rentState}`);
+    console.log(`checked: ${checked}, rent: ${rentRangeState}`);
   };
   // mock
   const properties: Property[] = [
@@ -103,7 +103,10 @@ export const PropertySearchSection = () => {
           </CheckboxGroup>
           <Box pb="5">
             <Text fontWeight="semibold">家賃条件</Text>
-            <PropertyRentHist setRentState={setRentState} />
+            <PropertyRentHist
+              rentRangeState={rentRangeState}
+              setRentRangeState={setRentRangeState}
+            />
           </Box>
           <Button type="submit" colorScheme="brand" onClick={handleSubmit}>
             検索
