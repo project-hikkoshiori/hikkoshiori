@@ -75,33 +75,47 @@ export const PropertySearchSection = () => {
     <Flex>
       <Box w="45%">
         <Stack alignContent="left">
-          <Text fontWeight="semibold">属性条件</Text>
-          <CheckboxGroup colorScheme="brand">
-            <Stack direction="row" p="2">
-              <Checkbox
-                mx={4}
-                borderColor="white"
-                onChange={() => toggleChecked("南向き")}
-              >
-                南向き
-              </Checkbox>
-              <Checkbox
-                mx={4}
-                borderColor="white"
-                onChange={() => toggleChecked("二階以上")}
-              >
-                二階以上
-              </Checkbox>
-              <Checkbox
-                mx={4}
-                borderColor="white"
-                onChange={() => toggleChecked("宅配ボックス")}
-              >
-                宅配ボックス
-              </Checkbox>
-            </Stack>
-          </CheckboxGroup>
-          <Box pb="5">
+          <Box
+            backgroundColor="white"
+            p="2"
+            border="1px"
+            borderColor="brand.100"
+            borderRadius="4px"
+          >
+            <Text fontWeight="semibold">属性条件</Text>
+            <CheckboxGroup colorScheme="brand">
+              <Stack direction="row" p="2">
+                <Checkbox
+                  mx={4}
+                  borderColor="brand.100"
+                  onChange={() => toggleChecked("南向き")}
+                >
+                  南向き
+                </Checkbox>
+                <Checkbox
+                  mx={4}
+                  borderColor="brand.100"
+                  onChange={() => toggleChecked("二階以上")}
+                >
+                  二階以上
+                </Checkbox>
+                <Checkbox
+                  mx={4}
+                  borderColor="brand.100"
+                  onChange={() => toggleChecked("宅配ボックス")}
+                >
+                  宅配ボックス
+                </Checkbox>
+              </Stack>
+            </CheckboxGroup>
+          </Box>
+          <Box
+            backgroundColor="white"
+            p="2"
+            border="1px"
+            borderColor="brand.100"
+            borderRadius="4px"
+          >
             <Text fontWeight="semibold">家賃条件</Text>
             <PropertyRentHist
               rentRangeState={rentRangeState}
