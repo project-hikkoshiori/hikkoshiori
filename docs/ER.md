@@ -9,19 +9,14 @@ erDiagram
     users {
         uuid id PK
         text name
-        text email
-        bool is_male
-        bool is_student
-        bool is_new_employee
-        bool is_remote_work
     }
 
-    knowledge_lists {
+    advices {
         uuid id PK
         uuid user_id FK
-        text name
-        timestamp created_at
         text content
+        timestamp created_at
+        text icon_src
     }
 
     housekeeps {
