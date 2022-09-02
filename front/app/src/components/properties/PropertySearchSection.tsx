@@ -129,7 +129,19 @@ export const PropertySearchSection = () => {
         <Text fontWeight="semibold" pt="5">
           検索結果
         </Text>
-        <Box overflowY="auto" maxH="800">
+        <Box
+          overflowY="auto"
+          maxH="800"
+          sx={{
+            "::-webkit-scrollbar": {
+              height: "10px",
+            },
+            "::-webkit-scrollbar-thumb": {
+              borderRadius: "20px",
+              backgroundColor: "brand.100",
+            },
+          }}
+        >
           {properties.map((p: Property) => (
             <Box key={p.id} p="5">
               <PropertySearchWindow property={p} />
