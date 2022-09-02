@@ -41,7 +41,7 @@ const PaperQuestion: NextPage = () => {
   };
 
   return (
-    <VStack my={4}>
+    <VStack my={4} height="calc(100vh - 61px - 32px)">
       <Heading my={8}>提出書類フローチャート</Heading>
       {isWaitingResult ? (
         <WeitingResult />

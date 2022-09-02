@@ -1,4 +1,12 @@
-import { Button, HStack, Progress, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  HStack,
+  Progress,
+  Spacer,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { Question } from "../../utils/types";
 
 type Props = {
@@ -7,8 +15,8 @@ type Props = {
 };
 
 const QuestionView = ({ question, onClick }: Props) => (
-  <VStack>
-    <Text mb={40}>
+  <VStack height="calc(100% - 40px)">
+    <Text my={32}>
       Q{question.number}. {question.text}
     </Text>
     <HStack>
@@ -19,13 +27,21 @@ const QuestionView = ({ question, onClick }: Props) => (
         はい
       </Button>
     </HStack>
-    <Progress
-      height="20px"
-      width="500px"
-      value={question.number}
-      max={question.max}
-      colorScheme="brand"
-    />
+    <Spacer />
+    <Box p={10}>
+      <Progress
+        height="20px"
+        width="500px"
+        value={question.number}
+        max={question.max}
+        colorScheme="brand"
+      />
+      <HStack width="500px">
+        <Text>0</Text>
+        <Spacer />
+        <Text>{question.max}</Text>
+      </HStack>
+    </Box>
   </VStack>
 );
 
