@@ -28,6 +28,6 @@ export type Advice = {
 
 export type Question = {
   number: number;
-  max: number;
-  text: string;
+  maxQuestion: number;
+  content: string;
 };

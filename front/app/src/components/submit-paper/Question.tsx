@@ -17,7 +17,7 @@ type Props = {
 const QuestionView = ({ question, onClick }: Props) => (
   <VStack height="calc(100% - 40px)">
     <Text my={32}>
-      Q{question.number}. {question.text}
+      Q{question.number}. {question.content}
     </Text>
     <HStack>
       <Button colorScheme="brand" height="64px" width="400px" onClick={onClick}>
@@ -33,13 +33,13 @@ const QuestionView = ({ question, onClick }: Props) => (
         height="20px"
         width="500px"
         value={question.number}
-        max={question.max}
+        max={question.maxQuestion}
         colorScheme="brand"
       />
       <HStack width="500px">
         <Text>0</Text>
         <Spacer />
-        <Text>{question.max}</Text>
+        <Text>{question.maxQuestion}</Text>
       </HStack>
     </Box>
   </VStack>

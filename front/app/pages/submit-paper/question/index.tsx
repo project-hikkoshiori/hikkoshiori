@@ -13,18 +13,18 @@ const PaperQuestion: NextPage = () => {
   const questions: Question[] = [
     {
       number: 1,
-      max: 3,
-      text: "なんかいい感じに質問ですか？",
+      maxQuestion: 3,
+      content: "なんかいい感じに質問ですか？",
     },
     {
       number: 2,
-      max: 3,
-      text: "次の質問に進みます",
+      maxQuestion: 3,
+      content: "次の質問に進みます",
     },
     {
       number: 3,
-      max: 3,
-      text: "これで最後です！",
+      maxQuestion: 3,
+      content: "これで最後です！",
     },
   ];
 
