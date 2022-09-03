@@ -25,3 +25,9 @@ export type Advice = {
   text: string;
   iconSrc: string;
 };
+
+export type Question = {
+  number: number;
+  maxQuestion: number;
+  content: string;
+};
