@@ -8,7 +8,7 @@ import { Question } from "../../../src/utils/types";
 
 const PaperQuestion: NextPage = () => {
   const router = useRouter();
-  const [isWaitingResult, setIsWeitingResult] = useState(false);
+  const [isWaitingResult, setIsWaitingResult] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
   const questions: Question[] = [
     {
@@ -34,7 +34,7 @@ const PaperQuestion: NextPage = () => {
       setQuestionIndex((prev) => prev + 1);
     } else {
       // TODO: 結果をサーバーに送る？
-      setIsWeitingResult(true);
+      setIsWaitingResult(true);
       // TODO: データが返ってきたら遷移
       setTimeout(() => router.push("/submit-paper/result"), 1000);
     }
