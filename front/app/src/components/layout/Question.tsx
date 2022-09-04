@@ -8,6 +8,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { LayoutQuestion } from "../../utils/types";
+import LayoutImage from "./LayoutImage";
 
 type Props = {
   question: LayoutQuestion;
@@ -18,24 +19,8 @@ const QuestionView = ({ question, onClick }: Props) => (
   <VStack height="calc(100% - 40px)">
     <Text my={2}>Q{question.number}</Text>
     <HStack gap={20}>
-      <Box
-        as="button"
-        bg="gray.500"
-        height="320px"
-        width="240px"
-        onClick={onClick}
-      >
-        画像1
-      </Box>
-      <Box
-        as="button"
-        bg="gray.500"
-        height="320px"
-        width="240px"
-        onClick={onClick}
-      >
-        画像2
-      </Box>
+      <LayoutImage src={question.imageSrc[0]} onClick={onClick} />
+      <LayoutImage src={question.imageSrc[1]} onClick={onClick} />
     </HStack>
     <Spacer />
     <Box p={10}>
