@@ -1,6 +1,7 @@
 import NextLink from "next/link";
 import { Box, Button, Heading, HStack, Text, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import LayoutTendacyList from "../../../src/components/layout/LayoutTendacyList";
 
 const LayoutResult: NextPage = () => {
   return (
@@ -11,11 +12,14 @@ const LayoutResult: NextPage = () => {
         <Box bg="gray.300" width="240px" height="320px">
           選ばれたレイアウト
         </Box>
-        <NextLink href="/properties" passHref>
-          <Button as="a" colorScheme="brand" height="64px">
-            この条件で家を探す
-          </Button>
-        </NextLink>
+        <VStack>
+          <LayoutTendacyList />
+          <NextLink href="/properties" passHref>
+            <Button as="a" colorScheme="brand" height="64px">
+              この条件で家を探す
+            </Button>
+          </NextLink>
+        </VStack>
       </HStack>
     </VStack>
   );
