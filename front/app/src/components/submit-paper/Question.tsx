@@ -7,10 +7,10 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { Question } from "../../utils/types";
+import { PaperQuestion } from "../../utils/types";
 
 type Props = {
-  question: Question;
+  question: PaperQuestion;
   onClick: () => void;
 };
 

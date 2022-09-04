@@ -4,13 +4,13 @@ import { Heading, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import WeitingResult from "../../../src/components/submit-paper/WeitingResult";
 import QuestionView from "../../../src/components/submit-paper/Question";
-import { Question } from "../../../src/utils/types";
+import { PaperQuestion } from "../../../src/utils/types";
 
 const PaperQuestion: NextPage = () => {
   const router = useRouter();
   const [isWaitingResult, setIsWaitingResult] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
-  const questions: Question[] = [
+  const questions: PaperQuestion[] = [
     {
       number: 1,
       maxQuestion: 3,
