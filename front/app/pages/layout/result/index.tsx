@@ -8,8 +8,8 @@ const LayoutResult: NextPage = () => {
     <VStack my={4}>
       <Heading my={8}>レイアウト タイプ診断</Heading>
       <Text>ざとさんにおすすめのレイアウトはこちら</Text>
-      <HStack align="start">
-        <Box bg="gray.300" width="240px" height="320px">
+      <HStack align="center" gap={4}>
+        <Box bg="gray.300" width="360px" height="480px">
           選ばれたレイアウト
         </Box>
         <VStack>
