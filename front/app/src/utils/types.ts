@@ -31,3 +31,9 @@ export type PaperQuestion = {
   maxQuestion: number;
   content: string;
 };
+
+export type LayoutQuestion = {
+  number: number;
+  maxQuestion: number;
+  imageSrc: string[];
+};
