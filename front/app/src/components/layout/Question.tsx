@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  HStack,
-  Progress,
-  Spacer,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, HStack, Progress, Spacer, Text, VStack } from "@chakra-ui/react";
 import { LayoutQuestion } from "../../utils/types";
 import LayoutImage from "./LayoutImage";
 
