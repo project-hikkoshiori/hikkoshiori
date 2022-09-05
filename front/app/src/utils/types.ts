@@ -26,8 +26,14 @@ export type Advice = {
   iconSrc: string;
 };
 
-export type Question = {
+export type PaperQuestion = {
   number: number;
   maxQuestion: number;
   content: string;
+};
+
+export type LayoutQuestion = {
+  number: number;
+  maxQuestion: number;
+  imageSrc: string[];
 };

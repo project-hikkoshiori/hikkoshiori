@@ -2,29 +2,29 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { Heading, VStack } from "@chakra-ui/react";
 import { useState } from "react";
-import WeitingResult from "../../../src/components/submit-paper/WeitingResult";
-import QuestionView from "../../../src/components/submit-paper/Question";
-import { PaperQuestion } from "../../../src/utils/types";
+import WeitingResult from "../../../src/components/layout/WeitingResult";
+import QuestionView from "../../../src/components/layout/Question";
+import { LayoutQuestion } from "../../../src/utils/types";
 
-const PaperQuestion: NextPage = () => {
+const LayoutQuestion: NextPage = () => {
   const router = useRouter();
   const [isWaitingResult, setIsWaitingResult] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
-  const questions: PaperQuestion[] = [
+  const questions: LayoutQuestion[] = [
     {
       number: 1,
       maxQuestion: 3,
-      content: "なんかいい感じに質問ですか？",
+      imageSrc: ["", ""],
     },
     {
       number: 2,
       maxQuestion: 3,
-      content: "次の質問に進みます",
+      imageSrc: ["", ""],
     },
     {
       number: 3,
       maxQuestion: 3,
-      content: "これで最後です！",
+      imageSrc: ["", ""],
     },
   ];
 
@@ -36,13 +36,13 @@ const PaperQuestion: NextPage = () => {
       // TODO: 結果をサーバーに送る？
       setIsWaitingResult(true);
       // TODO: データが返ってきたら遷移
-      setTimeout(() => router.push("/submit-paper/result"), 1000);
+      setTimeout(() => router.push("/layout/result"), 1000);
     }
   };
 
   return (
     <VStack my={4} height="calc(100vh - 61px - 32px)">
-      <Heading my={8}>提出書類フローチャート</Heading>
+      <Heading my={8}>レイアウト タイプ診断</Heading>
       {isWaitingResult ? (
         <WeitingResult />
       ) : (
@@ -52,4 +52,4 @@ const PaperQuestion: NextPage = () => {
   );
 };
 
-export default PaperQuestion;
+export default LayoutQuestion;

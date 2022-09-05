@@ -1,31 +1,18 @@
-import {
-  Box,
-  Button,
-  HStack,
-  Progress,
-  Spacer,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
-import { PaperQuestion } from "../../utils/types";
+import { Box, HStack, Progress, Spacer, Text, VStack } from "@chakra-ui/react";
+import { LayoutQuestion } from "../../utils/types";
+import LayoutImage from "./LayoutImage";
 
 type Props = {
-  question: PaperQuestion;
+  question: LayoutQuestion;
   onClick: () => void;
 };
 
 const QuestionView = ({ question, onClick }: Props) => (
   <VStack height="calc(100% - 40px)">
-    <Text my={32}>
-      Q{question.number}. {question.content}
-    </Text>
-    <HStack>
-      <Button colorScheme="brand" height="64px" width="400px" onClick={onClick}>
-        いいえ
-      </Button>
-      <Button colorScheme="brand" height="64px" width="400px" onClick={onClick}>
-        はい
-      </Button>
+    <Text my={2}>Q{question.number}</Text>
+    <HStack gap={20}>
+      <LayoutImage src={question.imageSrc[0]} onClick={onClick} />
+      <LayoutImage src={question.imageSrc[1]} onClick={onClick} />
     </HStack>
     <Spacer />
     <Box p={10}>
