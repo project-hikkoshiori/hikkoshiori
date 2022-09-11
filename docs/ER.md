@@ -61,7 +61,7 @@ erDiagram
         text distance_station_raw
         text house_layout
         float8 exclusive_area
-        int8 age of building
+        int8 age_of_building
         int8 floor_num
         text direction
         json additional_info
