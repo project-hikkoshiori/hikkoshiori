@@ -3,10 +3,10 @@ erDiagram
 
     users ||--|{ knowledge_lists: ""
     users ||--|{ housekeeps: ""
-    users ||--o{ user_property: ""
+    users ||--o{ bookmark: ""
     housekeeps ||--o{ housekeep_tables: ""
     housekeep_tables ||--o{ housekeep_columns: ""
-    property_tables ||--o{ user_property: ""
+    properties ||--o{ bookmark: ""
 
     users {
         uuid id PK
@@ -46,13 +46,13 @@ erDiagram
     }
 
 
-    user_property{
+    bookmark{
         uuid id PK
         uuid user_id FK
         uuid property_id FK
     }
 
-    property_tables{
+    properties{
         uuid id PK
         int8 monthly_rent_price
         int8 monthly_maintenance_fee
@@ -62,9 +62,9 @@ erDiagram
         text house_layout
         float8 exclusive_area
         int8 age of building
-        int8 n_floor
+        int8 floor_num
         text direction
-        json info
+        json additional_info
     }
 
 ```
