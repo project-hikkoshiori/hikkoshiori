@@ -1,4 +1,5 @@
 import math
+import os
 from glob import glob
 from typing import List
 
@@ -9,7 +10,9 @@ from app.controllers.property_collector import SuumoParser
 @pytest.fixture
 def suumo_parsers() -> List[SuumoParser]:
     parsers = []
-    for fname in sorted(glob("property_html/suumo_example*")):
+    for fname in sorted(
+        glob(f"{os.path.dirname(os.path.abspath(__file__))}/property_html/suumo_example*")
+    ):
         with open(fname) as fp:
             parsers.append(SuumoParser(fp.read()))
     return parsers
