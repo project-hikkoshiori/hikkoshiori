@@ -1,8 +1,4 @@
-from re import S
-from sqlite3 import SQLITE_SAVEPOINT
-
 import sqlalchemy
-from sqlalchemy.orm import Session
 
 from db import Base
 
