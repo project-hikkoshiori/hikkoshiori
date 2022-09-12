@@ -3,22 +3,27 @@ erDiagram
 
     users ||--|{ knowledge_lists: ""
     users ||--|{ housekeeps: ""
-    users ||--o{ user_property: ""
+    users ||--o{ bookmark: ""
     housekeeps ||--o{ housekeep_tables: ""
     housekeep_tables ||--o{ housekeep_columns: ""
-    property_tables ||--o{ user_property: ""
+    properties ||--o{ bookmark: ""
 
     users {
         uuid id PK
         text name
+        text email
+        bool is_male
+        bool is_student
+        bool is_new_employee
+        bool is_remote_work
     }
 
-    advices {
+    knowledge_lists {
         uuid id PK
         uuid user_id FK
-        text content
+        text name
         timestamp created_at
-        text icon_src
+        text content
     }
 
     housekeeps {
@@ -41,13 +46,13 @@ erDiagram
     }
 
 
-    user_property{
+    bookmark{
         uuid id PK
         uuid user_id FK
         uuid property_id FK
     }
 
-    property_tables{
+    properties{
         uuid id PK
         int8 monthly_rent_price
         int8 monthly_maintenance_fee
@@ -56,10 +61,11 @@ erDiagram
         text distance_station_raw
         text house_layout
         float8 exclusive_area
-        int8 age of building
-        int8 n_floor
+        int8 age_of_building
+        int8 floor_num
         text direction
-        json info
+        json additional_info
+        datetime fetched_at
     }
 
 ```
