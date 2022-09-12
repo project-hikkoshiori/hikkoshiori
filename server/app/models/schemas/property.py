@@ -18,3 +18,6 @@ class Property(BaseModel):
     direction: str
     additional_info: dict
     fetched_at: datetime
+
+    class Config:
+        orm_mode = True
