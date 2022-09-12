@@ -13,3 +13,14 @@ class Advice(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class AdviceCreate(Advice):
+    id: UUID
+    user_id: UUID
+    content: str
+    created_at: datetime
+    icon_src: str
+
+    class Config:
+        orm_mode = True
