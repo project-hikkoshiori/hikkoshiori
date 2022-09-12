@@ -11,5 +11,8 @@ RUN pip install --upgrade --no-cache-dir pip && \
     poetry config virtualenvs.create false && \
     poetry install
 
+RUN pip install sqlalchemy
+# housekeep追加
+
 WORKDIR /server/app
 EXPOSE 8080

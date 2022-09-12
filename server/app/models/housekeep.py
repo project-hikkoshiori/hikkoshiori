@@ -1,6 +1,6 @@
 from lib2to3.pytree import Base
 from db import Base
-from sqlalchemy import Column, String, DateTime, ForeignKey
+from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.dialects.mysql import INTEGER, BOOLEAN
 
 class Housekeeps(Base):
@@ -24,8 +24,8 @@ class Housekeeps(Base):
     def __init__(self, user_id):
         self.user_id = user_id
  
-    # def __str__(self):
-    #     return str(self.id) + ':' + self.user_id
+    def __str__(self):
+        return str(self.id) + ':' + self.user_id
 
 class Housekeep_tables(Base):
     """
@@ -75,34 +75,20 @@ class Housekeep_columns(Base):
         autoincrement=True,
     )
  
-    user_id = Column('user_id', ForeignKey('user.id'))
-    content = Column('content', String(256))
-    deadline = Column(
-        'deadline',
-        DateTime,
-        default=None,
-        nullable=False,
-    )
-    date = Column(
-        'date',
-        DateTime,
-        default=datetime.now(),
-        nullable=False,
-        server_default=current_timestamp(),
-    )
-    done = Column('done', BOOLEAN, default=False, nullable=False)
+    table_id = Column('table_id', ForeignKey('housekeep_table.id'))
+    name = Column('name', String(256))
+    value = Column('value', INTEGER)
+    is_prepared = Column('is_prepared', BOOLEAN, default=False, nullable=False)
  
-    def __init__(self, user_id: int, content: str, deadline: datetime, date: datetime = datetime.now()):
-        self.user_id = user_id
-        self.content = content
-        self.deadline = deadline
-        self.date = date
-        self.done = False
+    def __init__(self, table_id: int, name: str, value: int, is_prepared: bool):
+        self.table_id = table_id
+        self.name = name
+        self.value = value
+        self.is_prepared = False
  
     def __str__(self):
         return str(self.id) + \
-               ': user_id -> ' + str(self.user_id) + \
-               ', content -> ' + self.content + \
-               ', deadline -> ' + self.deadline.strftime('%Y/%m/%d - %H:%M:%S') + \
-               ', date -> ' + self.date.strftime('%Y/%m/%d - %H:%M:%S') + \
-               ', done -> ' + str(self.done)
+               ': table_id -> ' + str(self.table_id) + \
+               ', name -> ' + self.name + \
+               ', value -> ' + str(self.value) + \
+               ', is_prepared -> ' + str(self.is_prepared)
