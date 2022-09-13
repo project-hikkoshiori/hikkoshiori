@@ -22,7 +22,7 @@ class PropertyCreate(PropertyBase):
     pass
 
 
-class Property(BaseModel):
+class Property(PropertyBase):
     id: UUID
     monthly_rent_price: int
     monthly_maintenance_fee: int
