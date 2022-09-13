@@ -1,7 +1,7 @@
 ```mermaid
 erDiagram
 
-    users ||--|{ knowledge_lists: ""
+    users ||--|{ advices: ""
     users ||--|{ housekeeps: ""
     users ||--o{ bookmark: ""
     housekeeps ||--o{ housekeep_tables: ""
@@ -18,12 +18,12 @@ erDiagram
         bool is_remote_work
     }
 
-    knowledge_lists {
+    advices {
         uuid id PK
         uuid user_id FK
-        text name
-        timestamp created_at
         text content
+        timestamp created_at
+        text icon_src
     }
 
     housekeeps {
