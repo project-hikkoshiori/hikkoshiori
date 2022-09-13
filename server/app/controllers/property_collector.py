@@ -1,5 +1,4 @@
 import abc
-import ast
 import decimal
 import re
 
@@ -28,6 +27,21 @@ class SuumoParser(AbstractPropertyParser):
         self._floor_num = None
         self._direction = None
         self._additional_info = None
+
+    def dict(self) -> dict:
+        return {
+            "monthly_rent_price": self.monthly_rent_price,
+            "monthly_maintenance_fee": self.monthly_maintenance_fee,
+            "initial_cost": self.initial_cost,
+            "location": self.location,
+            "distance_station_raw": self.distance_station_raw,
+            "house_layout": self.house_layout,
+            "exclusive_area": self.exclusive_area,
+            "age_of_building": self.age_of_building,
+            "floor_num": self.floor_num,
+            "direction": self.direction,
+            "additional_info": self.additional_info,
+        }
 
     @property
     def monthly_rent_price(self) -> int:

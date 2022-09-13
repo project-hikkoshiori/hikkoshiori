@@ -1,4 +1,9 @@
+import datetime
+import uuid
+
 import sqlalchemy
+from models.schemas.property import PropertyCreate
+from sqlalchemy.orm import Session
 
 from db import Base
 
@@ -18,3 +23,13 @@ class PropertyDB(Base):
     direction = sqlalchemy.Column("direction", sqlalchemy.String)
     additional_info = sqlalchemy.Column("additional_info", sqlalchemy.dialects.postgresql.JSONB)
     fetched_at = sqlalchemy.Column("fetched_at", sqlalchemy.DateTime)
+
+
+def create_property_db(db: Session, property: PropertyCreate):
+    id = str(uuid.uuid1())
+    dt = datetime.datetime.now()
+    db_property = PropertyDB(**property.dict(), id=id, fetched_at=dt)
+    db.add(db_property)
+    db.commit()
+    db.refresh(db_property)
+    return db_property
