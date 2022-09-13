@@ -40,9 +40,9 @@ class TestSuumoParser:
         assert suumo_parsers[2].location == "京都府京都市左京区一乗寺築田町"
 
     def test_distance_station_raw(self, suumo_parsers):
-        assert suumo_parsers[0].distance_station_raw.startswith("\n西武池袋線/保谷駅 歩8分")
-        assert suumo_parsers[1].distance_station_raw.startswith("\n西武新宿線/武蔵関駅 歩4分")
-        assert suumo_parsers[2].distance_station_raw.startswith("\n叡山電鉄叡山本線/茶山駅 歩12分")
+        assert suumo_parsers[0].distance_station_raw.startswith("西武池袋線/保谷駅 歩8分")
+        assert suumo_parsers[1].distance_station_raw.startswith("西武新宿線/武蔵関駅 歩4分")
+        assert suumo_parsers[2].distance_station_raw.startswith("叡山電鉄叡山本線/茶山駅 歩12分")
 
     def test_house_layout(self, suumo_parsers):
         assert suumo_parsers[0].house_layout == "3LDK"

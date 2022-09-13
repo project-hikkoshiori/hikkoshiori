@@ -229,7 +229,7 @@ class SuumoParser(AbstractPropertyParser):
             values = row.select("td")
             for k, v in zip(keys, values):
                 if tag in k.get_text():
-                    ret = v.get_text()
+                    ret = v.get_text(strip=True)
         ret.strip()
         return ret
 
@@ -322,7 +322,7 @@ class SuumoParser(AbstractPropertyParser):
         ret = dict()
         selector = self.soup.select_one("#bkdt-option > div > ul > li")
         if selector:
-            features = selector.get_text()
+            features = selector.get_text(strip=True)
             ret["features"] = features.split("、")
         else:
             ret["features"] = []
@@ -333,7 +333,7 @@ class SuumoParser(AbstractPropertyParser):
             keys = row.select("th")
             values = row.select("td")
             for k, v in zip(keys, values):
-                ret[k.get_text()] = v.get_text()
+                ret[k.get_text(strip=True)] = v.get_text(strip=True)
 
         return ret
 
@@ -403,34 +403,149 @@ class HomesParser(AbstractPropertyParser):
         return sum(fees)
 
     def _parse_location(self) -> str:
-        return super()._parse_location()
+        selector = self.soup.select_one(
+            "div[class='bukkenSpec'] > div[class='line'] > dl.rentLocation > dd"
+        )
+        if selector:
+            location = ""
+            tokens = selector.get_text(separator="<sep>", strip=True).split("<sep>")
+            for t in tokens:
+                if "地図を見る" in t:
+                    break
+                location += t
+        else:
+            return "div[class='bukkenSpec'] > div[class='line'] > dl.fulltraffic"
+
+        return location
 
     def _parse_distance_station_raw(self) -> str:
-        return super()._parse_distance_station_raw()
+        selector = self.soup.select(
+            "div[class='bukkenSpec'] > div[class='line']  dd#chk-bkc-fulltraffic > p"
+        )
+        ret = ""
+        for line in selector:
+            if line.select("a"):
+                break
+            ret += line.get_text(strip=True) + "\n"
+        return ret
 
     def _parse_house_layout(self) -> str:
-        return super()._parse_house_layout()
+        selector = self.soup.select_one(
+            "div[class='bukkenSpec'] > div[class='line'] dd#chk-bkc-marodi"
+        )
+        if selector:
+            layout = selector.get_text(strip=True)
+        else:
+            return ""
+
+        return layout.split()[0]
 
     def _parse_exclusive_area(self) -> float:
-        return super()._parse_exclusive_area()
+        selector = self.soup.select_one(
+            "div[class='bukkenSpec'] > div[class='line'] dd#chk-bkc-housearea"
+        )
+        if selector:
+            raw = selector.get_text()
+            area = re.findall(r"([0-9]+\.?[0-9]*)", raw)
+            if area:
+                return float(area[0])
+            else:
+                return 0.0
+        else:
+            return 0.0
 
     def _parse_age_of_building(self) -> int:
-        return super()._parse_age_of_building()
+        selector = self.soup.select_one(
+            "div[class='bukkenSpec'] > div[class='line'] dd#chk-bkc-kenchikudate"
+        )
+        if selector:
+            raw = selector.get_text()
+            match = re.search(r"\(.+\)", raw)
+            if match:
+                raw = match.group()
+                raw = re.sub(r"\D", "", raw)
+                try:
+                    age = int(raw)
+                except ValueError:
+                    age = 0
+                return age
+            else:
+                return 0
+        else:
+            return 0
 
     def _parse_floor_num(self) -> int:
-        return super()._parse_floor_num()
+        tag = "所在階 / 階数"
+
+        selector = self.soup.select("[class=mod-bukkenSpecDetail] > table tr")
+        for row in selector:
+            keys = row.select("th")
+            values = row.select("td")
+            for k, v in zip(keys, values):
+                if tag in k.get_text():
+                    raw = v.get_text()
+        floor = raw.split("/")[0]
+        floor = re.sub(r"\D", "", floor)
+        if floor:
+            return int(floor)
+        else:
+            floor = raw.split("/")[1]
+            floor = re.sub(r"\D", "", floor)
+            if floor:
+                return int(floor)
+            else:
+                return 1
 
     def _parse_direction(self) -> str:
-        return super()._parse_direction()
+        selector = self.soup.select_one(
+            "div[class='bukkenSpec'] > div[class='line'] dd#chk-bkc-windowangle"
+        )
+        if selector:
+            direction = selector.get_text()
+            return direction
+        else:
+            return ""
 
     def _parse_additional_info(self) -> dict:
-        return super()._parse_additional_info()
+        ret = dict()
+        features = []
+
+        exclusive_tag = "この物件のこだわり"
+        tag = "備考"
+
+        selector = self.soup.select("#prg-bukkenNotes > table tr")
+        for row in selector:
+            keys = row.select("th")
+            values = row.select("td")
+            for k, v in zip(keys, values):
+                if exclusive_tag in k.get_text():
+                    continue
+                if tag in k.get_text():
+                    ret["備考"] = v.get_text(strip=True)
+                    continue
+
+                features += [_.strip() for _ in v.get_text(strip=True).split("、")]
+        ret["features"] = features
+
+        selector = self.soup.select("[class=mod-bukkenSpecDetail] > table tr")
+        for row in selector:
+            keys = row.select("th")
+            values = row.select("td")
+            for k, v in zip(keys, values):
+                ret[k.get_text(strip=True)] = v.get_text(strip=True)
+        return ret
 
 
 def download(url: str) -> AbstractPropertyParser:
-    response = requests.get(url, timeout=3)
-    html = response.text
     if re.match(r"https:\/\/suumo\.jp", url):
+        response = requests.get(url, timeout=3)
+        html = response.text
         return SuumoParser(html)
+    if re.match(r"https:\/\/www\.homes\.co\.jp\/chintai\/room\/", url):
+        user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
+        header = {"User-Agent": user_agent}
+        response = requests.get(url, headers=header)
+        html = response.text
+        return HomesParser(html)
     else:
         raise NotImplementedError
