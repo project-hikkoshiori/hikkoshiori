@@ -7,15 +7,7 @@ import requests
 
 
 class AbstractPropertyParser(abc.ABC):
-    pass
-
-
-class SuumoParser(AbstractPropertyParser):
-    def __init__(self, html: str) -> None:
-        super().__init__()
-        self.html = html
-        self.soup = bs4.BeautifulSoup(html, "lxml")
-
+    def __init__(self) -> None:
         self._monthly_rent_price = None
         self._monthly_maintenance_fee = None
         self._initial_cost = None
@@ -108,6 +100,57 @@ class SuumoParser(AbstractPropertyParser):
         if self._additional_info is None:
             self._additional_info = self._parse_additional_info()
         return self._additional_info
+
+    @abc.abstractmethod
+    def _parse_monthly_rent_price(self) -> int:
+        pass
+
+    @abc.abstractmethod
+    def _parse_monthly_maintenance_fee(self) -> int:
+        pass
+
+    @abc.abstractmethod
+    def _parse_initial_cost(self) -> int:
+        pass
+
+    @abc.abstractmethod
+    def _parse_location(self) -> str:
+        pass
+
+    @abc.abstractmethod
+    def _parse_distance_station_raw(self) -> str:
+        pass
+
+    @abc.abstractmethod
+    def _parse_house_layout(self) -> str:
+        pass
+
+    @abc.abstractmethod
+    def _parse_exclusive_area(self) -> float:
+        pass
+
+    @abc.abstractmethod
+    def _parse_age_of_building(self) -> int:
+        pass
+
+    @abc.abstractmethod
+    def _parse_floor_num(self) -> int:
+        pass
+
+    @abc.abstractmethod
+    def _parse_direction(self) -> str:
+        pass
+
+    @abc.abstractmethod
+    def _parse_additional_info(self) -> dict:
+        pass
+
+
+class SuumoParser(AbstractPropertyParser):
+    def __init__(self, html: str) -> None:
+        super().__init__()
+        self.html = html
+        self.soup = bs4.BeautifulSoup(html, "lxml")
 
     def _parse_monthly_rent_price(self) -> int:
         rent_price_raw = self.soup.select_one("[class='property_view_note-emphasis']")
@@ -293,6 +336,95 @@ class SuumoParser(AbstractPropertyParser):
                 ret[k.get_text()] = v.get_text()
 
         return ret
+
+
+class HomesParser(AbstractPropertyParser):
+    def __init__(self, html):
+        super().__init__()
+        self.html = html
+        self.soup = bs4.BeautifulSoup(html, "lxml")
+
+    def _parse_monthly_rent_price(self) -> int:
+        rent_price_raw = self.soup.select_one("dl[class='price'] #chk-bkc-moneyroom > span")
+        if rent_price_raw:
+            rent_price_raw = rent_price_raw.get_text()
+        else:
+            return 0
+
+        price_canditates = re.findall(r"[0-9]+\.?[0-9]*", rent_price_raw.replace(",", ""))
+        re_price = 0 if len(price_canditates) == 0 else price_canditates[0]
+        if "万円" in rent_price_raw:
+            return int(decimal.Decimal(re_price) * 10000)
+        elif "千円" in rent_price_raw:
+            return int(decimal.Decimal(re_price) * 1000)
+        else:
+            return int(re_price)
+
+    def _parse_monthly_maintenance_fee(self) -> int:
+        raw = self.soup.select_one("dl[class='price'] #chk-bkc-moneyroom")
+        if raw:
+            raw = raw.get_text()
+        else:
+            return 0
+
+        match = re.search(r"\(.+\)", raw)
+        if match:
+            raw = match.group()
+            price_canditates = re.findall(r"[0-9]+\.?[0-9]*", raw.replace(",", ""))
+            re_price = 0 if len(price_canditates) == 0 else price_canditates[0]
+            if "万円" in raw:
+                return int(decimal.Decimal(re_price) * 10000)
+            elif "千円" in raw:
+                return int(decimal.Decimal(re_price) * 1000)
+            else:
+                return int(re_price)
+        else:
+            return 0
+
+    def _parse_initial_cost(self) -> int:
+        tags = {"敷金", "礼金", "保証金", "敷引"}
+        selector = self.soup.select("div[class='bukkenSpec'] > div[class='line'] > dl")
+
+        fees = []
+        for row in selector:
+            if [_ for _ in tags if _ in row.select_one("dt").get_text()]:
+                raw = row.select_one("dd").get_text()
+                raw_fees = raw.split("/")
+                for t in raw_fees:
+                    if "ヶ月" in t:
+                        fees.append(int(re.sub(r"\D", "", t)) * self.monthly_rent_price)
+                    else:
+                        price_canditates = re.findall(r"[0-9]+\.?[0-9]*", t.replace(",", ""))
+                        re_price = 0 if len(price_canditates) == 0 else price_canditates[0]
+                        if "万円" in t:
+                            fees.append(int(decimal.Decimal(re_price) * 10000))
+                        else:
+                            fees.append(int(re_price))
+        return sum(fees)
+
+    def _parse_location(self) -> str:
+        return super()._parse_location()
+
+    def _parse_distance_station_raw(self) -> str:
+        return super()._parse_distance_station_raw()
+
+    def _parse_house_layout(self) -> str:
+        return super()._parse_house_layout()
+
+    def _parse_exclusive_area(self) -> float:
+        return super()._parse_exclusive_area()
+
+    def _parse_age_of_building(self) -> int:
+        return super()._parse_age_of_building()
+
+    def _parse_floor_num(self) -> int:
+        return super()._parse_floor_num()
+
+    def _parse_direction(self) -> str:
+        return super()._parse_direction()
+
+    def _parse_additional_info(self) -> dict:
+        return super()._parse_additional_info()
 
 
 def download(url: str) -> AbstractPropertyParser:
