@@ -65,6 +65,7 @@ erDiagram
         int8 floor_num
         text direction
         json additional_info
+        datetime fetched_at
     }
 
 ```
