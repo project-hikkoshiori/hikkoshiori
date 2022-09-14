@@ -12,10 +12,7 @@ erDiagram
         uuid id PK
         text name
         text email
-        bool is_male
-        bool is_student
-        bool is_new_employee
-        bool is_remote_work
+        text password
     }
 
     advices {

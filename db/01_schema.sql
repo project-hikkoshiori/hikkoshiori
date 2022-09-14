@@ -2,7 +2,9 @@ set client_encoding = 'UTF8';
 
 create table users (
     id uuid not null,
-    name text not null
+    name text not null,
+    email text not null,
+    password text not null
 );
 
 create table advices (
