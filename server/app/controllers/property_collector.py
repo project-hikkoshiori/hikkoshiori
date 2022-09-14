@@ -345,17 +345,13 @@ class HomesParser(AbstractPropertyParser):
         self.soup = bs4.BeautifulSoup(html, "lxml")
 
     def _parse_monthly_rent_price(self) -> int:
-        rent_price_raw = self.soup.select_one(
-            "dl[class='price'] #chk-bkc-moneyroom > span"
-        )
+        rent_price_raw = self.soup.select_one("dl[class='price'] #chk-bkc-moneyroom > span")
         if rent_price_raw:
             rent_price_raw = rent_price_raw.get_text()
         else:
             return 0
 
-        price_canditates = re.findall(
-            r"[0-9]+\.?[0-9]*", rent_price_raw.replace(",", "")
-        )
+        price_canditates = re.findall(r"[0-9]+\.?[0-9]*", rent_price_raw.replace(",", ""))
         re_price = 0 if len(price_canditates) == 0 else price_canditates[0]
         if "万円" in rent_price_raw:
             return int(decimal.Decimal(re_price) * 10000)
@@ -398,12 +394,8 @@ class HomesParser(AbstractPropertyParser):
                     if "ヶ月" in t:
                         fees.append(int(re.sub(r"\D", "", t)) * self.monthly_rent_price)
                     else:
-                        price_canditates = re.findall(
-                            r"[0-9]+\.?[0-9]*", t.replace(",", "")
-                        )
-                        re_price = (
-                            0 if len(price_canditates) == 0 else price_canditates[0]
-                        )
+                        price_canditates = re.findall(r"[0-9]+\.?[0-9]*", t.replace(",", ""))
+                        re_price = 0 if len(price_canditates) == 0 else price_canditates[0]
                         if "万円" in t:
                             fees.append(int(decimal.Decimal(re_price) * 10000))
                         else:

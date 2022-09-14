@@ -16,9 +16,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 class UserController:
     def __init__(self, app, logger):
         # ログイン周りで使う変数
-        self.SECRET_KEY = (
-            "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
-        )
+        self.SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
         self.ALGORITHM = "HS256"
         self.ACCESS_TOKEN_EXPIRE_MINUTES = 30  # トークンの保持期間(min)
 
@@ -28,13 +26,9 @@ class UserController:
         ):
             user = get_user_by_name_db(db, form.username)
             if not user:
-                raise HTTPException(
-                    status_code=400, detail="incorrect username or password"
-                )
+                raise HTTPException(status_code=400, detail="incorrect username or password")
             if form.password != user.password:  # TODO: hash
-                raise HTTPException(
-                    status_code=400, detail="incorrect username or password"
-                )
+                raise HTTPException(status_code=400, detail="incorrect username or password")
             access_token = self.create_access_token(data={"sub": user.name})
             return {"access_token": access_token, "token_type": "bearer"}
 
@@ -49,9 +43,7 @@ class UserController:
         encoded_jwt = jwt.encode(to_encode, self.SECRET_KEY, algorithm=self.ALGORITHM)
         return encoded_jwt
 
-    def get_current_user(
-        self, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
-    ):
+    def get_current_user(self, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
         credentials_exception = HTTPException(
             status_code=401,
             detail="invalid authentication credentials",
