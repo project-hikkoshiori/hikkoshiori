@@ -1,6 +1,7 @@
 ```mermaid
 erDiagram
 
+    users ||--|| auths: ""
     users ||--|{ advices: ""
     users ||--|{ housekeeps: ""
     users ||--o{ bookmark: ""
@@ -8,11 +9,15 @@ erDiagram
     housekeep_tables ||--o{ housekeep_columns: ""
     properties ||--o{ bookmark: ""
 
+    auths {
+        text name PK
+        text password
+    }
+
     users {
         uuid id PK
         text name
         text email
-        text password
     }
 
     advices {
