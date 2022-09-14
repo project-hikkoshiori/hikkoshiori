@@ -1,8 +1,10 @@
 import sqlalchemy
+import uuid
+import datetime
 from db import Base
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
-from models.schemas.advice import Advice
+from models.schemas.advice import AdviceCreate
 
 
 class AdviceDB(Base):
@@ -18,9 +20,11 @@ def get_advices_db(db: Session):
     return db.query(AdviceDB).all()
 
 
-def add_advices_db(db: Session, advice: Advice):
+def add_advices_db(db: Session, advice: AdviceCreate):
+    id = str(uuid.uuid1())
+    dt = datetime.datetime.now()
     json_data = jsonable_encoder(advice)
-    advice_obj = AdviceDB(**json_data)
+    advice_obj = AdviceDB(**json_data, id=id, created_at=dt)
     db.add(advice_obj)
     db.commit()
     db.refresh(advice_obj)

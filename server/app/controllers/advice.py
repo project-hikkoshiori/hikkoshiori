@@ -5,7 +5,7 @@ from fastapi import Depends, HTTPException
 from db import get_db
 from sqlalchemy.orm import Session
 
-from models.schemas.advice import Advice
+from models.schemas.advice import Advice, AdviceCreate
 from models.db.advice_db import get_advices_db, add_advices_db
 
 
@@ -24,7 +24,7 @@ class AdviceController:
             return result
 
         @app.post("/advices", response_model=Advice)
-        async def post_advices(body: Advice, db: Session = Depends(get_db)):
+        async def post_advices(body: AdviceCreate, db: Session = Depends(get_db)):
             try:
                 result = add_advices_db(db, body)
             except Exception as e:
