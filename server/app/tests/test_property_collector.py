@@ -11,7 +11,9 @@ from app.controllers.property_collector import SuumoParser
 def suumo_parsers() -> List[SuumoParser]:
     parsers = []
     for fname in sorted(
-        glob(f"{os.path.dirname(os.path.abspath(__file__))}/property_html/suumo_example*")
+        glob(
+            f"{os.path.dirname(os.path.abspath(__file__))}/property_html/suumo_example*"
+        )
     ):
         with open(fname) as fp:
             parsers.append(SuumoParser(fp.read()))

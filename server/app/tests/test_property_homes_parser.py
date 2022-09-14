@@ -11,7 +11,9 @@ from app.controllers.property_collector import HomesParser
 def homes_parsers() -> List[HomesParser]:
     parsers = []
     for fname in sorted(
-        glob(f"{os.path.dirname(os.path.abspath(__file__))}/property_html/homes_example*")
+        glob(
+            f"{os.path.dirname(os.path.abspath(__file__))}/property_html/homes_example*"
+        )
     ):
         with open(fname) as fp:
             parsers.append(HomesParser(fp.read()))
