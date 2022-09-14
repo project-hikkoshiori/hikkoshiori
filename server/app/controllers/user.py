@@ -7,6 +7,7 @@ from db import get_db
 from sqlalchemy.orm import Session
 
 from models.db.user_db import get_user_by_name_db
+from models.db.auth_db import get_auth_by_name_db
 from models.schemas.user import User
 from models.schemas.token import Token
 
@@ -24,12 +25,12 @@ class UserController:
         async def login(
             form: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
         ):
-            user = get_user_by_name_db(db, form.username)
-            if not user:
+            auth = get_auth_by_name_db(db, form.username)
+            if not auth:
                 raise HTTPException(status_code=400, detail="incorrect username or password")
-            if form.password != user.password:  # TODO: hash
+            if form.password != auth.password:  # TODO: hash
                 raise HTTPException(status_code=400, detail="incorrect username or password")
-            access_token = self.create_access_token(data={"sub": user.name})
+            access_token = self.create_access_token(data={"sub": auth.name})
             return {"access_token": access_token, "token_type": "bearer"}
 
         @app.get("/users/me", response_model=User)

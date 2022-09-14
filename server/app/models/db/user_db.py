@@ -8,7 +8,6 @@ class UserDB(Base):
     id = sqlalchemy.Column("id", sqlalchemy.dialects.postgresql.UUID, primary_key=True)
     name = sqlalchemy.Column("name", sqlalchemy.String)
     email = sqlalchemy.Column("email", sqlalchemy.String)
-    password = sqlalchemy.Column("password", sqlalchemy.String)
 
 
 def get_user_by_name_db(db: Session, name: str):
