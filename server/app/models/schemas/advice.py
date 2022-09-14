@@ -4,12 +4,20 @@ from uuid import UUID
 from datetime import datetime
 
 
-class Advice(BaseModel):
-    id: UUID
+class AdviceBase(BaseModel):
     user_id: UUID
     content: str
-    created_at: datetime
     icon_src: str
 
+
+class Advice(AdviceBase):
+    id: UUID
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
+class AdviceCreate(AdviceBase):
     class Config:
         orm_mode = True
