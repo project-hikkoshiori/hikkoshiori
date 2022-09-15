@@ -2,8 +2,9 @@ from typing import List
 
 from db import get_db
 from fastapi import Depends, HTTPException
-from models.db.bookmark_db import get_user_bookmark
+from models.db.bookmark_db import get_user_bookmark, link_user_bookmark
 from models.db.property_db import create_property_db
+from models.schemas.bookmark import BookmarkDownloadRequest, BookmarkRequest
 from models.schemas.property import BookmarkedProperty, Property, PropertyCreate
 from sqlalchemy.orm import Session
 
@@ -29,3 +30,11 @@ class PropertyController:
                     status_code=404, detail=f"cannot fetch properties of user {user_id}"
                 )
             return result
+
+        @app.post("/property/addBookmarks", response_model=List[BookmarkedProperty])
+        async def add_user_bookmark(request: BookmarkRequest, db: Session = Depends(get_db)):
+            pass
+
+        @app.post("/property/removeBookmark", response_model=List[BookmarkedProperty])
+        async def add_user_bookmark(request: BookmarkRequest, db: Session = Depends(get_db)):
+            pass
