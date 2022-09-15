@@ -7,7 +7,7 @@ create table auths (
 
 create table users (
     id uuid primary key,
-    name text not null
+    name text not null,
     email text not null
 );
 
