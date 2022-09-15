@@ -30,7 +30,7 @@ create table properties (
 );
 
 create table bookmark (
-    id uuid primary key,
+    bookmark_id uuid primary key,
     user_id uuid references users(id),
     property_id uuid references properties(id),
     is_bookmarked boolean not null

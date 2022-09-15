@@ -47,7 +47,7 @@ erDiagram
 
 
     bookmark{
-        uuid id PK
+        uuid bookmark_id PK
         uuid user_id FK
         uuid property_id FK
         bool is_bookmarked
