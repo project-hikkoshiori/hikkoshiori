@@ -21,9 +21,10 @@ export type Property = {
   rent: number;
 };
 export type Advice = {
-  id: string;
-  text: string;
+  user_id: string;
+  content: string;
   iconSrc: string;
+  created_at: string;
 };
 
 export type PaperQuestion = {

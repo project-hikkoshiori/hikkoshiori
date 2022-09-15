@@ -8,7 +8,7 @@ type Props = {
 };
 
 const AdviceCell = ({ advice }: Props) => (
-  <NextLink href={`/advice/${advice.id}`} passHref>
+  <NextLink href={`/advice/${advice.user_id}`} passHref>
     <Flex
       as="a"
       height="280px"
@@ -37,7 +37,7 @@ const AdviceCell = ({ advice }: Props) => (
         />
       </Circle>
       <VStack align="right" flex="auto">
-        <Text noOfLines={8}>{advice.text}</Text>
+        <Text noOfLines={8}>{advice.content}</Text>
         <Spacer />
         <Text className="seemore-link" align="right">
           もっと見る{">"}
