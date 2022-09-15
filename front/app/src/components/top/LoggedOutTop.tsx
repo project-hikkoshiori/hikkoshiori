@@ -19,7 +19,14 @@ const LoggedOutTop = () => (
           borderStyle="dashed"
           flex="auto"
         >
-          <Button onClick={() => signIn("google")} minW="35%">
+          <Button
+            onClick={() => signIn("google")}
+            as="a"
+            colorScheme="brand"
+            size="lg"
+            height="64px"
+            minW="35%"
+          >
             ログイン
           </Button>
         </Center>
