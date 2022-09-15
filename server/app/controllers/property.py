@@ -35,6 +35,6 @@ class PropertyController:
         async def add_user_bookmark(request: BookmarkRequest, db: Session = Depends(get_db)):
             pass
 
-        @app.post("/property/removeBookmark", response_model=List[BookmarkedProperty])
+        @app.post("/property/removeBookmarks", response_model=List[BookmarkedProperty])
         async def add_user_bookmark(request: BookmarkRequest, db: Session = Depends(get_db)):
             pass
