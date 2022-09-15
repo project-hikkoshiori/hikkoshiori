@@ -35,7 +35,7 @@ create table properties (
     fetched_at timestamp not null
 );
 
-create table bookmark (
+create table bookmarks (
     bookmark_id uuid primary key,
     user_id uuid references users(id),
     property_id uuid references properties(id),

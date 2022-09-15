@@ -4,10 +4,10 @@ erDiagram
     users ||--|| auths: ""
     users ||--|{ advices: ""
     users ||--|{ housekeeps: ""
-    users ||--o{ bookmark: ""
+    users ||--o{ bookmarks: ""
     housekeeps ||--o{ housekeep_tables: ""
     housekeep_tables ||--o{ housekeep_columns: ""
-    properties ||--o{ bookmark: ""
+    properties ||--o{ bookmarks: ""
 
     auths {
         text name PK
@@ -48,7 +48,7 @@ erDiagram
     }
 
 
-    bookmark{
+    bookmarks{
         uuid bookmark_id PK
         uuid user_id FK
         uuid property_id FK
