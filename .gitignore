@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 # auth
-client_sercret.env
+client_secret.env
 
 # C extensions
 *.so
