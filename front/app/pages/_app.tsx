@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import { Layout } from "../src/utils/layout";
+import { SessionProvider } from "next-auth/react";
 
 const colors = {
   brand: {
@@ -30,11 +31,13 @@ const font = {
 
 const theme = extendTheme({ colors, font });
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Layout>
-        <Component {...pageProps} />
+        <SessionProvider session={session}>
+          <Component {...pageProps} />
+        </SessionProvider>
       </Layout>
     </ChakraProvider>
   );

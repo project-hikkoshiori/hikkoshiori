@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { Box, Center, Flex, Heading, HStack } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, HStack } from "@chakra-ui/react";
 import TopPageButton from "./TopPageButton";
 import topImageSrc from "../../../public/top.png";
+import { signIn } from "next-auth/react";
 
 const LoggedOutTop = () => (
   <Box>
@@ -18,7 +19,9 @@ const LoggedOutTop = () => (
           borderStyle="dashed"
           flex="auto"
         >
-          <TopPageButton link="/login" text="ログイン" minW="35%" />
+          <Button onClick={() => signIn("google")} minW="35%">
+            ログイン
+          </Button>
         </Center>
       </Flex>
       <Flex width="40%" height="200px" flexDirection="column">
