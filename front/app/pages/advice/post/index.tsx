@@ -1,7 +1,16 @@
 import { ChangeEvent, useState } from "react";
 import type { NextPage } from "next";
+import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { Button, Flex, Heading, Textarea, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Link,
+  Textarea,
+  useToast,
+} from "@chakra-ui/react";
 import { postAdvices } from "../../../src/api/AdviceAPI";
 
 const AdvicePage: NextPage = () => {
@@ -44,8 +53,14 @@ const AdvicePage: NextPage = () => {
 
   return (
     <Flex align="center" flexDir="column" gap={4}>
+      <Box width="70%" maxW="800px" mt={8}>
+        <NextLink href="/advice" passHref>
+          <Link>＜一覧に戻る</Link>
+        </NextLink>
+      </Box>
       <Heading my={16}>アドバイスを投稿する</Heading>
       <Textarea
+        width="70%"
         maxW="800px"
         minH="300px"
         value={value}
