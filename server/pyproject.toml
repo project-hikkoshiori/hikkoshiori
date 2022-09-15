@@ -18,6 +18,9 @@ databases = "^0.6.1"
 asyncpg = "^0.26.0"
 lxml = "^4.9.1"
 beautifulsoup4 = "^4.11.1"
+python-multipart = "^0.0.5"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+python-jose = "^3.3.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.6.0"
