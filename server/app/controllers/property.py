@@ -4,7 +4,7 @@ from db import get_db
 from fastapi import Depends, HTTPException
 from models.db.bookmark_db import add_user_bookmark, get_user_bookmark, remove_user_bookmark
 from models.db.property_db import create_property_db
-from models.schemas.bookmark import Bookmark, BookmarkRequest
+from models.schemas.bookmark import BookmarkRequest
 from models.schemas.property import BookmarkedProperty, Property, PropertyCreate
 from sqlalchemy.orm import Session
 
@@ -32,12 +32,12 @@ class PropertyController:
 
             return result
 
-        @app.post("/property/addBookmarks")
-        async def add_user_bookmark(request: BookmarkRequest, db: Session = Depends(get_db)):
+        @app.post("/bookmark/add")
+        async def register_user_bookmark(request: BookmarkRequest, db: Session = Depends(get_db)):
             result = add_user_bookmark(db, request)
             return {"msg": result}
 
-        @app.post("/property/removeBookmarks")
-        async def add_user_bookmark(request: BookmarkRequest, db: Session = Depends(get_db)):
+        @app.delete("/bookmark/delete")
+        async def delete_user_bookmark(request: BookmarkRequest, db: Session = Depends(get_db)):
             result = remove_user_bookmark(db, request)
             return {"msg": result}

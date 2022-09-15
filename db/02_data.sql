@@ -79,6 +79,5 @@ insert into properties values(
 insert into bookmarks values(
     'd8a1d83a-340e-11ed-ad77-acde48001122',
     '81f981b2-bdfa-4b98-b1a3-b4669f948a12',
-    '2735556c-32cf-11ed-9ef9-acde48001122',
-    'TRUE'
+    '2735556c-32cf-11ed-9ef9-acde48001122'
 );

@@ -44,4 +44,3 @@ class Property(PropertyBase):
 class BookmarkedProperty(Property):
     bookmark_id: UUID
     user_id: str
-    is_bookmarked: bool
