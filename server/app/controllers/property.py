@@ -20,7 +20,7 @@ class PropertyController:
             result = create_property_db(db, property)
             return result
 
-        @app.get("/property/getProperties", response_model=List[BookmarkedProperty])
+        @app.get("/property/get", response_model=List[BookmarkedProperty])
         async def get_user_properties(user_id: str, db: Session = Depends((get_db))):
             try:
                 result = get_user_bookmark(db, user_id)
