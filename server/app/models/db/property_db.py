@@ -33,11 +33,3 @@ def create_property_db(db: Session, property: PropertyCreate):
     db.commit()
     db.refresh(db_property)
     return db_property
-
-
-def add_bookmarks_db():
-    pass
-
-
-def remove_bookmarks_db():
-    pass
