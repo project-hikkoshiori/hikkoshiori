@@ -12,4 +12,4 @@ RUN pip install --upgrade --no-cache-dir pip && \
     poetry install
 
 WORKDIR /server/app
-EXPOSE 8080
+EXPOSE $PORT
