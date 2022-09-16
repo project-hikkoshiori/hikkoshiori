@@ -38,3 +38,19 @@ export type LayoutQuestion = {
   maxQuestion: number;
   imageSrc: string[];
 };
+
+export type UserForm = {
+  name: string
+  gender: Gender
+  userType: UserType
+  workPattern: WorkPattern
+}
+
+export const genderList = ["MAN", "WOMAN"] as const
+export type Gender = typeof genderList[number]
+
+export const userTypeList = ["STUDENT", "NEW_WORKER", "WORKER"]
+export type UserType = typeof userTypeList[number]
+
+export const workPatternList = ["REMOTE", "ELSE"]
+export type WorkPattern = typeof workPatternList[number]
