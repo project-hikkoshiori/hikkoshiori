@@ -154,7 +154,7 @@ class AbstractPropertyParser(abc.ABC):
         pass
 
     def _parse_image_links(self) -> Dict[str, str]:
-        return []
+        return {}
 
 
 class SuumoParser(AbstractPropertyParser):
