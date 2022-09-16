@@ -1,8 +1,19 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import DefaultErrorPage from "next/error";
 import NextLink from "next/link";
-import { Box, Center, Flex, Heading, Link, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Center,
+  Circle,
+  Flex,
+  Heading,
+  HStack,
+  Link,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { useGetAdvice } from "../../../src/api/AdviceAPI";
 
 const queryToString = (x: string | string[] | undefined): string => {
@@ -37,6 +48,23 @@ const AdviceDetailPage: NextPage = () => {
       <Center pos="relative" width="80%">
         <Heading my={16}>みんなのアドバイス</Heading>
       </Center>
+      <HStack align="top">
+        <Circle size="60px" bg="brand.100" overflow="hidden" mr={2}>
+          <Image
+            src={advice!.iconSrc}
+            alt="user icon"
+            height="60px"
+            width="60px"
+          />
+        </Circle>
+        <VStack align="left" flex="auto">
+          <HStack align="top" height="60px" alignItems="center">
+            <Text fontSize="lg">〇〇さんからのアドバイス</Text>
+            <Text color="gray">男性・学生</Text>
+          </HStack>
+          <Text width="700px">{advice!.content}</Text>
+        </VStack>
+      </HStack>
     </Flex>
   );
 };
