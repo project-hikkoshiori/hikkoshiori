@@ -1,4 +1,5 @@
 import {
+  Button,
   Center,
   Flex,
   IconButton,
@@ -12,10 +13,12 @@ import Image from "next/image";
 import iconSrc from "../../public/icon.png";
 import logoSrc from "../../public/logo.png";
 import SideBar from "./sidebar";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const isLoggedIn = true;
+  const { data: session } = useSession();
+  const isLoggedIn = session && session.user;
   return (
     <Flex
       as="header"
@@ -44,13 +47,18 @@ const Header = () => {
       </NextLink>
       <Spacer />
       {isLoggedIn ? (
-        <NextLink href="/mypage" passHref>
-          <Text cursor="pointer">ようこそ、ざとさん</Text>
-        </NextLink>
+        <>
+          <Button as="a" colorScheme="brand" onClick={() => signOut()}>
+            ログアウト
+          </Button>
+          <NextLink href="/mypage" passHref>
+            <Text cursor="pointer">ようこそ、{session.user?.name}さん</Text>
+          </NextLink>
+        </>
       ) : (
-        <NextLink href="/login" passHref>
-          <Text cursor="pointer">ログイン</Text>
-        </NextLink>
+        <Button as="a" colorScheme="brand" onClick={() => signIn("google")}>
+          ログイン
+        </Button>
       )}
     </Flex>
   );
