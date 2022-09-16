@@ -73,3 +73,10 @@ class TestSuumoParser:
         info = suumo_parsers[0].additional_info
         assert "バストイレ別" in info["features"]
         assert "初期費用カード決済可" in info["features"]
+
+    def test_image_links(self, suumo_parsers):
+        links = suumo_parsers[0].image_links
+        assert (
+            links[0]
+            == "https://img01.suumo.com/front/gazo/fr/bukken/698/100296698698/100296698698_go.jpg"
+        )

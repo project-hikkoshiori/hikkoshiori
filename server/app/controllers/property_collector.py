@@ -1,6 +1,7 @@
 import abc
 import decimal
 import re
+from typing import List
 
 import bs4
 import requests
@@ -19,6 +20,7 @@ class AbstractPropertyParser(abc.ABC):
         self._floor_num = None
         self._direction = None
         self._additional_info = None
+        self._image_links = None
 
     def dict(self) -> dict:
         return {
@@ -101,6 +103,12 @@ class AbstractPropertyParser(abc.ABC):
             self._additional_info = self._parse_additional_info()
         return self._additional_info
 
+    @property
+    def image_links(self) -> List[str]:
+        if self._image_links is None:
+            self._image_links = self._parse_image_links()
+        return self._image_links
+
     @abc.abstractmethod
     def _parse_monthly_rent_price(self) -> int:
         pass
@@ -144,6 +152,9 @@ class AbstractPropertyParser(abc.ABC):
     @abc.abstractmethod
     def _parse_additional_info(self) -> dict:
         pass
+
+    def _parse_image_links(self) -> List[str]:
+        return []
 
 
 class SuumoParser(AbstractPropertyParser):
@@ -335,6 +346,14 @@ class SuumoParser(AbstractPropertyParser):
             for k, v in zip(keys, values):
                 ret[k.get_text(strip=True)] = v.get_text(strip=True)
 
+        return ret
+
+    def _parse_image_links(self) -> List[str]:
+        ret = []
+        selector = self.soup.select("#js-view_gallery-list > li > a > img")
+        for img in selector:
+            link = img["data-src"]
+            ret.append(link)
         return ret
 
 
@@ -533,6 +552,14 @@ class HomesParser(AbstractPropertyParser):
             values = row.select("td")
             for k, v in zip(keys, values):
                 ret[k.get_text(strip=True)] = v.get_text(strip=True)
+        return ret
+
+    def _parse_image_links(self) -> List[str]:
+        ret = []
+        selector = self.soup.select("#photo ul[class='thumbs noscript'] > li > a > img")
+        for img in selector:
+            link = img["src"]
+            ret.append(link)
         return ret
 
 

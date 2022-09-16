@@ -76,3 +76,10 @@ insert into bookmarks values(
     '81f981b2-bdfa-4b98-b1a3-b4669f948a12',
     '2735556c-32cf-11ed-9ef9-acde48001122'
 );
+
+insert into property_images values(
+    '64e9c828-35a1-11ed-86f0-acde48001122',
+    '2735556c-32cf-11ed-9ef9-acde48001122',
+    '建物外観',
+    'https://img01.suumo.com/front/gazo/fr/bukken/698/100296698698/100296698698_go.jpg'
+)

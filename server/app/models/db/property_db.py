@@ -1,5 +1,6 @@
 import datetime
 import uuid
+from typing import List
 
 import sqlalchemy
 from models.schemas.property import PropertyCreate
@@ -43,3 +44,19 @@ def create_property_db(db: Session, property: PropertyCreate):
     db.commit()
     db.refresh(db_property)
     return db_property
+
+
+def create_property_images_db(db: Session, property_id: str, links: List[str]):
+    for link in links:
+        id = str(uuid.uuid1())
+        image = PropertyImageDB(id=id, property_id=property_id, image=link)
+        db.add(image)
+    db.commit()
+    return f"{len(links)} figures are added."
+
+
+def get_property_images_db(db: Session, property_id: str):
+    images = (
+        db.query(PropertyImageDB.image).filter(PropertyImageDB.property_id == property_id).all()
+    )
+    return images

@@ -2,8 +2,16 @@ from typing import List
 
 from db import get_db
 from fastapi import Depends, HTTPException
-from models.db.bookmark_db import add_user_bookmark, get_user_bookmark, remove_user_bookmark
-from models.db.property_db import create_property_db
+from models.db.bookmark_db import (
+    add_user_bookmark,
+    get_user_bookmark,
+    remove_user_bookmark,
+)
+from models.db.property_db import (
+    create_property_db,
+    create_property_images_db,
+    get_property_images_db,
+)
 from models.schemas.bookmark import BookmarkRequest
 from models.schemas.property import BookmarkedProperty, Property, PropertyCreate
 from sqlalchemy.orm import Session
@@ -18,6 +26,11 @@ class PropertyController:
             parser = download(url)
             property = PropertyCreate(**parser.dict())
             result = create_property_db(db, property)
+            try:
+                msg = create_property_images_db(db, result.id, parser.image_links)
+                logger.info(msg)
+            except Exception as e:
+                logger.warning(e)
             return result
 
         @app.get("/property/get", response_model=List[BookmarkedProperty])
@@ -31,6 +44,15 @@ class PropertyController:
                 )
 
             return result
+
+        @app.get("/property/images/{property_id}")
+        async def get_property_images(property_id, db: Session = Depends(get_db)):
+            try:
+                ret = get_property_images_db(db, property_id)
+                return ret
+            except Exception as e:
+                logger.error(e)
+                raise HTTPException(status_code=404)
 
         @app.post("/bookmark/add")
         async def register_user_bookmark(request: BookmarkRequest, db: Session = Depends(get_db)):
