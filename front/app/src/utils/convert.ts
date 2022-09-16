@@ -6,6 +6,8 @@ export const genderUI = (g: Gender) => {
             return "男性"
         case "WOMAN":
             return "女性"
+        case "ELSE":
+            return "その他"
         default:
             return "invalid"
     }
@@ -19,6 +21,8 @@ export const userTypeUI = (u: UserType) => {
             return "新社会人"
         case "WORKER":
             return "社会人"
+        case "ELSE":
+            return "その他"
         default:
             return "invalid"
     }
@@ -29,7 +33,7 @@ export const workPatternUI = (w: WorkPattern) => {
         case "REMOTE":
             return "リモート勤務"
         case "ELSE":
-            return "その他(無職)"
+            return "その他(無職など)"
         default: 
             return "invalid"
     }
