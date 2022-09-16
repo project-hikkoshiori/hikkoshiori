@@ -8,7 +8,7 @@ type Props = {
 };
 
 const AdviceCell = ({ advice }: Props) => (
-  <NextLink href={`/advice/${advice.user_id}`} passHref>
+  <NextLink href={`/advice/${advice.id}`} passHref>
     <Flex
       as="a"
       height="280px"
