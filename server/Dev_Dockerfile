@@ -1,8 +1,5 @@
 FROM python:3.9.13-bullseye
 
-
-ENV DN_PATH postgres://wnwbajprwbdsuk:019c21ecab80dd21b5ae3249f41306b9a78eb54eb8c4d26796146cea6be12c8a@ec2-3-214-2-141.compute-1.amazonaws.com:5432/d2vk9sdaupfmnc
-
 WORKDIR /server
 COPY poetry.lock pyproject.toml ./
 RUN apt-get update && apt-get install -y \
@@ -15,6 +12,4 @@ RUN pip install --upgrade --no-cache-dir pip && \
     poetry install
 
 WORKDIR /server/app
-
-EXPOSE $PORT
-CMD ["uvicorn", "setup:app", "--host", "0.0.0.0", "--port", $PORT]
+EXPOSE 8080
