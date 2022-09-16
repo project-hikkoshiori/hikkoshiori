@@ -83,14 +83,14 @@ insert into housekeeps values(
 );
 
 insert into housekeep_tables values(
-    'd74ce570-b4fb-ff54-8344-a0e829bd3b92',
     '63a38ecf-9e71-d5d4-bb5a-573300f129a9',
+    'd74ce570-b4fb-ff54-8344-a0e829bd3b92',
     '不動産'
 );
 
 insert into housekeep_tables values(
-    'd74ce570-b4fb-ff54-8344-a0e829bd3b92',
     'ebb26fe1-8fbd-c094-2f51-f4e41fa557a5',
+    'd74ce570-b4fb-ff54-8344-a0e829bd3b92',
     '家具'
 );
 
@@ -111,7 +111,7 @@ insert into housekeep_columns values(
 );
 
 insert into housekeep_columns values(
-    '0c8c01da-2e78-cb8d-8dc5-c5aedd6e10e4',
+    '5e624c13-ffb9-8a19-6c73-f41aec504b9d',
     'ebb26fe1-8fbd-c094-2f51-f4e41fa557a5',
     '冷蔵庫',
     80000,
