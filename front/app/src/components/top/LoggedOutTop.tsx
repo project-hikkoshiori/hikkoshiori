@@ -35,9 +35,24 @@ const LoggedOutTop = () => (
           wrap="wrap"
           flex="auto"
         >
-          <TopPageButton link="/" text="レイアウト診断" minW="35%" m={2} />
-          <TopPageButton link="/" text="みんなのアドバイス" minW="35%" m={2} />
-          <TopPageButton link="/" text="提出書類" minW="35%" m={2} />
+          <TopPageButton
+            link="/layout"
+            text="レイアウト診断"
+            minW="35%"
+            m={2}
+          />
+          <TopPageButton
+            link="/advice"
+            text="みんなのアドバイス"
+            minW="35%"
+            m={2}
+          />
+          <TopPageButton
+            link="/submit-paper"
+            text="提出書類"
+            minW="35%"
+            m={2}
+          />
         </Flex>
       </Flex>
     </HStack>

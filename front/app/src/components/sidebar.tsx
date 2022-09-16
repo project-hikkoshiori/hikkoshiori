@@ -65,9 +65,12 @@ const SideBar = ({ isOpen, onClose }: SideBarProps) => {
               <SideBarChildItem link="/layout/result" text="前回の結果を見る" />
             </VStack>
             <VStack align="start" shouldWrapChildren>
-              <SideBarItem link="/" text="物件探し" />
-              <SideBarChildItem link="/" text="物件を探す" />
-              <SideBarChildItem link="/" text="ブックマークを見る" />
+              <SideBarItem link="/properties" text="物件探し" />
+              <SideBarChildItem link="/properties" text="物件を探す" />
+              <SideBarChildItem
+                link="/properties?bookmark=true"
+                text="ブックマークを見る"
+              />
             </VStack>
           </VStack>
         </DrawerBody>
