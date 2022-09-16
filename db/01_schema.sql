@@ -35,3 +35,22 @@ create table bookmarks (
     user_id uuid references users(id),
     property_id uuid references properties(id)
 );
+
+create table housekeeps (
+    id uuid  primary key,
+    user_id uuid references users(id),
+)
+
+create table housekeep_tables (
+    id uuid  primary key,
+    housekeep_id uuid references housekeeps(id),
+    name text not null,
+)
+
+create table housekeep_columns (
+    id uuid  primary key,
+    table_id uuidd references housekeep_tables(id),
+    name text not null,
+    value int not null,
+    is_prepared bool not null,
+)
