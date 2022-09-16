@@ -76,4 +76,4 @@ class TestSuumoParser:
 
     def test_image_links(self, suumo_parsers):
         links = suumo_parsers[0].image_links
-        assert links[0].startswith("https://img01.suumo.com/front/gazo/fr/")
+        assert links["間取り図"].startswith("https://img01.suumo.com/front/gazo/fr/")
