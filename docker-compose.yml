@@ -2,7 +2,9 @@ version: "3"
 
 services:
   server:
-    build: ./server
+    build:
+      context: ./server
+      dockerfile: Dev_Dockerfile
     container_name: server
     restart: always
     env_file:
@@ -23,7 +25,9 @@ services:
     ports:
       - 5432:5432
   front:
-    build: ./front
+    build:
+      context: ./front
+      dockerfile: Dev_Dockerfile
     container_name: front
     env_file:
       - client.env

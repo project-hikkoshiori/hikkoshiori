@@ -1,20 +1,14 @@
-FROM python:3.9.13-bullseye
+FROM python:3.9.13
 
-
-ENV DN_PATH postgres://wnwbajprwbdsuk:019c21ecab80dd21b5ae3249f41306b9a78eb54eb8c4d26796146cea6be12c8a@ec2-3-214-2-141.compute-1.amazonaws.com:5432/d2vk9sdaupfmnc
-
-WORKDIR /server
-COPY poetry.lock pyproject.toml ./
 RUN apt-get update && apt-get install -y \
-    # For psycopg2 and psycopg2 installation
-    libpq-dev 
+    && pip install --upgrade pip
 
-RUN pip install --upgrade --no-cache-dir pip && \
-    pip install --no-cache-dir poetry && \
-    poetry config virtualenvs.create false && \
-    poetry install
+WORKDIR /app
 
-WORKDIR /server/app
+COPY ./requirements.txt /app/requirements.txt
+
+RUN pip install -r /app/requirements.txt
+
+ENV DB_PATH  postgres://wnwbajprwbdsuk:019c21ecab80dd21b5ae3249f41306b9a78eb54eb8c4d26796146cea6be12c8a@ec2-3-214-2-141.compute-1.amazonaws.com:5432/d2vk9sdaupfmnc
 
 EXPOSE $PORT
-CMD ["uvicorn", "setup:app", "--host", "0.0.0.0", "--port", $PORT]

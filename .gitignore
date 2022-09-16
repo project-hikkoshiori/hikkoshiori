@@ -5,6 +5,7 @@ __pycache__/
 
 # auth
 client_secret.env
+Dockerfile
 
 # C extensions
 *.so
