@@ -2,9 +2,6 @@ from pydantic import BaseModel
 
 from uuid import UUID
 
-from models.schemas.housekeep_table import HouseKeepTable
-
-
 class HouseKeepColumnBase(BaseModel):
     table_id: UUID
     name: str
