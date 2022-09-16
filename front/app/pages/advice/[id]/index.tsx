@@ -1,16 +1,31 @@
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import DefaultErrorPage from "next/error";
 import NextLink from "next/link";
 import { Box, Center, Flex, Heading, Link, Text } from "@chakra-ui/react";
+import { useGetAdvice } from "../../../src/api/AdviceAPI";
+
+const queryToString = (x: string | string[] | undefined): string => {
+  if (typeof x === "string") {
+    return x;
+  } else if (Array.isArray(x)) {
+    return x[0];
+  }
+  return "";
+};
 
 const AdviceDetailPage: NextPage = () => {
-  //   if (isError) {
-  //     return <DefaultErrorPage statusCode={404} />;
-  //   }
+  const router = useRouter();
+  const { id } = router.query;
+  const { data: advice, isError, isLoading } = useGetAdvice(queryToString(id));
 
-  //   if (isLoading) {
-  //     return <Text>Loading...</Text>;
-  //   }
+  if (isError) {
+    return <DefaultErrorPage statusCode={404} />;
+  }
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <Flex align="center" flexDir="column">

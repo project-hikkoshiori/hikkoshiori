@@ -4,9 +4,13 @@ const postRequestOptionsBase: RequestInit = {
 };
 
 export const fetcher = (path: String): Promise<any> =>
-  fetch(`${process.env.NEXT_PUBLIC_SERVER_PATH}` + path).then((res) =>
-    res.json()
-  );
+  fetch(`${process.env.NEXT_PUBLIC_SERVER_PATH}` + path).then((res) => {
+    res.json();
+    if (!res.ok) {
+      throw new Error("error in fetching");
+    }
+    res.json();
+  });
 
 export const post = async (path: String, body: object): Promise<any> => {
   const requestOptions: RequestInit = {
