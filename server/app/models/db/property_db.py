@@ -25,6 +25,16 @@ class PropertyDB(Base):
     fetched_at = sqlalchemy.Column("fetched_at", sqlalchemy.DateTime)
 
 
+class PropertyImageDB(Base):
+    __tablename__ = "property_images"
+    id = sqlalchemy.Column("id", sqlalchemy.dialects.postgresql.UUID, primary_key=True)
+    property_id = sqlalchemy.Column(
+        "property_id", sqlalchemy.dialects.postgresql.UUID, sqlalchemy.ForeignKey("properties.id")
+    )
+    title = sqlalchemy.Column("title", sqlalchemy.String)
+    image = sqlalchemy.Column("image", sqlalchemy.String)
+
+
 def create_property_db(db: Session, property: PropertyCreate):
     id = str(uuid.uuid1())
     dt = datetime.datetime.now()

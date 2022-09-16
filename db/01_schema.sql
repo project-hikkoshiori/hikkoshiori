@@ -35,3 +35,10 @@ create table bookmarks (
     user_id uuid references users(id),
     property_id uuid references properties(id)
 );
+
+create table property_images (
+    id uuid not null,
+    property_id uuid references properties(id),
+    title text,
+    image text not null
+)
