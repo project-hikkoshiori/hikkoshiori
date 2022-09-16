@@ -4,7 +4,6 @@ import Head from "next/head";
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import { Layout } from "../src/utils/layout";
-import topImageSrc from "../public/top.png";
 
 const colors = {
   brand: {
