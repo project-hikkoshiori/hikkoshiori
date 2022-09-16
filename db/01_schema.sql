@@ -1,12 +1,7 @@
 set client_encoding = 'UTF8';
 
-create table auths (
-    name text not null,
-    password text not null
-);
-
 create table users (
-    id uuid not null,
+    id uuid primary key,
     name text not null,
     email text not null
 );
@@ -20,7 +15,7 @@ create table advices (
 );
 
 create table properties (
-    id uuid not null,
+    id uuid primary key,
     monthly_rent_price int not null,
     monthly_maintenance_fee int not null,
     initial_cost int not null,
@@ -33,4 +28,10 @@ create table properties (
     direction text,
     additional_info jsonb,
     fetched_at timestamp not null
+);
+
+create table bookmarks (
+    bookmark_id uuid primary key,
+    user_id uuid references users(id),
+    property_id uuid references properties(id)
 );
