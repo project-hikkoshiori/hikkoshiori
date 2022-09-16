@@ -75,6 +75,6 @@ erDiagram
         uuid id PK
         uuid property_id FK
         title text
-        text image 
+        text image_link
     }
 ```
