@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  distDir: 'out',
   images: {
     loader: 'akamai',
     path: '',
