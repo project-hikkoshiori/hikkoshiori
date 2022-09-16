@@ -1,5 +1,7 @@
 FROM python:3.9.13-bullseye
 
+ENV POETRY_CACHE_DIR=/usr/local/.cache/pypoetry
+
 WORKDIR /server
 COPY poetry.lock pyproject.toml ./
 RUN apt-get update && apt-get install -y \
