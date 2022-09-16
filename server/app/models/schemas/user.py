@@ -12,3 +12,14 @@ class UserBase(BaseModel):
 class User(UserBase):
     class Config:
         orm_mode = True
+
+class UserLayout(UserBase):
+    """User for layout suggestion
+
+    Attributes:
+        layout_paths: path to suggested layout imgs.
+        model_path: path to current model.
+
+    """
+    layout_paths: list
+    model_path: str
