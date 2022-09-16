@@ -13,7 +13,12 @@ from models.db.property_db import (
     get_property_images_db,
 )
 from models.schemas.bookmark import BookmarkRequest
-from models.schemas.property import BookmarkedProperty, Property, PropertyCreate
+from models.schemas.property import (
+    BookmarkedProperty,
+    Property,
+    PropertyCreate,
+    PropertyImage,
+)
 from sqlalchemy.orm import Session
 
 from controllers.property_collector import download
@@ -45,7 +50,7 @@ class PropertyController:
 
             return result
 
-        @app.get("/property/images/{property_id}")
+        @app.get("/property/images/{property_id}", response_model=List[PropertyImage])
         async def get_property_images(property_id, db: Session = Depends(get_db)):
             try:
                 ret = get_property_images_db(db, property_id)

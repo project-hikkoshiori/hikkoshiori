@@ -1,7 +1,7 @@
 import abc
 import decimal
 import re
-from typing import List
+from typing import Dict
 
 import bs4
 import requests
@@ -104,7 +104,7 @@ class AbstractPropertyParser(abc.ABC):
         return self._additional_info
 
     @property
-    def image_links(self) -> List[str]:
+    def image_links(self) -> Dict[str, str]:
         if self._image_links is None:
             self._image_links = self._parse_image_links()
         return self._image_links
@@ -153,7 +153,7 @@ class AbstractPropertyParser(abc.ABC):
     def _parse_additional_info(self) -> dict:
         pass
 
-    def _parse_image_links(self) -> List[str]:
+    def _parse_image_links(self) -> Dict[str, str]:
         return []
 
 
@@ -348,12 +348,13 @@ class SuumoParser(AbstractPropertyParser):
 
         return ret
 
-    def _parse_image_links(self) -> List[str]:
-        ret = []
+    def _parse_image_links(self) -> Dict[str, str]:
+        ret = dict()
         selector = self.soup.select("#js-view_gallery-list > li > a > img")
         for img in selector:
+            name = img["alt"]
             link = img["data-src"]
-            ret.append(link)
+            ret[name] = link
         return ret
 
 
@@ -554,12 +555,13 @@ class HomesParser(AbstractPropertyParser):
                 ret[k.get_text(strip=True)] = v.get_text(strip=True)
         return ret
 
-    def _parse_image_links(self) -> List[str]:
-        ret = []
+    def _parse_image_links(self) -> Dict[str, str]:
+        ret = dict()
         selector = self.soup.select("#photo ul[class='thumbs noscript'] > li > a > img")
         for img in selector:
+            name = img["alt"]
             link = img["src"]
-            ret.append(link)
+            ret[name] = link
         return ret
 
 

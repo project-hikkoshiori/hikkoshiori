@@ -1,6 +1,7 @@
 import datetime
 import uuid
-from typing import List
+from turtle import title
+from typing import Dict
 
 import sqlalchemy
 from models.schemas.property import PropertyCreate
@@ -33,7 +34,7 @@ class PropertyImageDB(Base):
         "property_id", sqlalchemy.dialects.postgresql.UUID, sqlalchemy.ForeignKey("properties.id")
     )
     title = sqlalchemy.Column("title", sqlalchemy.String)
-    image = sqlalchemy.Column("image", sqlalchemy.String)
+    image_link = sqlalchemy.Column("image", sqlalchemy.String)
 
 
 def create_property_db(db: Session, property: PropertyCreate):
@@ -46,10 +47,10 @@ def create_property_db(db: Session, property: PropertyCreate):
     return db_property
 
 
-def create_property_images_db(db: Session, property_id: str, links: List[str]):
-    for link in links:
+def create_property_images_db(db: Session, property_id: str, links: Dict[str, str]):
+    for name, link in links.items():
         id = str(uuid.uuid1())
-        image = PropertyImageDB(id=id, property_id=property_id, image=link)
+        image = PropertyImageDB(id=id, title=name, property_id=property_id, image_link=link)
         db.add(image)
     db.commit()
     return f"{len(links)} figures are added."
@@ -57,6 +58,8 @@ def create_property_images_db(db: Session, property_id: str, links: List[str]):
 
 def get_property_images_db(db: Session, property_id: str):
     images = (
-        db.query(PropertyImageDB.image).filter(PropertyImageDB.property_id == property_id).all()
+        db.query(PropertyImageDB.title, PropertyImageDB.image_link)
+        .filter(PropertyImageDB.property_id == property_id)
+        .all()
     )
     return images

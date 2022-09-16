@@ -44,3 +44,8 @@ class Property(PropertyBase):
 class BookmarkedProperty(Property):
     bookmark_id: UUID
     user_id: str
+
+
+class PropertyImage(BaseModel):
+    title: str
+    image_link: str
