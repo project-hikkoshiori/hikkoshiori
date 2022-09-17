@@ -7,10 +7,13 @@ import {
   Heading,
   Select,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import type { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { postUser } from "../../../src/api/UserAPI";
 import {
   genderUI,
   userTypeUI,
@@ -24,6 +27,8 @@ import {
 } from "../../../src/utils/types";
 
 const RegisterUser: NextPage = () => {
+  const toast = useToast();
+  const router = useRouter();
   const { handleSubmit, register } = useForm<UserForm>();
   const { data: session } = useSession();
   if (!session || !session.user) {
@@ -31,8 +36,16 @@ const RegisterUser: NextPage = () => {
   }
   const addUser = async (form: UserForm) => {
     form.name = session?.user?.name ?? "";
-    console.log(form);
-    // ここからform投げて200だったらトップページへリダイレクト
+    const { isError } = await postUser(form);
+    if (!isError) {
+      router.push("/");
+      toast({
+        title: "ユーザー登録が完了しました",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
   };
   return (
     <Center>
@@ -51,7 +64,7 @@ const RegisterUser: NextPage = () => {
           </FormControl>
           <FormControl isRequired>
             <FormLabel htmlFor="userType">属性</FormLabel>
-            <Select id="userType" {...register("userType")}>
+            <Select id="userType" {...register("user_type")}>
               {userTypeList.map((u) => (
                 <option value={u} key={u}>
                   {userTypeUI(u)}
@@ -61,7 +74,7 @@ const RegisterUser: NextPage = () => {
           </FormControl>
           <FormControl isRequired>
             <FormLabel htmlFor="workPattern">勤務体系</FormLabel>
-            <Select id="workPattern" {...register("workPattern")}>
+            <Select id="workPattern" {...register("work_pattern")}>
               {workPatternList.map((w) => (
                 <option value={w} key={w}>
                   {workPatternUI(w)}
