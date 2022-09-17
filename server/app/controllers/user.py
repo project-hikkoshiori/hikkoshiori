@@ -1,19 +1,20 @@
 from fastapi import Depends, HTTPException
+from typing import List
 
 from db import get_db
 from sqlalchemy.orm import Session
 
 from models.schemas.user import User, UserCreate
 
-from models.db.user_db import get_user_by_name_db, post_user_db
+from models.db.user_db import get_users_db, post_user_db
 
 
 class UserController:
     def __init__(self, app, logger):
-        @app.get("/users/{name}", response_model=User)
-        async def get_user(name, db: Session = Depends(get_db)):
+        @app.get("/users", response_model=List[User])
+        async def get_user(db: Session = Depends(get_db)):
             try:
-                result = get_user_by_name_db(db, name)
+                result = get_users_db(db)
             except Exception as e:
                 logger.error(e)
                 raise HTTPException(

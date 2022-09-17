@@ -18,8 +18,8 @@ class UserDB(Base):
     created_at = sqlalchemy.Column("created_at", sqlalchemy.DateTime)
 
 
-def get_user_by_name_db(db: Session, name: str):
-    return db.query(UserDB).filter(UserDB.name == name).first()
+def get_users_db(db: Session):
+    return db.query(UserDB).all()
 
 
 def post_user_db(db: Session, user: UserCreate):

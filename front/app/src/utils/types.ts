@@ -64,11 +64,20 @@ export type LayoutQuestion = {
   imageSrc: string[];
 };
 
+export type User = {
+  id: string;
+  name: string
+  gender: Gender
+  user_type: UserType
+  work_pattern: WorkPattern
+  created_at: string;
+}
+
 export type UserForm = {
   name: string
   gender: Gender
-  userType: UserType
-  workPattern: WorkPattern
+  user_type: UserType
+  work_pattern: WorkPattern
 }
 
 export const genderList = ["MAN", "WOMAN", "ELSE"] as const
