@@ -8,8 +8,6 @@ export const useGetHouseKeeps = (user_id: string) => {
     fetcher
   );
 
-  console.log(data, !data && !error, error, isValidating);
-
   const structuredData: HouseKeepTable[] = [];
 
   if (data != undefined) {

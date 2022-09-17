@@ -1,7 +1,12 @@
 import { VStack, Text } from "@chakra-ui/react";
+import { HouseKeepTable } from "../../utils/types";
 import HouseKeepSection from "./HouseKeepSection";
 
-const HouseKeepList = () => (
+type Props = {
+  housekeeps: HouseKeepTable[];
+};
+
+const HouseKeepList = ({ housekeeps }: Props) => (
   <VStack align="end" p={2}>
     <VStack
       maxW="700px"
@@ -14,9 +19,9 @@ const HouseKeepList = () => (
       backgroundRepeat="no-repeat"
       backgroundAttachment="local, local, scroll, scroll"
     >
-      <HouseKeepSection />
-      <HouseKeepSection />
-      <HouseKeepSection />
+      {housekeeps.map((housekeep) => (
+        <HouseKeepSection houseKeepTable={housekeep} key={housekeep.id} />
+      ))}
     </VStack>
     <Text textAlign="right" height="50px">
       合計 ¥400,000

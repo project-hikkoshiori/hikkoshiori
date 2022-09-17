@@ -2,17 +2,25 @@ import { useState } from "react";
 import { Heading, IconButton, VStack } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import HouseKeepRow from "./HouseKeepRow";
-import { HouseKeep } from "../../utils/types";
+import { HouseKeep, HouseKeepTable } from "../../utils/types";
 
-const HouseKeepSection = () => {
-  const [houseKeepDatas, setHouseKeepDatas] = useState<HouseKeep[]>([]);
+type Props = {
+  houseKeepTable: HouseKeepTable;
+};
+
+const HouseKeepSection = ({ houseKeepTable }: Props) => {
+  const [houseKeepDatas, setHouseKeepDatas] = useState<HouseKeep[]>(
+    houseKeepTable.data
+  );
 
   const addHouseKeepData = () => {
     const newHouseKeepData: HouseKeep = {
       id: houseKeepDatas.length.toString(),
-      title: "",
+      name: "",
       value: 0,
-      isUserAdded: true,
+      is_prepared: true,
+      table_name: houseKeepTable.name,
+      table_id: houseKeepTable.id,
     };
     setHouseKeepDatas((prev) => [...prev, newHouseKeepData]);
   };
