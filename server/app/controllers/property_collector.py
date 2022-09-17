@@ -22,6 +22,12 @@ class AbstractPropertyParser(abc.ABC):
         self._additional_info = None
         self._image_links = None
 
+        self._image_normalize_pattern = [
+            "間取",
+            "外観",
+            "キッチン",
+        ]
+
     def dict(self) -> dict:
         return {
             "monthly_rent_price": self.monthly_rent_price,
@@ -353,6 +359,9 @@ class SuumoParser(AbstractPropertyParser):
         selector = self.soup.select("#js-view_gallery-list > li > a > img")
         for img in selector:
             name = img["alt"]
+            normalized = [_ for _ in self._image_normalize_pattern if _ in name]
+            if normalized:
+                name = normalized[0]
             link = img["data-src"]
             ret[name] = link
         return ret
