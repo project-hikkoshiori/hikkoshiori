@@ -32,7 +32,12 @@ const HouseKeepRow = ({ houseKeepData, onDelete, onUpdate }: Props) => {
     if (isNaN(val)) {
       val = 0;
     }
-    return `¥` + Intl.NumberFormat("ja-JP").format(val);
+
+    const price = new Intl.NumberFormat("ja-JP", {
+      style: "currency",
+      currency: "JPY",
+    });
+    return price.format(val);
   };
 
   return (
