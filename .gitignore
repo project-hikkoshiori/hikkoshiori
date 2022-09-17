@@ -5,7 +5,7 @@ __pycache__/
 
 # auth
 client_secret.env
-
+secret.env
 # C extensions
 *.so
 
@@ -130,3 +130,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+.DS_Store
+client_secret.env

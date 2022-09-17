@@ -39,3 +39,8 @@ class Property(PropertyBase):
 
     class Config:
         orm_mode = True
+
+
+class BookmarkedProperty(Property):
+    bookmark_id: UUID
+    user_id: str

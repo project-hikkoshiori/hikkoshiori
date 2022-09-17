@@ -1,3 +1,4 @@
+import string
 import sqlalchemy
 import uuid
 import datetime
@@ -18,6 +19,10 @@ class AdviceDB(Base):
 
 def get_advices_db(db: Session):
     return db.query(AdviceDB).all()
+
+
+def get_advice_db(advice_id: string, db: Session):
+    return db.query(AdviceDB).filter(AdviceDB.id == advice_id).one()
 
 
 def add_advices_db(db: Session, advice: AdviceCreate):

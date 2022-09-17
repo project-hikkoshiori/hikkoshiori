@@ -21,6 +21,7 @@ export type Property = {
   rent: number;
 };
 export type Advice = {
+  id: string;
   user_id: string;
   content: string;
   iconSrc: string;
