@@ -3,7 +3,7 @@ name: DeployHeroku
 on:
   push:
     branches:
-      - main
+      - release-server
 
 jobs:
   build:
