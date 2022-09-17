@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 import sqlalchemy
 import uuid
 from db import Base
@@ -44,7 +45,10 @@ def add_housekeep_column(db: Session, housekeep: HouseKeepColumnCreate, user_id:
         .filter(HouseKeepDB.user_id == user_id, HouseKeepTableDB.id == housekeep.table_id)
     )
     if db.query(table.exists()).scalar() == None:
-        msg = "the table_id is wrong. this is not your table."
+        raise HTTPException(
+            status_code=404,
+            detail="[controller/housekeep/post] the table_id is wrong. this is not your table.",
+        )
     else:
         # add
         id = str(uuid.uuid1())
@@ -53,8 +57,7 @@ def add_housekeep_column(db: Session, housekeep: HouseKeepColumnCreate, user_id:
         db.add(housekeep_column_obj)
         db.commit()
         db.refresh(housekeep_column_obj)
-        msg = "housekeep_column added successfully"
-    return msg
+    return housekeep_column_obj
 
 
 def delete_housekeep_column(db: Session, housekeep: HouseKeepColumn, user_id: str):

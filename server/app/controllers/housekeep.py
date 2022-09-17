@@ -88,20 +88,20 @@ class HouseKeepController:
                 )
             return {"msg": result}
 
-        @app.post("/housekeep-columns/{user_id}")
-        async def post_housekeep_columns(
-            request: HouseKeepColumnCreate, user_id: str, db: Session = Depends(get_db)
-        ):
+        @app.post("/housekeep-columns/{user_id}", response_model=HouseKeepColumn)
+        async def post_housekeep_columns(request: HouseKeepColumnCreate, user_id: str, db: Session = Depends(get_db)):
             try:
                 result = add_housekeep_column(db, request, user_id)
 
+            except HTTPException as e:
+                raise e
             except Exception as e:
                 logger.error(e)
                 raise HTTPException(
                     status_code=404,
                     detail="[controller/housekeep/post] error while posting housekeep-columns",
                 )
-            return {"msg": result}
+            return result
 
         @app.delete("/housekeep-columns/{user_id}")
         async def remove_housekeep_columns(
