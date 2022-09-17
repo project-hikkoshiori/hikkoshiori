@@ -23,7 +23,8 @@ const HouseKeepRow = ({ houseKeepData, onDelete, onUpdate }: Props) => {
   const [isOnHover, setIsOnHover] = useState(true);
   const [data, setData] = useState(houseKeepData);
 
-  useEffect(() => onUpdate(data), [data, onUpdate]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => onUpdate(data), [data]);
 
   const format = (val: string | number) => {
     if (typeof val == "string") {

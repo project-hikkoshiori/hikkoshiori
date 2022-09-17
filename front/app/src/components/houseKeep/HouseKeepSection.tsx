@@ -3,7 +3,7 @@ import { Heading, IconButton, VStack } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import HouseKeepRow from "./HouseKeepRow";
 import { HouseKeep, HouseKeepTable } from "../../utils/types";
-import { postHouseKeep } from "../../api/HousekeepAPI";
+import { postHouseKeep, updateHouseKeep } from "../../api/HousekeepAPI";
 
 type Props = {
   houseKeepTable: HouseKeepTable;
@@ -19,8 +19,15 @@ const HouseKeepSection = ({ houseKeepTable, onUpdate }: Props) => {
     const newDatas = [
       ...houseKeepDatas.map((data) => (data.id == newData.id ? newData : data)),
     ];
-    setHouseKeepDatas(newDatas);
-    onUpdate(newDatas.reduce((prev, curr) => prev + curr.value, 0));
+    updateHouseKeep({
+      ...newData,
+      user_id: "81f981b2-bdfa-4b98-b1a3-b4669f948a12",
+    }).then((res) => {
+      if (!res.isError) {
+        setHouseKeepDatas(newDatas);
+        onUpdate(newDatas.reduce((prev, curr) => prev + curr.value, 0));
+      }
+    });
   };
 
   const addHouseKeepData = () => {
