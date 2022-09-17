@@ -8,19 +8,22 @@ import {
   NumberInputField,
   Text,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { HouseKeep } from "../../utils/types";
 
 type Props = {
   houseKeepData: HouseKeep;
   onDelete: (id: string) => void;
+  onUpdate: (newData: HouseKeep) => void;
 };
 
-const HouseKeepRow = ({ houseKeepData, onDelete }: Props) => {
+const HouseKeepRow = ({ houseKeepData, onDelete, onUpdate }: Props) => {
   const [isChecked, setIsChecked] = useState(true);
   const [isOnHover, setIsOnHover] = useState(true);
-  const [value, setValue] = useState(houseKeepData.value.toString());
-  const [title, setTitle] = useState(houseKeepData.name);
+  const [data, setData] = useState(houseKeepData);
+
+  useEffect(() => onUpdate(data), [data, onUpdate]);
 
   const format = (val: string | number) => {
     if (typeof val == "string") {
@@ -57,16 +60,30 @@ const HouseKeepRow = ({ houseKeepData, onDelete }: Props) => {
           isDisabled={!isChecked}
           focusBorderColor="brand.500"
           placeholder="項目名"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={data.name}
+          onChange={(e) => {
+            setData((prev) => {
+              return {
+                ...prev,
+                name: e.target.value,
+              };
+            });
+          }}
         />
       )}
       <NumberInput
         width="300px"
         variant="flushed"
         focusBorderColor="brand.500"
-        onChange={(valueString) => setValue(valueString)}
-        value={value}
+        onChange={(valueString) => {
+          setData((prev) => {
+            return {
+              ...prev,
+              value: parseInt(valueString),
+            };
+          });
+        }}
+        value={data.value}
         min={0}
         format={format}
         step={1000}

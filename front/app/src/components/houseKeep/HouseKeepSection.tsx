@@ -6,19 +6,28 @@ import { HouseKeep, HouseKeepTable } from "../../utils/types";
 
 type Props = {
   houseKeepTable: HouseKeepTable;
+  onUpdate: (newSum: number) => void;
 };
 
-const HouseKeepSection = ({ houseKeepTable }: Props) => {
+const HouseKeepSection = ({ houseKeepTable, onUpdate }: Props) => {
   const [houseKeepDatas, setHouseKeepDatas] = useState<HouseKeep[]>(
     houseKeepTable.data
   );
+
+  const updateHouseKeepData = (newData: HouseKeep) => {
+    const newDatas = [
+      ...houseKeepDatas.map((data) => (data.id == newData.id ? newData : data)),
+    ];
+    setHouseKeepDatas(newDatas);
+    onUpdate(newDatas.reduce((prev, curr) => prev + curr.value, 0));
+  };
 
   const addHouseKeepData = () => {
     const newHouseKeepData: HouseKeep = {
       id: houseKeepDatas.length.toString(),
       name: "",
       value: 0,
-      is_prepared: true,
+      is_prepared: false,
       table_name: houseKeepTable.name,
       table_id: houseKeepTable.id,
     };
@@ -26,7 +35,9 @@ const HouseKeepSection = ({ houseKeepTable }: Props) => {
   };
 
   const deleteHouseKeepData = (id: string) => {
-    setHouseKeepDatas((prev) => [...prev.filter((data) => data.id !== id)]);
+    const newDatas = [...houseKeepDatas.filter((data) => data.id !== id)];
+    setHouseKeepDatas(newDatas);
+    onUpdate(newDatas.reduce((prev, curr) => prev + curr.value, 0));
   };
 
   return (
@@ -39,6 +50,7 @@ const HouseKeepSection = ({ houseKeepTable }: Props) => {
           key={houseKeepData.id}
           houseKeepData={houseKeepData}
           onDelete={deleteHouseKeepData}
+          onUpdate={updateHouseKeepData}
         />
       ))}
       <IconButton
