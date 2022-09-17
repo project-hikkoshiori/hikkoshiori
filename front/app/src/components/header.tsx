@@ -64,7 +64,7 @@ const Header = () => {
           <Button as="a" colorScheme="brand" onClick={() => signOut()}>
             ログアウト
           </Button>
-          <NextLink href="/mypage" passHref>
+          <NextLink href="/users/mypage" passHref>
             <Text cursor="pointer">ようこそ、{session.user?.name}さん</Text>
           </NextLink>
         </>

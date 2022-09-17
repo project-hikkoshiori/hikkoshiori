@@ -9,8 +9,10 @@ class HouseKeepDB(Base):
     id = sqlalchemy.Column("id", sqlalchemy.dialects.postgresql.UUID, primary_key=True)
     user_id = sqlalchemy.Column("user_id", sqlalchemy.dialects.postgresql.UUID)
 
+
 def get_user_housekeeps(db: Session, user_id: str):
     return db.query(HouseKeepDB).filter(HouseKeepDB.user_id == user_id).all()
+
 
 def add_user_housekeep(db: Session, user_id: str):
     id = str(uuid.uuid1())

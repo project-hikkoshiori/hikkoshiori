@@ -10,29 +10,39 @@ from models.schemas.housekeep_column import HouseKeepColumnCreate, HouseKeepColu
 
 class HouseKeepColumnDB(Base):
     __tablename__ = "housekeep_columns"
-    id = sqlalchemy.Column("id", sqlalchemy.dialects.postgresql.UUID(as_uuid=True), primary_key=True)
+    id = sqlalchemy.Column(
+        "id", sqlalchemy.dialects.postgresql.UUID(as_uuid=True), primary_key=True
+    )
     table_id = sqlalchemy.Column("table_id", sqlalchemy.dialects.postgresql.UUID(as_uuid=True))
     name = sqlalchemy.Column("name", sqlalchemy.String)
     value = sqlalchemy.Column("value", sqlalchemy.Numeric)
     is_prepared = sqlalchemy.Column("is_prepared", sqlalchemy.Boolean)
 
+
 def get_user_housekeep_columns(db: Session, user_id: str):
-    return db.query(HouseKeepColumnDB.id,\
-            HouseKeepColumnDB.table_id,\
-            HouseKeepColumnDB.name,\
-            HouseKeepColumnDB.value,\
-            HouseKeepColumnDB.is_prepared,\
-            HouseKeepTableDB.name.label("table_name"))\
-        .join(HouseKeepTableDB, HouseKeepTableDB.id == HouseKeepColumnDB.table_id)\
-        .join(HouseKeepDB, HouseKeepDB.id == HouseKeepTableDB.housekeep_id)\
-        .filter(HouseKeepDB.user_id == user_id)\
+    return (
+        db.query(
+            HouseKeepColumnDB.id,
+            HouseKeepColumnDB.table_id,
+            HouseKeepColumnDB.name,
+            HouseKeepColumnDB.value,
+            HouseKeepColumnDB.is_prepared,
+            HouseKeepTableDB.name.label("table_name"),
+        )
+        .join(HouseKeepTableDB, HouseKeepTableDB.id == HouseKeepColumnDB.table_id)
+        .join(HouseKeepDB, HouseKeepDB.id == HouseKeepTableDB.housekeep_id)
+        .filter(HouseKeepDB.user_id == user_id)
         .all()
+    )
+
 
 def add_housekeep_column(db: Session, housekeep: HouseKeepColumnCreate, user_id: str):
     # table exist check
-    table = db.query(HouseKeepTableDB)\
-        .join(HouseKeepDB, HouseKeepDB.id == HouseKeepTableDB.housekeep_id)\
+    table = (
+        db.query(HouseKeepTableDB)
+        .join(HouseKeepDB, HouseKeepDB.id == HouseKeepTableDB.housekeep_id)
         .filter(HouseKeepDB.user_id == user_id, HouseKeepTableDB.id == housekeep.table_id)
+    )
     if db.query(table.exists()).scalar() == None:
         msg = "the table_id is wrong. this is not your table."
     else:
@@ -46,10 +56,12 @@ def add_housekeep_column(db: Session, housekeep: HouseKeepColumnCreate, user_id:
         msg = "housekeep_column added successfully"
     return msg
 
+
 def delete_housekeep_column(db: Session, housekeep: HouseKeepColumn, user_id: str):
     # table exist check
-    table = db.query(HouseKeepTableDB)\
-        .filter(HouseKeepDB.user_id == user_id, HouseKeepTableDB.id == housekeep.table_id)
+    table = db.query(HouseKeepTableDB).filter(
+        HouseKeepDB.user_id == user_id, HouseKeepTableDB.id == housekeep.table_id
+    )
     if db.query(table.exists()).scalar() == False:
         msg = "the table_id is wrong. this is not your table."
     else:
@@ -58,16 +70,21 @@ def delete_housekeep_column(db: Session, housekeep: HouseKeepColumn, user_id: st
         msg = "housekeep_column deleted successfully"
     return msg
 
+
 def update_housekeep_column(db: Session, housekeep: HouseKeepColumn, user_id: str):
     # data exist check
-    table = db.query(HouseKeepColumnDB)\
-        .join(HouseKeepTableDB, HouseKeepTableDB.id == HouseKeepColumnDB.table_id)\
-        .join(HouseKeepDB, HouseKeepDB.id == HouseKeepTableDB.housekeep_id)\
+    table = (
+        db.query(HouseKeepColumnDB)
+        .join(HouseKeepTableDB, HouseKeepTableDB.id == HouseKeepColumnDB.table_id)
+        .join(HouseKeepDB, HouseKeepDB.id == HouseKeepTableDB.housekeep_id)
         .filter(HouseKeepColumnDB.id == housekeep.id, HouseKeepDB.user_id == user_id)
+    )
     if db.query(table.exists()).scalar() == False:
         msg = "the data is wrong."
     else:
-        update_column = db.query(HouseKeepColumnDB).filter(HouseKeepColumnDB.id == housekeep.id).first()
+        update_column = (
+            db.query(HouseKeepColumnDB).filter(HouseKeepColumnDB.id == housekeep.id).first()
+        )
         update_column.name = housekeep.name
         update_column.table_id = housekeep.table_id
         update_column.value = housekeep.value

@@ -9,12 +9,21 @@ from models.schemas.housekeep_table import HouseKeepTableCreate
 
 class HouseKeepTableDB(Base):
     __tablename__ = "housekeep_tables"
-    id = sqlalchemy.Column("id", sqlalchemy.dialects.postgresql.UUID(as_uuid=True), primary_key=True)
+    id = sqlalchemy.Column(
+        "id", sqlalchemy.dialects.postgresql.UUID(as_uuid=True), primary_key=True
+    )
     housekeep_id = sqlalchemy.Column("housekeep_id", sqlalchemy.dialects.postgresql.UUID)
     name = sqlalchemy.Column("name", sqlalchemy.String)
 
+
 def get_user_housekeep_tables(db: Session, user_id: str):
-    return db.query(HouseKeepTableDB).join(HouseKeepDB, HouseKeepDB.id == HouseKeepTableDB.housekeep_id).filter(HouseKeepDB.user_id == user_id).all()
+    return (
+        db.query(HouseKeepTableDB)
+        .join(HouseKeepDB, HouseKeepDB.id == HouseKeepTableDB.housekeep_id)
+        .filter(HouseKeepDB.user_id == user_id)
+        .all()
+    )
+
 
 def add_housekeep_table(db: Session, housekeep: HouseKeepTableCreate):
     id = str(uuid.uuid1())
