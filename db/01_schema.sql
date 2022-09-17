@@ -57,3 +57,10 @@ create table housekeep_columns (
     value int not null,
     is_prepared bool not null
 );
+
+create table property_images (
+    id uuid not null,
+    property_id uuid references properties(id),
+    title text,
+    image_link text not null
+)

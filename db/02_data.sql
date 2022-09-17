@@ -120,3 +120,10 @@ insert into housekeep_columns values(
     80000,
     true
 );
+
+insert into property_images values(
+    '64e9c828-35a1-11ed-86f0-acde48001122',
+    '2735556c-32cf-11ed-9ef9-acde48001122',
+    '建物外観',
+    'https://img01.suumo.com/front/gazo/fr/bukken/698/100296698698/100296698698_go.jpg'
+)

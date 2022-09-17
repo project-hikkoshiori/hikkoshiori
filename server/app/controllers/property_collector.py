@@ -2,7 +2,7 @@ import abc
 import decimal
 import re
 import urllib
-from typing import Tuple
+from typing import Dict, Tuple
 
 import bs4
 import requests
@@ -21,6 +21,13 @@ class AbstractPropertyParser(abc.ABC):
         self._floor_num = None
         self._direction = None
         self._additional_info = None
+        self._image_links = None
+
+        self._image_normalize_pattern = [
+            "間取",
+            "外観",
+            "キッチン",
+        ]
 
     def dict(self) -> dict:
         return {
@@ -105,6 +112,12 @@ class AbstractPropertyParser(abc.ABC):
         self._additional_info["coordinates"] = list(fetch_lng_lat_from_address(self.location))
         return self._additional_info
 
+    @property
+    def image_links(self) -> Dict[str, str]:
+        if self._image_links is None:
+            self._image_links = self._parse_image_links()
+        return self._image_links
+
     @abc.abstractmethod
     def _parse_monthly_rent_price(self) -> int:
         pass
@@ -148,6 +161,9 @@ class AbstractPropertyParser(abc.ABC):
     @abc.abstractmethod
     def _parse_additional_info(self) -> dict:
         pass
+
+    def _parse_image_links(self) -> Dict[str, str]:
+        return {}
 
 
 class SuumoParser(AbstractPropertyParser):
@@ -339,6 +355,18 @@ class SuumoParser(AbstractPropertyParser):
             for k, v in zip(keys, values):
                 ret[k.get_text(strip=True)] = v.get_text(strip=True)
 
+        return ret
+
+    def _parse_image_links(self) -> Dict[str, str]:
+        ret = dict()
+        selector = self.soup.select("#js-view_gallery-list > li > a > img")
+        for img in selector:
+            name = img["alt"]
+            normalized = [_ for _ in self._image_normalize_pattern if _ in name]
+            if normalized:
+                name = normalized[0]
+            link = img["data-src"]
+            ret[name] = link
         return ret
 
 
@@ -537,6 +565,18 @@ class HomesParser(AbstractPropertyParser):
             values = row.select("td")
             for k, v in zip(keys, values):
                 ret[k.get_text(strip=True)] = v.get_text(strip=True)
+        return ret
+
+    def _parse_image_links(self) -> Dict[str, str]:
+        ret = dict()
+        selector = self.soup.select("#photo ul[class='thumbs noscript'] > li > a > img")
+        for img in selector:
+            name = img["alt"]
+            normalized = [_ for _ in self._image_normalize_pattern if _ in name]
+            if normalized:
+                name = normalized[0]
+            link = img["src"]
+            ret[name] = link
         return ret
 
 
