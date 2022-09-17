@@ -7,6 +7,18 @@
 
 ### マニュアル
 
+#### command
+- server
+```
+heroku git:remote -a hikkoshiori
+git subtree push --prefix server heroku main
+```
+- front
+```
+heroku git:remote -a hikkoshiori-front
+git subtree push --prefix front/app heroku main
+```
+
 #### フロント
 
 #### サーバー
