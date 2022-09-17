@@ -36,7 +36,7 @@ const HouseKeepSection = ({ houseKeepTable, onUpdate }: Props) => {
 
   const addHouseKeepData = () => {
     const newHouseKeepData: HouseKeep = {
-      id: houseKeepDatas.length.toString(),
+      id: "",
       name: "",
       value: 0,
       is_prepared: false,
@@ -47,8 +47,10 @@ const HouseKeepSection = ({ houseKeepTable, onUpdate }: Props) => {
       ...newHouseKeepData,
       user_id: "81f981b2-bdfa-4b98-b1a3-b4669f948a12",
     }).then((res) => {
-      if (!res.isError)
+      if (!res.isError) {
+        newHouseKeepData.id = res.data.id;
         setHouseKeepDatas((prev) => [...prev, newHouseKeepData]);
+      }
     });
   };
 
