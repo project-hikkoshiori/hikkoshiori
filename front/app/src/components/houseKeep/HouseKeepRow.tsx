@@ -8,19 +8,23 @@ import {
   NumberInputField,
   Text,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { HouseKeep } from "../../utils/types";
 
 type Props = {
   houseKeepData: HouseKeep;
-  onDelete: (id: string) => void;
+  onDelete: (deleteData: HouseKeep) => void;
+  onUpdate: (newData: HouseKeep) => void;
 };
 
-const HouseKeepRow = ({ houseKeepData, onDelete }: Props) => {
+const HouseKeepRow = ({ houseKeepData, onDelete, onUpdate }: Props) => {
   const [isChecked, setIsChecked] = useState(true);
   const [isOnHover, setIsOnHover] = useState(true);
-  const [value, setValue] = useState(houseKeepData.value.toString());
-  const [title, setTitle] = useState(houseKeepData.title);
+  const [data, setData] = useState(houseKeepData);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => onUpdate(data), [data]);
 
   const format = (val: string | number) => {
     if (typeof val == "string") {
@@ -29,7 +33,12 @@ const HouseKeepRow = ({ houseKeepData, onDelete }: Props) => {
     if (isNaN(val)) {
       val = 0;
     }
-    return `¥` + Intl.NumberFormat("ja-JP").format(val);
+
+    const price = new Intl.NumberFormat("ja-JP", {
+      style: "currency",
+      currency: "JPY",
+    });
+    return price.format(val);
   };
 
   return (
@@ -46,27 +55,41 @@ const HouseKeepRow = ({ houseKeepData, onDelete }: Props) => {
         colorScheme="brand"
         onChange={() => setIsChecked((prev) => !prev)}
       />
-      {houseKeepData.isUserAdded ? (
+      {houseKeepData.is_prepared ? (
+        <Text width="200px" color={isChecked ? "inherit" : "gray.400"}>
+          {houseKeepData.name}
+        </Text>
+      ) : (
         <Input
           width="200px"
           variant="flushed"
           isDisabled={!isChecked}
           focusBorderColor="brand.500"
           placeholder="項目名"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          value={data.name}
+          onChange={(e) => {
+            setData((prev) => {
+              return {
+                ...prev,
+                name: e.target.value,
+              };
+            });
+          }}
         />
-      ) : (
-        <Text width="200px" color={isChecked ? "inherit" : "gray.400"}>
-          家賃
-        </Text>
       )}
       <NumberInput
         width="300px"
         variant="flushed"
         focusBorderColor="brand.500"
-        onChange={(valueString) => setValue(valueString)}
-        value={value}
+        onChange={(valueString) => {
+          setData((prev) => {
+            return {
+              ...prev,
+              value: parseInt(valueString),
+            };
+          });
+        }}
+        value={data.value}
         min={0}
         format={format}
         step={1000}
@@ -74,16 +97,18 @@ const HouseKeepRow = ({ houseKeepData, onDelete }: Props) => {
       >
         <NumberInputField />
       </NumberInput>
-      <IconButton
-        aria-label="delete"
-        variant="outline"
-        size="xs"
-        colorScheme="red"
-        isRound={true}
-        isDisabled={!isOnHover}
-        icon={<MinusIcon />}
-        onClick={() => onDelete(houseKeepData.id)}
-      />
+      {!data.is_prepared && (
+        <IconButton
+          aria-label="delete"
+          variant="outline"
+          size="xs"
+          colorScheme="red"
+          isRound={true}
+          isDisabled={!isOnHover}
+          icon={<MinusIcon />}
+          onClick={() => onDelete(data)}
+        />
+      )}
     </Flex>
   );
 };

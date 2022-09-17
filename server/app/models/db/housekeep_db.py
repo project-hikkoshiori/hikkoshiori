@@ -21,3 +21,8 @@ def add_user_housekeep(db: Session, user_id: str):
     db.commit()
     db.refresh(housekeep_obj)
     return housekeep_obj
+
+def delete_user_housekeeps(db: Session, user_id: str):
+    db.query(HouseKeepDB).filter(HouseKeepDB.user_id == user_id).delete()
+    db.commit()
+    return "delete success!"
