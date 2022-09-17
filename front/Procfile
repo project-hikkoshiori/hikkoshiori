@@ -1,1 +1,1 @@
-web: /bin/sh -c 'npm install && npm run dev'
+web: /bin/sh -c 'npm install && npm run start'
