@@ -34,34 +34,34 @@ const theme = extendTheme({ colors, font });
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <ChakraProvider theme={theme}>
-      <Layout>
-        <Head>
-          <title>hikkoshiori</title>
-          <meta
-            property="description"
-            content="一人暮らしを始めるあなたをお手伝いします。探した物件をまとめて記録したり、あなた好みのレイアウトを探したり、あなたの引越しに必要な手続きリストを作成したり。引っ越し資金の試算の試算もできます。さらに、一人暮らしの先輩からアドバイスをもらうことも。"
-          />
-          <link rel="icon" href="favicon.ico" type="image/x-icon" />
-          <meta property="og:site_name" content="hikkoshiori" />
-          <meta property="og:title" content="hikkoshiori" />
-          <meta
-            property="og:description"
-            content="一人暮らしを始めるあなたをお手伝いします"
-          />
-          <meta property="og:type" content="website" />
-          <meta name="twitter:card" content="summary" />
-          <meta name="twitter:title" content="hikkoshiori" />
-          <meta
-            name="twitter:description"
-            content="一人暮らしを始めるあなたをお手伝いします"
-          />
-        </Head>
-        <SessionProvider session={session}>
+    <SessionProvider session={session}>
+      <ChakraProvider theme={theme}>
+        <Layout>
+          <Head>
+            <title>hikkoshiori</title>
+            <meta
+              property="description"
+              content="一人暮らしを始めるあなたをお手伝いします。探した物件をまとめて記録したり、あなた好みのレイアウトを探したり、あなたの引越しに必要な手続きリストを作成したり。引っ越し資金の試算の試算もできます。さらに、一人暮らしの先輩からアドバイスをもらうことも。"
+            />
+            <link rel="icon" href="favicon.ico" type="image/x-icon" />
+            <meta property="og:site_name" content="hikkoshiori" />
+            <meta property="og:title" content="hikkoshiori" />
+            <meta
+              property="og:description"
+              content="一人暮らしを始めるあなたをお手伝いします"
+            />
+            <meta property="og:type" content="website" />
+            <meta name="twitter:card" content="summary" />
+            <meta name="twitter:title" content="hikkoshiori" />
+            <meta
+              name="twitter:description"
+              content="一人暮らしを始めるあなたをお手伝いします"
+            />
+          </Head>
           <Component {...pageProps} />
-        </SessionProvider>
-      </Layout>
-    </ChakraProvider>
+        </Layout>
+      </ChakraProvider>
+    </SessionProvider>
   );
 }
 
