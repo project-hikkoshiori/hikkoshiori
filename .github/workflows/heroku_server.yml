@@ -3,7 +3,7 @@ name: heroku server
 on:
   push:
     branches:
-      - invalid
+      - release
 
 jobs:
   build:
