@@ -1,5 +1,13 @@
 import { StarIcon } from "@chakra-ui/icons";
-import { Box, Flex, Spacer, Stack, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Spacer,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { Property } from "../../utils/types";
 
 type Props = {
@@ -17,7 +25,11 @@ export const BookmarkWindow = ({ property }: Props) => {
     >
       <Flex>
         <Spacer />
-        <StarIcon color="yellow.300" />
+        <IconButton
+          aria-label="Search database"
+          icon={<StarIcon color="yellow.300" />}
+          variant="unstyled"
+        />
       </Flex>
       <Flex>
         <Box backgroundColor="brand.300" boxSize="40" ml="5" mr="5">

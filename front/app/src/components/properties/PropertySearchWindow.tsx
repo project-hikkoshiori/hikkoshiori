@@ -1,4 +1,13 @@
-import { Box, Flex, Stack, Text, VStack } from "@chakra-ui/react";
+import { StarIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Spacer,
+  Stack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { Property } from "../../utils/types";
 
 type Props = {
@@ -14,6 +23,14 @@ export const PropertySearchWindow = ({ property }: Props) => {
       borderColor="brand.100"
       borderRadius="4px"
     >
+      <Flex>
+        <Spacer />
+        <IconButton
+          aria-label="Search database"
+          icon={<StarIcon color="yellow.300" />}
+          variant="unstyled"
+        />
+      </Flex>
       <Flex pt="2">
         <Box backgroundColor="brand.300" boxSize="40" ml="5" mr="5">
           ここに画像が入ります
