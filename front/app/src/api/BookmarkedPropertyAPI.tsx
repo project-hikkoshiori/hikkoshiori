@@ -4,7 +4,7 @@ import { fetcher } from "./APIUtils";
 
 export const useGetBookmarkedProperties = (user_id: string) => {
   const { data, error, isValidating } = useSWR<BookmarkedProperty[]>(
-    "/property/get?user_id=${user_id}",
+    `/property/get?user_id=${user_id}`,
     fetcher
   );
   console.log(data, !data && !error, error, isValidating);
