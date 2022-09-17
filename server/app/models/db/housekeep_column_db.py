@@ -50,9 +50,8 @@ def add_housekeep_column(db: Session, housekeep: HouseKeepColumnCreate, user_id:
 def delete_housekeep_column(db: Session, housekeep: HouseKeepColumn, user_id: str):
     # table exist check
     table = db.query(HouseKeepTableDB)\
-        .join(HouseKeepDB, HouseKeepDB.id == HouseKeepTableDB.housekeep_id)\
         .filter(HouseKeepDB.user_id == user_id, HouseKeepTableDB.id == housekeep.table_id)
-    if db.query(table.exists()).scalar() == None:
+    if db.query(table.exists()).scalar() == False:
         msg = "the table_id is wrong. this is not your table."
     else:
         db.query(HouseKeepColumnDB).filter(HouseKeepColumnDB.id == housekeep.id).delete()
@@ -61,12 +60,13 @@ def delete_housekeep_column(db: Session, housekeep: HouseKeepColumn, user_id: st
     return msg
 
 def update_housekeep_column(db: Session, housekeep: HouseKeepColumn, user_id: str):
-    # table exist check
-    table = db.query(HouseKeepTableDB)\
+    # data exist check
+    table = db.query(HouseKeepColumnDB)\
+        .join(HouseKeepTableDB, HouseKeepTableDB.id == HouseKeepColumnDB.table_id)\
         .join(HouseKeepDB, HouseKeepDB.id == HouseKeepTableDB.housekeep_id)\
-        .filter(HouseKeepDB.user_id == user_id, HouseKeepTableDB.id == housekeep.table_id)
-    if db.query(table.exists()).scalar() == None:
-        msg = "the table_id is wrong. this is not your table."
+        .filter(HouseKeepColumnDB.id == housekeep.id, HouseKeepDB.user_id == user_id)
+    if db.query(table.exists()).scalar() == False:
+        msg = "the data is wrong."
     else:
         update_column = db.query(HouseKeepColumnDB).filter(HouseKeepColumnDB.id == housekeep.id).first()
         update_column.name = housekeep.name
