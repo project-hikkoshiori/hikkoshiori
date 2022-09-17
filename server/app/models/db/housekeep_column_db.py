@@ -29,19 +29,20 @@ def get_user_housekeep_columns(db: Session, user_id: str):
         .filter(HouseKeepDB.user_id == user_id)\
         .all()
 
-def add_housekeep_column(db: Session, housekeep: HouseKeepColumnCreate):
-    id = str(uuid.uuid1())
-    json_data = jsonable_encoder(housekeep)
-    housekeep_column_obj = HouseKeepColumnDB(**json_data, id=id)
-    db.add(housekeep_column_obj)
-    db.commit()
-    db.refresh(housekeep_column_obj)
-    return housekeep_column_obj
-
-def add_housekeep_columns(db: Session, housekeep_columns: List[HouseKeepColumnCreate]):
-    housekeep_columns_obj = [HouseKeepColumnDB(**jsonable_encoder(housekeep_column), id=str(uuid.uuid1()))
-        for housekeep_column in housekeep_columns]
-    db.bulk_save_objects(housekeep_columns_obj, return_defaults=True)
-    db.commit()
-    db.refresh(housekeep_columns_obj)
-    return housekeep_columns_obj
+def add_housekeep_column(db: Session, housekeep: HouseKeepColumnCreate, user_id: str):
+    # table exist check
+    table = db.query(HouseKeepTableDB)\
+        .join(HouseKeepDB, HouseKeepDB.id == HouseKeepTableDB.housekeep_id)\
+        .filter(HouseKeepDB.user_id == user_id, HouseKeepTableDB.id == housekeep.table_id)
+    if db.query(table.exists()).scalar() == None:
+        msg = "the table_id is wrong. this is not your table."
+    else:
+        # add
+        id = str(uuid.uuid1())
+        json_data = jsonable_encoder(housekeep)
+        housekeep_column_obj = HouseKeepColumnDB(**json_data, id=id)
+        db.add(housekeep_column_obj)
+        db.commit()
+        db.refresh(housekeep_column_obj)
+        msg = "housekeep_column added successfully"
+    return msg
