@@ -21,6 +21,7 @@ beautifulsoup4 = "^4.11.1"
 python-multipart = "^0.0.5"
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
 python-jose = "^3.3.0"
+mangum = "^0.15.1"
 
 [tool.poetry.dev-dependencies]
 black = "^22.6.0"
