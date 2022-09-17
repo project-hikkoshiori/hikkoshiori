@@ -10,6 +10,7 @@ from models.db.bookmark_db import (
 from models.db.property_db import (
     create_property_db,
     create_property_images_db,
+    get_filtered_properties_db,
     get_property_images_db,
 )
 from models.schemas.bookmark import BookmarkRequest
@@ -48,6 +49,22 @@ class PropertyController:
                     status_code=404, detail=f"cannot fetch properties of user {user_id}"
                 )
 
+            return result
+
+        @app.get("/property/filter", response_model=List[Property])
+        async def get_filtered_properties(
+            direction: str = None,
+            least_two_floor: bool = None,
+            initial_cost_zero: bool = None,
+            db: Session = Depends((get_db)),
+        ):
+            try:
+                result = get_filtered_properties_db(
+                    db, direction, least_two_floor, initial_cost_zero
+                )
+            except Exception as e:
+                logger.error(e)
+                raise HTTPException(status_code=404, detail="cannot fetch filtered properties")
             return result
 
         @app.get("/property/images/{property_id}", response_model=List[PropertyImage])

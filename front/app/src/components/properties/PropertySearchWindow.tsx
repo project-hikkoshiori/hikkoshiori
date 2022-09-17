@@ -19,13 +19,21 @@ export const PropertySearchWindow = ({ property }: Props) => {
           ここに画像が入ります
         </Box>
         <VStack align="left">
-          <Text>￥{property.rent}</Text>
-          <Text>{property.name}</Text>
-          <Text>{property.fromStation}</Text>
+          <Text>{property.house_layout}</Text>
+          <Text>家賃：￥{property.monthly_rent_price}</Text>
+          <Text>初期費用：￥{property.initial_cost}</Text>
+          <Text>
+            {property.location.replaceAll("n", "").replaceAll("\\", "")}
+          </Text>
+          <Text>
+            {property.distance_station_raw
+              .replaceAll("n", "")
+              .replaceAll("\\", "")}
+          </Text>
         </VStack>
       </Flex>
       <Box>
-        <Text align="end">データ取得日: {property.updatedAt}</Text>
+        <Text align="end">データ取得日: {property.fetched_at}</Text>
       </Box>
     </Stack>
   );
