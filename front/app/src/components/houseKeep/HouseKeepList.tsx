@@ -1,6 +1,11 @@
 import { Button, VStack, Text, HStack, Spacer } from "@chakra-ui/react";
 import { useState } from "react";
-import { deleteAllHouseKeep, initHouseKeep } from "../../api/HousekeepAPI";
+import { useSWRConfig } from "swr";
+import {
+  deleteAllHouseKeep,
+  getHouseKeepPath,
+  initHouseKeep,
+} from "../../api/HousekeepAPI";
 import { HouseKeepTable } from "../../utils/types";
 import HouseKeepSection from "./HouseKeepSection";
 
@@ -9,6 +14,8 @@ type Props = {
 };
 
 const HouseKeepList = ({ housekeeps }: Props) => {
+  const { mutate } = useSWRConfig();
+
   const [sectionSums, setSectionSums] = useState(
     housekeeps.map((housekeep) =>
       housekeep.data.reduce((prev, curr) => prev + curr.value, 0)
@@ -25,6 +32,7 @@ const HouseKeepList = ({ housekeeps }: Props) => {
     deleteAllHouseKeep("81f981b2-bdfa-4b98-b1a3-b4669f948a12").then((res) => {
       if (!res.isError) {
         initHouseKeep("81f981b2-bdfa-4b98-b1a3-b4669f948a12");
+        mutate(getHouseKeepPath("81f981b2-bdfa-4b98-b1a3-b4669f948a12"));
       }
     });
   };

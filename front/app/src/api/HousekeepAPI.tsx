@@ -15,11 +15,11 @@ type postHouseKeepResult = {
   isError: boolean;
 };
 
+export const getHouseKeepPath = (user_id: string) => `/housekeeps/${user_id}`;
+
 export const useGetHouseKeeps = (user_id: string) => {
-  const { data, error, isValidating } = useSWR<HouseKeep[]>(
-    `/housekeeps/${user_id}`,
-    fetcher
-  );
+  const path = getHouseKeepPath(user_id);
+  const { data, error } = useSWR<HouseKeep[]>(path, fetcher);
 
   const structuredData: HouseKeepTable[] = [];
 
