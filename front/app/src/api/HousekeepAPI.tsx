@@ -1,6 +1,15 @@
 import useSWR from "swr";
 import { HouseKeep, HouseKeepTable } from "../utils/types";
-import { fetcher } from "./APIUtils";
+import { fetcher, post } from "./APIUtils";
+
+type postHouseKeepProps = {
+  user_id: string;
+} & Omit<HouseKeep, "id">;
+
+type postHouseKeepResult = {
+  data: HouseKeep;
+  isError: boolean;
+};
 
 export const useGetHouseKeeps = (user_id: string) => {
   const { data, error, isValidating } = useSWR<HouseKeep[]>(
@@ -32,5 +41,27 @@ export const useGetHouseKeeps = (user_id: string) => {
     isLoading: !data && !error,
     isError: !!error,
     error: error,
+  };
+};
+
+export const postHouseKeep = async ({
+  name,
+  value,
+  is_prepared,
+  table_id,
+  table_name,
+  user_id,
+}: postHouseKeepProps): Promise<postHouseKeepResult> => {
+  const { status, data } = await post(`/housekeep-columns/${user_id}`, {
+    name,
+    value,
+    is_prepared,
+    table_id,
+    table_name,
+  });
+
+  return {
+    data: data,
+    isError: status != 200,
   };
 };
