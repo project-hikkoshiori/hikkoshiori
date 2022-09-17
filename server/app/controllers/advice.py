@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from models.schemas.advice import Advice, AdviceCreate
 from models.db.advice_db import get_advices_db, get_advice_db, add_advices_db
 
+
 class AdviceController:
     def __init__(self, app, logger):
         @app.get("/advices", response_model=List[Advice])
