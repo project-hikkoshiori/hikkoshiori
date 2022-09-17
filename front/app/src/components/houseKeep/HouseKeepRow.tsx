@@ -14,7 +14,7 @@ import { HouseKeep } from "../../utils/types";
 
 type Props = {
   houseKeepData: HouseKeep;
-  onDelete: (id: string) => void;
+  onDelete: (deleteData: HouseKeep) => void;
   onUpdate: (newData: HouseKeep) => void;
 };
 
@@ -105,7 +105,7 @@ const HouseKeepRow = ({ houseKeepData, onDelete, onUpdate }: Props) => {
         isRound={true}
         isDisabled={!isOnHover}
         icon={<MinusIcon />}
-        onClick={() => onDelete(houseKeepData.id)}
+        onClick={() => onDelete(data)}
       />
     </Flex>
   );

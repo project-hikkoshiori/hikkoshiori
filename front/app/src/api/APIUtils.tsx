@@ -8,6 +8,11 @@ const putRequestOptionsBase: RequestInit = {
   headers: { "Content-Type": "application/json" },
 };
 
+const deleteRequestOptionsBase: RequestInit = {
+  method: "DELETE",
+  headers: { "Content-Type": "application/json" },
+};
+
 export const fetcher = (path: String): Promise<any> =>
   fetch(`${process.env.NEXT_PUBLIC_SERVER_PATH}` + path).then((res) => {
     if (!res.ok) {
@@ -35,6 +40,22 @@ export const post = async (path: String, body: object): Promise<any> => {
 export const put = async (path: String, body: object): Promise<any> => {
   const requestOptions: RequestInit = {
     ...putRequestOptionsBase,
+    body: JSON.stringify(body),
+  };
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_PATH}` + path,
+    requestOptions
+  );
+
+  return {
+    status: res.status,
+    data: await res.json(),
+  };
+};
+
+export const del = async (path: String, body: object): Promise<any> => {
+  const requestOptions: RequestInit = {
+    ...deleteRequestOptionsBase,
     body: JSON.stringify(body),
   };
   const res = await fetch(
