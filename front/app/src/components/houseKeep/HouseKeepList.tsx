@@ -20,6 +20,11 @@ const HouseKeepList = ({ housekeeps }: Props) => {
     );
   };
 
+  const price = new Intl.NumberFormat("ja-JP", {
+    style: "currency",
+    currency: "JPY",
+  });
+
   return (
     <VStack align="end" p={2}>
       <VStack
@@ -42,7 +47,7 @@ const HouseKeepList = ({ housekeeps }: Props) => {
         ))}
       </VStack>
       <Text textAlign="right" height="50px">
-        合計 ¥{sectionSums.reduce((prev, curr) => prev + curr)}
+        合計 {price.format(sectionSums.reduce((prev, curr) => prev + curr))}
       </Text>
     </VStack>
   );
