@@ -23,7 +23,7 @@ export const BookmarkSection = () => {
   const { data: users, isError, isLoading } = useGetUsers();
   const user = users?.filter((u) => u.name == session?.user?.name)[0];
   const { data: bookmarkedProperties, isError: isErrorProperty } =
-    useGetBookmarkedProperties(user.id);
+    useGetBookmarkedProperties(user?.id ?? "");
   const [mapMode, setMapMode] = useState(false);
   const toggleMapMode = () => {
     setMapMode(!mapMode);
