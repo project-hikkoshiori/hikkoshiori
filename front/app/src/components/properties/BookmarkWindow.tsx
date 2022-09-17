@@ -27,8 +27,14 @@ export const BookmarkWindow = ({ property }: Props) => {
           <Text>{property.house_layout}</Text>
           <Text>家賃：￥{property.monthly_rent_price}</Text>
           <Text>初期費用：￥{property.initial_cost}</Text>
-          <Text>{property.location}</Text>
-          <Text>{property.distance_station_raw}</Text>
+          <Text>
+            {property.location.replaceAll("n", "").replaceAll("\\", "")}
+          </Text>
+          <Text>
+            {property.distance_station_raw
+              .replaceAll("n", "")
+              .replaceAll("\\", "")}
+          </Text>
         </VStack>
       </Flex>
       <Box>
