@@ -1,4 +1,3 @@
-from typing import List
 import sqlalchemy
 import uuid
 from db import Base
