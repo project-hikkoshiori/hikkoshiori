@@ -6,9 +6,11 @@ import {
   SimpleGrid,
   Spacer,
   Stack,
+  //Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { Property } from "../../utils/types";
+//import { useGetBookmarkedProperties } from "../../api/BookmarkedPropertyAPI";
+import { BookmarkedProperty } from "../../utils/types";
 import { BookmarkWindow } from "./BookmarkWindow";
 import { PropertySearchMap } from "./PropertySearchMap";
 
@@ -17,8 +19,7 @@ export const BookmarkSection = () => {
   const toggleMapMode = () => {
     setMapMode(!mapMode);
   };
-  // mock
-  const properties: Property[] = [
+  const properties: BookmarkedProperty[] = [
     {
       id: "4f66a848-3369-11ed-9208-0242ac160004",
       location: "千葉県柏市布施974-19",
@@ -34,8 +35,18 @@ export const BookmarkSection = () => {
       floor_num: 1,
       direction: "南",
       fetched_at: "2022-09-13T05:41:01.682674",
+      user_id: "81f981b2-bdfa-4b98-b1a3-b4669f948a12",
     },
   ];
+  // ユーザー認証からfetchしてくるやつにつなぐ
+  /* const {
+    data: properties,
+    isError,
+    isLoading,
+  } = useGetBookmarkedProperties("81f981b2-bdfa-4b98-b1a3-b4669f948a12");
+  if (isError) {
+    return <Text>エラーが発生しました。</Text>;
+  } */
   return (
     <Stack p="5">
       <Flex mt="50" mb="5">
@@ -67,7 +78,7 @@ export const BookmarkSection = () => {
         <PropertySearchMap properties={properties} />
       ) : (
         <SimpleGrid columns={3} spacing={10}>
-          {properties.map((p: Property) => (
+          {properties.map((p: BookmarkedProperty) => (
             <BookmarkWindow key={p.id} property={p} />
           ))}
         </SimpleGrid>

@@ -10,6 +10,24 @@ export type HouseKeeps = {
   data: HouseKeep[];
 };
 
+export type BookmarkedProperty = {
+  id: string;
+  location: string;
+  lat: number;
+  lng: number;
+  monthly_rent_price: number;
+  monthly_maintenance_fee: number;
+  initial_cost: number;
+  distance_station_raw: string;
+  house_layout: string;
+  exclusive_area: number;
+  age_of_building: number;
+  floor_num: number;
+  direction: string;
+  fetched_at: string;
+  user_id: string;
+}
+
 export type Property = {
   id: string;
   location: string;
