@@ -3,7 +3,10 @@ set client_encoding = 'UTF8';
 create table users (
     id uuid primary key,
     name text not null,
-    email text not null
+    gender text not null,
+    user_type text not null,
+    work_pattern text not null,
+    created_at timestamp not null
 );
 
 create table advices (
@@ -34,6 +37,25 @@ create table bookmarks (
     bookmark_id uuid primary key,
     user_id uuid references users(id),
     property_id uuid references properties(id)
+);
+
+create table housekeeps (
+    id uuid  primary key,
+    user_id uuid references users(id)
+);
+
+create table housekeep_tables (
+    id uuid  primary key,
+    housekeep_id uuid references housekeeps(id),
+    name text not null
+);
+
+create table housekeep_columns (
+    id uuid  primary key,
+    table_id uuid references housekeep_tables(id),
+    name text not null,
+    value int not null,
+    is_prepared bool not null
 );
 
 create table property_images (
