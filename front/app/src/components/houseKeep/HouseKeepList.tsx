@@ -1,4 +1,11 @@
-import { Button, VStack, Text, HStack, Spacer } from "@chakra-ui/react";
+import {
+  Button,
+  VStack,
+  Text,
+  HStack,
+  Spacer,
+  Divider,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import { useSWRConfig } from "swr";
 import {
@@ -55,6 +62,7 @@ const HouseKeepList = ({ housekeeps }: Props) => {
         background="linear-gradient(white 0%, white 100%) 0 0/100% 8px,linear-gradient(white 0%, white 100%) bottom/100% 8px,radial-gradient(ellipse 50% 8px at top, rgba(0,0,0,0.2) 0%, rgba(255,255,255,0) 100%) 0 0/100% 8px,radial-gradient(ellipse 50% 8px  at bottom , rgba(0,0,0,0.2) 0%, rgba(255,255,255,0) 100%) bottom/100% 8px"
         backgroundRepeat="no-repeat"
         backgroundAttachment="local, local, scroll, scroll"
+        divider={<Divider />}
       >
         {housekeeps.map((housekeep, index) => (
           <HouseKeepSection

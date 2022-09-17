@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Heading, IconButton, VStack } from "@chakra-ui/react";
+import { Heading, IconButton, Text, VStack } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import HouseKeepRow from "./HouseKeepRow";
 import { HouseKeep, HouseKeepTable } from "../../utils/types";
@@ -18,6 +18,11 @@ const HouseKeepSection = ({ houseKeepTable, onUpdate }: Props) => {
   const [houseKeepDatas, setHouseKeepDatas] = useState<HouseKeep[]>(
     houseKeepTable.data
   );
+
+  const price = new Intl.NumberFormat("ja-JP", {
+    style: "currency",
+    currency: "JPY",
+  });
 
   const updateHouseKeepData = (newData: HouseKeep) => {
     const newDatas = [
@@ -90,6 +95,12 @@ const HouseKeepSection = ({ houseKeepTable, onUpdate }: Props) => {
         border="none"
         onClick={() => addHouseKeepData()}
       />
+      <Text textAlign="end">
+        小計{" "}
+        {price.format(
+          houseKeepDatas.reduce((prev, curr) => prev + curr.value, 0)
+        )}
+      </Text>
     </VStack>
   );
 };
