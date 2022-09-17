@@ -33,3 +33,26 @@ def create_property_db(db: Session, property: PropertyCreate):
     db.commit()
     db.refresh(db_property)
     return db_property
+
+
+def get_filtered_properties_db(
+    db: Session, direction: str, least_two_floor: bool, initial_cost_zero: bool
+):
+    direction_dict = {
+        "north": "北",
+        "south": "南",
+        "east": "東",
+        "west": "西",
+        "northeast": "北東",
+        "northwest": "北西",
+        "southeast": "南東",
+        "southwest": "南西",
+    }
+    result = (
+        db.query(PropertyDB)
+        .filter(PropertyDB.direction == direction_dict[direction] if direction else True)
+        .filter(PropertyDB.floor_num >= 1 if least_two_floor else True)
+        .filter(PropertyDB.initial_cost == 0 if initial_cost_zero else True)
+        .all()
+    )
+    return result
