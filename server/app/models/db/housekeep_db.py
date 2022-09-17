@@ -1,11 +1,7 @@
-from typing import List
-import string
 import sqlalchemy
 import uuid
 from db import Base
-from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
-from models.schemas.housekeep import HouseKeepCreate
 
 
 class HouseKeepDB(Base):
