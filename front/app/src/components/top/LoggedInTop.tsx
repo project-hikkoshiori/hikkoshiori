@@ -20,10 +20,10 @@ const LoggedInTop = () => (
         <TopPageButton link="/properties" text="物件を見る" width="100%" />
       </Box>
       <HStack gap={10} width="80%" justifyContent="center">
-        <TopPageButton link="/" text="家計簿試算" width="20%" />
-        <TopPageButton link="/" text="レイアウト診断" width="20%" />
-        <TopPageButton link="/" text="提出書類" width="20%" />
-        <TopPageButton link="/" text="みんなのアドバイス" width="20%" />
+        <TopPageButton link="/housekeep" text="家計簿試算" width="20%" />
+        <TopPageButton link="/layout" text="レイアウト診断" width="20%" />
+        <TopPageButton link="/submit-paper" text="提出書類" width="20%" />
+        <TopPageButton link="/advice" text="みんなのアドバイス" width="20%" />
       </HStack>
     </VStack>
   </Box>

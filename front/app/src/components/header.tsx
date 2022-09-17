@@ -37,10 +37,23 @@ const Header = () => {
       />
       <SideBar isOpen={isOpen} onClose={onClose} />
       <Center>
-        <Image src={iconSrc} alt="hikkoshiori" height={40} width={40} />
+        <Image
+          src={iconSrc}
+          alt="hikkoshiori"
+          height={40}
+          width={40}
+          style={{ cursor: "pointer" }}
+          objectFit="contain"
+        />
       </Center>
       <NextLink href="/" passHref>
-        <Image src={logoSrc} alt="logo" height={34} width={234} />
+        <Image
+          src={logoSrc}
+          alt="logo"
+          height={34}
+          width={234}
+          style={{ cursor: "pointer" }}
+        />
       </NextLink>
       <Spacer />
       {isLoggedIn ? (

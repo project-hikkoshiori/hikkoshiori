@@ -17,19 +17,19 @@ type SideBarProps = {
   onClose: () => void;
 };
 
-type SideBarItemProps = { link: string; text: string };
+type SideBarItemProps = { link: string; text: string; onClick: () => void };
 
-const SideBarItem = ({ link, text }: SideBarItemProps) => (
+const SideBarItem = ({ link, text, onClick }: SideBarItemProps) => (
   <NextLink href={link} passHref>
-    <Text ml={1} as="b" cursor="pointer">
+    <Text ml={1} as="b" cursor="pointer" onClick={onClick}>
       {text}
     </Text>
   </NextLink>
 );
 
-const SideBarChildItem = ({ link, text }: SideBarItemProps) => (
+const SideBarChildItem = ({ link, text, onClick }: SideBarItemProps) => (
   <NextLink href={link} passHref>
-    <Text ml={3} cursor="pointer">
+    <Text ml={3} cursor="pointer" onClick={onClick}>
       {text}
     </Text>
   </NextLink>
@@ -48,26 +48,59 @@ const SideBar = ({ isOpen, onClose }: SideBarProps) => {
             align="start"
             divider={<StackDivider borderColor="gray.500" my={4} />}
           >
-            <SideBarItem link="/" text="トップ" />
-            <SideBarItem link="/housekeep" text="家計簿" />
-            <SideBarItem link="/advice" text="知見共有" />
+            <SideBarItem onClick={onClose} link="/" text="トップ" />
+            <SideBarItem onClick={onClose} link="/housekeep" text="家計簿" />
+            <SideBarItem onClick={onClose} link="/advice" text="知見共有" />
             <VStack align="start" shouldWrapChildren>
-              <SideBarItem link="/submit-paper" text="提出書類" />
-              <SideBarChildItem link="/submit-paper" text="診断する" />
+              <SideBarItem
+                onClick={onClose}
+                link="/submit-paper"
+                text="提出書類"
+              />
               <SideBarChildItem
+                onClick={onClose}
+                link="/submit-paper"
+                text="診断する"
+              />
+              <SideBarChildItem
+                onClick={onClose}
                 link="/submit-paper/result"
                 text="前回の結果を見る"
               />
             </VStack>
             <VStack align="start" shouldWrapChildren>
-              <SideBarItem link="/layout" text="レイアウト診断" />
-              <SideBarChildItem link="/layout" text="診断する" />
-              <SideBarChildItem link="/layout/result" text="前回の結果を見る" />
+              <SideBarItem
+                onClick={onClose}
+                link="/layout"
+                text="レイアウト診断"
+              />
+              <SideBarChildItem
+                onClick={onClose}
+                link="/layout"
+                text="診断する"
+              />
+              <SideBarChildItem
+                onClick={onClose}
+                link="/layout/result"
+                text="前回の結果を見る"
+              />
             </VStack>
             <VStack align="start" shouldWrapChildren>
-              <SideBarItem link="/" text="物件探し" />
-              <SideBarChildItem link="/" text="物件を探す" />
-              <SideBarChildItem link="/" text="ブックマークを見る" />
+              <SideBarItem
+                onClick={onClose}
+                link="/properties"
+                text="物件探し"
+              />
+              <SideBarChildItem
+                onClick={onClose}
+                link="/properties"
+                text="物件を探す"
+              />
+              <SideBarChildItem
+                onClick={onClose}
+                link="/properties?bookmark=true"
+                text="ブックマークを見る"
+              />
             </VStack>
           </VStack>
         </DrawerBody>
