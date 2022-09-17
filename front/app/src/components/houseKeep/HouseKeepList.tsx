@@ -1,5 +1,6 @@
 import { Button, VStack, Text, HStack, Spacer } from "@chakra-ui/react";
 import { useState } from "react";
+import { deleteAllHouseKeep, initHouseKeep } from "../../api/HousekeepAPI";
 import { HouseKeepTable } from "../../utils/types";
 import HouseKeepSection from "./HouseKeepSection";
 
@@ -18,6 +19,14 @@ const HouseKeepList = ({ housekeeps }: Props) => {
     setSectionSums((prev) =>
       prev.map((value, index) => (index == updateIndex ? newSum : value))
     );
+  };
+
+  const resetHouseKeep = () => {
+    deleteAllHouseKeep("81f981b2-bdfa-4b98-b1a3-b4669f948a12").then((res) => {
+      if (!res.isError) {
+        initHouseKeep("81f981b2-bdfa-4b98-b1a3-b4669f948a12");
+      }
+    });
   };
 
   const price = new Intl.NumberFormat("ja-JP", {
@@ -47,7 +56,7 @@ const HouseKeepList = ({ housekeeps }: Props) => {
         ))}
       </VStack>
       <HStack width="700px">
-        <Button width="210px" colorScheme="brand">
+        <Button width="210px" colorScheme="brand" onClick={resetHouseKeep}>
           最初に戻す
         </Button>
         <Spacer />

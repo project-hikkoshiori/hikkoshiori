@@ -128,3 +128,14 @@ export const initHouseKeep = async (
     isError: status != 200,
   };
 };
+
+export const deleteAllHouseKeep = async (
+  user_id: string
+): Promise<postHouseKeepResult> => {
+  const { status, data } = await del(`/housekeeps/${user_id}`, {});
+
+  return {
+    data: data,
+    isError: status != 200,
+  };
+};
