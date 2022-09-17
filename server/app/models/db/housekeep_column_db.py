@@ -12,7 +12,7 @@ from models.schemas.housekeep_column import HouseKeepColumnCreate, HouseKeepColu
 class HouseKeepColumnDB(Base):
     __tablename__ = "housekeep_columns"
     id = sqlalchemy.Column("id", sqlalchemy.dialects.postgresql.UUID(as_uuid=True), primary_key=True)
-    table_id = sqlalchemy.Column("table_id", sqlalchemy.dialects.postgresql.UUID)
+    table_id = sqlalchemy.Column("table_id", sqlalchemy.dialects.postgresql.UUID(as_uuid=True))
     name = sqlalchemy.Column("name", sqlalchemy.String)
     value = sqlalchemy.Column("value", sqlalchemy.Numeric)
     is_prepared = sqlalchemy.Column("is_prepared", sqlalchemy.Boolean)
@@ -58,4 +58,20 @@ def delete_housekeep_column(db: Session, housekeep: HouseKeepColumn, user_id: st
         db.query(HouseKeepColumnDB).filter(HouseKeepColumnDB.id == housekeep.id).delete()
         db.commit()
         msg = "housekeep_column deleted successfully"
+    return msg
+
+def update_housekeep_column(db: Session, housekeep: HouseKeepColumn, user_id: str):
+    # table exist check
+    table = db.query(HouseKeepTableDB)\
+        .join(HouseKeepDB, HouseKeepDB.id == HouseKeepTableDB.housekeep_id)\
+        .filter(HouseKeepDB.user_id == user_id, HouseKeepTableDB.id == housekeep.table_id)
+    if db.query(table.exists()).scalar() == None:
+        msg = "the table_id is wrong. this is not your table."
+    else:
+        update_column = db.query(HouseKeepColumnDB).filter(HouseKeepColumnDB.id == housekeep.id).first()
+        update_column.name = housekeep.name
+        update_column.table_id = housekeep.table_id
+        update_column.value = housekeep.value
+        db.commit()
+        msg = "housekeep_column updated successfully"
     return msg
