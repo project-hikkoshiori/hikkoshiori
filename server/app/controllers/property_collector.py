@@ -572,6 +572,9 @@ class HomesParser(AbstractPropertyParser):
         selector = self.soup.select("#photo ul[class='thumbs noscript'] > li > a > img")
         for img in selector:
             name = img["alt"]
+            normalized = [_ for _ in self._image_normalize_pattern if _ in name]
+            if normalized:
+                name = normalized[0]
             link = img["src"]
             ret[name] = link
         return ret
