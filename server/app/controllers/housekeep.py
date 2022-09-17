@@ -20,7 +20,7 @@ class HouseKeepController:
                 logger.error(e)
                 raise HTTPException(
                     status_code=404,
-                    detail="[controller/advice/get] error while getting advices",
+                    detail="[controller/housekeep/get] error while getting advices",
                 )
             return result
 
@@ -31,7 +31,7 @@ class HouseKeepController:
                 if (housekeep != []):
                     raise HTTPException(
                         status_code=404,
-                        detail="[controller/advice/get] this user already initialized",
+                        detail="[controller/housekeep/init/post] this user already initialized",
                     )
 
                 housekeep = add_user_housekeep(db, user_id)
@@ -59,7 +59,7 @@ class HouseKeepController:
                 logger.error(e)
                 raise HTTPException(
                     status_code=404,
-                    detail="[controller/advice/get] error while initializing housekeep",
+                    detail="[controller/housekeep/init/post] error while initializing housekeep",
                 )
             return {"msg": result}
 
@@ -72,7 +72,7 @@ class HouseKeepController:
                 logger.error(e)
                 raise HTTPException(
                     status_code=404,
-                    detail="[controller/advice/get] error while posting housekeep-columns",
+                    detail="[controller/housekeep/post] error while posting housekeep-columns",
                 )
             return {"msg": result}
 
@@ -85,7 +85,7 @@ class HouseKeepController:
                 logger.error(e)
                 raise HTTPException(
                     status_code=404,
-                    detail="[controller/advice/get] error while deleting housekeep-columns",
+                    detail="[controller/housekeep/delete] error while deleting housekeep-columns",
                 )
             return {"msg": result}
 
@@ -98,6 +98,6 @@ class HouseKeepController:
                 logger.error(e)
                 raise HTTPException(
                     status_code=404,
-                    detail="[controller/advice/get] error while updating housekeep-columns",
+                    detail="[controller/housekeep/put] error while updating housekeep-columns",
                 )
             return {"msg": result}
