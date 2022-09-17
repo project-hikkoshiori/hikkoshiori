@@ -97,16 +97,18 @@ const HouseKeepRow = ({ houseKeepData, onDelete, onUpdate }: Props) => {
       >
         <NumberInputField />
       </NumberInput>
-      <IconButton
-        aria-label="delete"
-        variant="outline"
-        size="xs"
-        colorScheme="red"
-        isRound={true}
-        isDisabled={!isOnHover}
-        icon={<MinusIcon />}
-        onClick={() => onDelete(data)}
-      />
+      {!data.is_prepared && (
+        <IconButton
+          aria-label="delete"
+          variant="outline"
+          size="xs"
+          colorScheme="red"
+          isRound={true}
+          isDisabled={!isOnHover}
+          icon={<MinusIcon />}
+          onClick={() => onDelete(data)}
+        />
+      )}
     </Flex>
   );
 };
