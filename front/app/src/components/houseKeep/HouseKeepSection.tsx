@@ -32,7 +32,7 @@ const HouseKeepSection = ({ houseKeepTable }: Props) => {
   return (
     <VStack align="left">
       <Heading as="h3" fontSize="md">
-        不動産系
+        {houseKeepTable.name}
       </Heading>
       {houseKeepDatas.map((houseKeepData) => (
         <HouseKeepRow

@@ -20,7 +20,7 @@ const HouseKeepRow = ({ houseKeepData, onDelete }: Props) => {
   const [isChecked, setIsChecked] = useState(true);
   const [isOnHover, setIsOnHover] = useState(true);
   const [value, setValue] = useState(houseKeepData.value.toString());
-  const [title, setTitle] = useState(houseKeepData.title);
+  const [title, setTitle] = useState(houseKeepData.name);
 
   const format = (val: string | number) => {
     if (typeof val == "string") {
@@ -46,7 +46,11 @@ const HouseKeepRow = ({ houseKeepData, onDelete }: Props) => {
         colorScheme="brand"
         onChange={() => setIsChecked((prev) => !prev)}
       />
-      {houseKeepData.isUserAdded ? (
+      {houseKeepData.is_prepared ? (
+        <Text width="200px" color={isChecked ? "inherit" : "gray.400"}>
+          {houseKeepData.name}
+        </Text>
+      ) : (
         <Input
           width="200px"
           variant="flushed"
@@ -56,10 +60,6 @@ const HouseKeepRow = ({ houseKeepData, onDelete }: Props) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-      ) : (
-        <Text width="200px" color={isChecked ? "inherit" : "gray.400"}>
-          家賃
-        </Text>
       )}
       <NumberInput
         width="300px"
