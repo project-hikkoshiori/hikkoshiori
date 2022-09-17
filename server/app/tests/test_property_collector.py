@@ -73,3 +73,4 @@ class TestSuumoParser:
         info = suumo_parsers[0].additional_info
         assert "バストイレ別" in info["features"]
         assert "初期費用カード決済可" in info["features"]
+        assert info["coordinates"] == [139.573303, 35.753147]

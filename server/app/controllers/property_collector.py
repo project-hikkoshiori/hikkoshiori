@@ -1,6 +1,8 @@
 import abc
 import decimal
 import re
+import urllib
+from typing import Tuple
 
 import bs4
 import requests
@@ -99,6 +101,8 @@ class AbstractPropertyParser(abc.ABC):
     def additional_info(self) -> dict:
         if self._additional_info is None:
             self._additional_info = self._parse_additional_info()
+
+        self._additional_info["coordinates"] = list(fetch_lng_lat_from_address(self.location))
         return self._additional_info
 
     @abc.abstractmethod
@@ -549,3 +553,11 @@ def download(url: str) -> AbstractPropertyParser:
         return HomesParser(html)
     else:
         raise NotImplementedError
+
+
+def fetch_lng_lat_from_address(address: str) -> Tuple[float, float]:
+    api_base = "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
+    url = api_base + urllib.parse.quote(address)
+    response = requests.get(url, timeout=3)
+    longitude, latitude = tuple(response.json()[0]["geometry"]["coordinates"])
+    return longitude, latitude
