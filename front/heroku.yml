@@ -1,5 +1,0 @@
-build:
-  docker:
-    web: Stage_Dockerfile
-run:
-  web: /bin/sh -c 'npm install && npm run dev'
