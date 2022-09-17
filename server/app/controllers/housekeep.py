@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 from models.db.housekeep_column_db import get_user_housekeep_columns, add_housekeep_column, delete_housekeep_column, update_housekeep_column
 from models.db.housekeep_table_db import add_housekeep_table
-from models.db.housekeep_db import add_user_housekeep
+from models.db.housekeep_db import add_user_housekeep, get_user_housekeeps
 from models.schemas.housekeep_column import HouseKeepColumnResponse, HouseKeepColumnCreate,  HouseKeepColumn
 from models.schemas.housekeep_table import HouseKeepTableCreate
 class HouseKeepController:
@@ -27,7 +27,7 @@ class HouseKeepController:
         @app.post("/housekeeps/{user_id}/init")
         async def init_housekeep(user_id: str, db: Session = Depends(get_db)):
             try:
-                housekeep = get_user_housekeep_columns(db, user_id)
+                housekeep = get_user_housekeeps(db, user_id)
                 if (housekeep != []):
                     raise HTTPException(
                         status_code=404,
@@ -53,6 +53,8 @@ class HouseKeepController:
                     furniture_column = HouseKeepColumnCreate(table_id=furniture_id, name=furniture[0], value=furniture[1], is_prepared=True)
                     result = add_housekeep_column(db, furniture_column, user_id)
 
+            except HTTPException as e:
+                raise e
             except Exception as e:
                 logger.error(e)
                 raise HTTPException(
