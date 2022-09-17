@@ -1,7 +1,10 @@
 insert into users values(
     '81f981b2-bdfa-4b98-b1a3-b4669f948a12',
     'おぎの',
-    'hoge@example.com'
+    'MAN',
+    'NEW_WORKER',
+    'REMOTE',
+    '2022-03-01 10:00:00'
 );
 
 insert into advices values(
@@ -75,6 +78,47 @@ insert into bookmarks values(
     'd8a1d83a-340e-11ed-ad77-acde48001122',
     '81f981b2-bdfa-4b98-b1a3-b4669f948a12',
     '2735556c-32cf-11ed-9ef9-acde48001122'
+);
+
+insert into housekeeps values(
+    'd74ce570-b4fb-ff54-8344-a0e829bd3b92',
+    '81f981b2-bdfa-4b98-b1a3-b4669f948a12'
+);
+
+insert into housekeep_tables values(
+    '63a38ecf-9e71-d5d4-bb5a-573300f129a9',
+    'd74ce570-b4fb-ff54-8344-a0e829bd3b92',
+    '不動産'
+);
+
+insert into housekeep_tables values(
+    'ebb26fe1-8fbd-c094-2f51-f4e41fa557a5',
+    'd74ce570-b4fb-ff54-8344-a0e829bd3b92',
+    '家具'
+);
+
+insert into housekeep_columns values(
+    '0c8c01da-2e78-cb8d-8dc5-c5aedd6e10e4',
+    '63a38ecf-9e71-d5d4-bb5a-573300f129a9',
+    '敷金',
+    100000,
+    true
+);
+
+insert into housekeep_columns values(
+    '6f94b129-0ed4-730e-7d9c-57696f7edc5c',
+    '63a38ecf-9e71-d5d4-bb5a-573300f129a9',
+    '空家賃',
+    120000,
+    false
+);
+
+insert into housekeep_columns values(
+    '5e624c13-ffb9-8a19-6c73-f41aec504b9d',
+    'ebb26fe1-8fbd-c094-2f51-f4e41fa557a5',
+    '冷蔵庫',
+    80000,
+    true
 );
 
 insert into property_images values(

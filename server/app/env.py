@@ -1,11 +1,5 @@
 import os
 
-# 環境変数展開(模索中)
-POSTGRES_USER = os.getenv("POSTGRES_USER")
-POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
-POSTGRES_DB_NAME = os.getenv("POSTGRES_DB_NAME")
-POSTGRES_PORT = os.getenv("POSTGRES_PORT")
-HOST = os.getenv("HOST")
-DB_PATH = (
-    f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{HOST}:{POSTGRES_PORT}/{POSTGRES_DB_NAME}"
-)
+DB_PATH = os.getenv("DATABASE_URL")
+if DB_PATH.startswith("postgres://"):
+    DB_PATH = DB_PATH.replace("postgres://", "postgresql://", 1)

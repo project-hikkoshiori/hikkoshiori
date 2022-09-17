@@ -1,5 +1,14 @@
 import type { NextPage } from "next";
-import { Box, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import NextLink from "next/link";
+import {
+  Button,
+  Box,
+  Center,
+  Flex,
+  Heading,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
 import AdviceCell from "../../src/components/advice/AdviceCell";
 import AdviceSearchPanel from "../../src/components/advice/AdviceSearchPanel";
 import { useGetAdvices } from "../../src/api/AdviceAPI";
@@ -17,7 +26,22 @@ const AdvicePage: NextPage = () => {
 
   return (
     <Flex align="center" flexDir="column">
-      <Heading my={16}>みんなのアドバイス</Heading>
+      <Center pos="relative" width="80%">
+        <NextLink href="/advice/post" passHref>
+          <Button
+            as="a"
+            colorScheme="brand"
+            pos="absolute"
+            zIndex="docked"
+            transform="translateY(-50%)"
+            top="50%"
+            right="0"
+          >
+            アドバイスを投稿する
+          </Button>
+        </NextLink>
+        <Heading my={16}>みんなのアドバイス</Heading>
+      </Center>
       <AdviceSearchPanel />
       <Box width="80%">
         <Text align="end">{advices!.length}件</Text>

@@ -8,6 +8,8 @@ def setup_middleware(app):
         "http://localhost",
         "http://localhost:3000",
         "http://localhost:8080",
+        "https://hikkoshiori-front.herokuapp.com",
+        "https://hikkoshiori.herokuapp.com",
     ]
 
     app.add_middleware(

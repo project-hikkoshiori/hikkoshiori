@@ -21,6 +21,7 @@ export type Property = {
   rent: number;
 };
 export type Advice = {
+  id: string;
   user_id: string;
   content: string;
   iconSrc: string;
@@ -38,3 +39,28 @@ export type LayoutQuestion = {
   maxQuestion: number;
   imageSrc: string[];
 };
+
+export type User = {
+  id: string;
+  name: string
+  gender: Gender
+  user_type: UserType
+  work_pattern: WorkPattern
+  created_at: string;
+}
+
+export type UserForm = {
+  name: string
+  gender: Gender
+  user_type: UserType
+  work_pattern: WorkPattern
+}
+
+export const genderList = ["MAN", "WOMAN", "ELSE"] as const
+export type Gender = typeof genderList[number]
+
+export const userTypeList = ["STUDENT", "NEW_WORKER", "WORKER", "ELSE"]
+export type UserType = typeof userTypeList[number]
+
+export const workPatternList = ["REMOTE", "ELSE"]
+export type WorkPattern = typeof workPatternList[number]
