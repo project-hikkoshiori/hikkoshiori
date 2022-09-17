@@ -4,49 +4,43 @@ import {
   Checkbox,
   CheckboxGroup,
   Flex,
+  Select,
   Spacer,
   Stack,
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { useGetFilteredProperties } from "../../api/PropertyAPI";
 import { Property } from "../../utils/types";
-import { PropertyRentHist } from "./PropertyRentHist";
 import { PropertySearchMap } from "./PropertySearchMap";
 import { PropertySearchWindow } from "./PropertySearchWindow";
 
 export const PropertySearchSection = () => {
-  const [checked, setChecked] = useState<string[]>([]);
-  const [rentRangeState, setRentRangeState] = useState<number[]>([0, 70000]);
-  const toggleChecked = (value: string) => {
-    if (checked.indexOf(value) == -1) {
-      setChecked((prev) => [...prev, value]);
-    } else {
-      setChecked((prev) => prev.filter((v) => v != value));
-    }
-  };
+  const [direction, setDirection] = useState("");
+  const [leastTwoFloor, setLeastTwoFloor] = useState(false);
+  const [initialCostZero, setInitialCostZero] = useState(false);
+  const [url, setUrl] = useState("/property/filter");
   const handleSubmit = () => {
     // responseがpropertiesになる
-    console.log(`checked: ${checked}, rent: ${rentRangeState}`);
+    console.log("test");
+    const query = [];
+    if (direction != "") {
+      query.push(`direction=${direction}`);
+    }
+    if (leastTwoFloor) {
+      query.push("least_two_floor=true");
+    }
+    if (initialCostZero) {
+      query.push("initial_cost_zero=true");
+    }
+    const queryPath = query.join("&");
+    setUrl("/property/filter" + (queryPath.length != 0 ? "?" + queryPath : ""));
   };
   // mock
-  const properties: Property[] = [
-    {
-      id: "4f66a848-3369-11ed-9208-0242ac160004",
-      location: "千葉県柏市布施974-19",
-      lat: 36.68156,
-      lng: 139.767201,
-      monthly_rent_price: 63000,
-      monthly_maintenance_fee: 0,
-      initial_cost: 0,
-      distance_station_raw: "JR常磐線 北柏駅 徒歩23分\n",
-      house_layout: "3LDK",
-      exclusive_area: 71.21,
-      age_of_building: 42,
-      floor_num: 1,
-      direction: "南",
-      fetched_at: "2022-09-13T05:41:01.682674",
-    },
-  ];
+  const { data: properties, isError } = useGetFilteredProperties(url);
+  if (isError || !properties) {
+    return <Text>エラーが発生しました。</Text>;
+  }
   return (
     <Flex>
       <Box w="45%">
@@ -59,44 +53,36 @@ export const PropertySearchSection = () => {
             borderRadius="4px"
           >
             <Text fontWeight="semibold">属性条件</Text>
+            方角
+            <Select onChange={(e) => setDirection(e.target.value)}>
+              <option value="all">指定なし</option>
+              <option value="north">北</option>
+              <option value="south">南</option>
+              <option value="east">東</option>
+              <option value="west">西</option>
+              <option value="northeast">北東</option>
+              <option value="northwest">北西</option>
+              <option value="southeast">南東</option>
+              <option value="southwest">南西</option>
+            </Select>
             <CheckboxGroup colorScheme="brand">
               <Stack direction="row" p="2">
                 <Checkbox
                   mx={4}
                   borderColor="brand.100"
-                  onChange={() => toggleChecked("南向き")}
-                >
-                  南向き
-                </Checkbox>
-                <Checkbox
-                  mx={4}
-                  borderColor="brand.100"
-                  onChange={() => toggleChecked("二階以上")}
+                  onChange={() => setLeastTwoFloor(!leastTwoFloor)}
                 >
                   二階以上
                 </Checkbox>
                 <Checkbox
                   mx={4}
                   borderColor="brand.100"
-                  onChange={() => toggleChecked("宅配ボックス")}
+                  onChange={() => setInitialCostZero(!initialCostZero)}
                 >
-                  宅配ボックス
+                  初期費用ゼロ
                 </Checkbox>
               </Stack>
             </CheckboxGroup>
-          </Box>
-          <Box
-            backgroundColor="white"
-            p="2"
-            border="1px"
-            borderColor="brand.100"
-            borderRadius="4px"
-          >
-            <Text fontWeight="semibold">家賃条件</Text>
-            <PropertyRentHist
-              rentRangeState={rentRangeState}
-              setRentRangeState={setRentRangeState}
-            />
           </Box>
           <Button type="submit" colorScheme="brand" onClick={handleSubmit}>
             検索
