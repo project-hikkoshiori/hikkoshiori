@@ -1,4 +1,4 @@
-import { VStack, Text } from "@chakra-ui/react";
+import { Button, VStack, Text, HStack, Spacer } from "@chakra-ui/react";
 import { useState } from "react";
 import { HouseKeepTable } from "../../utils/types";
 import HouseKeepSection from "./HouseKeepSection";
@@ -46,9 +46,15 @@ const HouseKeepList = ({ housekeeps }: Props) => {
           />
         ))}
       </VStack>
-      <Text textAlign="right" height="50px">
-        合計 {price.format(sectionSums.reduce((prev, curr) => prev + curr))}
-      </Text>
+      <HStack width="700px">
+        <Button width="210px" colorScheme="brand">
+          最初に戻す
+        </Button>
+        <Spacer />
+        <Text textAlign="right" height="50px">
+          合計 {price.format(sectionSums.reduce((prev, curr) => prev + curr))}
+        </Text>
+      </HStack>
     </VStack>
   );
 };
