@@ -74,3 +74,7 @@ class TestSuumoParser:
         assert "バストイレ別" in info["features"]
         assert "初期費用カード決済可" in info["features"]
         assert info["coordinates"] == [139.573303, 35.753147]
+
+    def test_image_links(self, suumo_parsers):
+        links = suumo_parsers[0].image_links
+        assert links["間取"].startswith("https://img01.suumo.com/front/gazo/fr/")

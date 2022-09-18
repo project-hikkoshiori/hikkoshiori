@@ -8,6 +8,7 @@ erDiagram
     housekeeps ||--o{ housekeep_tables: ""
     housekeep_tables ||--o{ housekeep_columns: ""
     properties ||--o{ bookmarks: ""
+    properties ||--o{ property_images: ""
 
     auths {
         text name PK
@@ -68,6 +69,13 @@ erDiagram
         text direction
         json additional_info
         datetime fetched_at
+        text image_src
     }
-
+    
+    property_images{
+        uuid id PK
+        uuid property_id FK
+        title text
+        text image_link
+    }
 ```

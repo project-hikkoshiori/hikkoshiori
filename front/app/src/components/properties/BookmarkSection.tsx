@@ -1,5 +1,9 @@
 import { SettingsIcon, ViewIcon } from "@chakra-ui/icons";
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Button,
   ButtonGroup,
   Flex,
@@ -8,7 +12,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useGetUsers } from "../../api/UserAPI";
@@ -28,6 +32,31 @@ export const BookmarkSection = () => {
   const toggleMapMode = () => {
     setMapMode(!mapMode);
   };
+  if (!user) {
+    return (
+      <Alert
+        status="error"
+        variant="subtle"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
+        height="200px"
+      >
+        <AlertIcon boxSize="40px" mr={0} />
+        <AlertTitle mt={4} mb={1} fontSize="lg">
+          ログインしていません
+        </AlertTitle>
+        <AlertDescription maxWidth="sm">
+          この機能をご覧になるには、
+          <Text as="u" cursor="pointer" onClick={() => signIn("google")}>
+            ログイン
+          </Text>
+          してください
+        </AlertDescription>
+      </Alert>
+    );
+  }
   if (isError || isErrorProperty || !bookmarkedProperties) {
     return <Text>エラーが発生しました。</Text>;
   }
@@ -37,25 +66,6 @@ export const BookmarkSection = () => {
   ) {
     router.push("/users/register");
   }
-  const properties: BookmarkedProperty[] = [
-    {
-      id: "4f66a848-3369-11ed-9208-0242ac160004",
-      location: "千葉県柏市布施974-19",
-      lat: 36.68156,
-      lng: 139.767201,
-      monthly_rent_price: 63000,
-      monthly_maintenance_fee: 0,
-      initial_cost: 0,
-      distance_station_raw: "JR常磐線 北柏駅 徒歩23分\n",
-      house_layout: "3LDK",
-      exclusive_area: 71.21,
-      age_of_building: 42,
-      floor_num: 1,
-      direction: "南",
-      fetched_at: "2022-09-13T05:41:01.682674",
-      user_id: "81f981b2-bdfa-4b98-b1a3-b4669f948a12",
-    },
-  ];
   return (
     <Stack p="5">
       <Flex mt="50" mb="5">
@@ -84,7 +94,7 @@ export const BookmarkSection = () => {
         </ButtonGroup>
       </Flex>
       {mapMode ? (
-        <PropertySearchMap properties={properties} />
+        <PropertySearchMap properties={bookmarkedProperties} />
       ) : (
         <SimpleGrid columns={3} spacing={10}>
           {bookmarkedProperties.map((p: BookmarkedProperty) => (

@@ -2,7 +2,7 @@ import abc
 import decimal
 import re
 import urllib
-from typing import Tuple
+from typing import Dict, Tuple
 
 import bs4
 import requests
@@ -21,6 +21,14 @@ class AbstractPropertyParser(abc.ABC):
         self._floor_num = None
         self._direction = None
         self._additional_info = None
+        self._image_links = None
+        self._image_src = None
+
+        self._image_normalize_pattern = [
+            "間取",
+            "外観",
+            "キッチン",
+        ]
 
     def dict(self) -> dict:
         return {
@@ -35,6 +43,7 @@ class AbstractPropertyParser(abc.ABC):
             "floor_num": self.floor_num,
             "direction": self.direction,
             "additional_info": self.additional_info,
+            "image_src": self.image_src,
         }
 
     @property
@@ -105,6 +114,18 @@ class AbstractPropertyParser(abc.ABC):
         self._additional_info["coordinates"] = list(fetch_lng_lat_from_address(self.location))
         return self._additional_info
 
+    @property
+    def image_links(self) -> Dict[str, str]:
+        if self._image_links is None:
+            self._image_links = self._parse_image_links()
+        return self._image_links
+
+    @property
+    def image_src(self) -> str:
+        if self._image_src is None:
+            self._image_src = self._parse_image_src()
+        return self._image_src
+
     @abc.abstractmethod
     def _parse_monthly_rent_price(self) -> int:
         pass
@@ -147,6 +168,13 @@ class AbstractPropertyParser(abc.ABC):
 
     @abc.abstractmethod
     def _parse_additional_info(self) -> dict:
+        pass
+
+    def _parse_image_links(self) -> Dict[str, str]:
+        return {}
+
+    @abc.abstractclassmethod
+    def _parse_image_src(self) -> str:
         pass
 
 
@@ -339,6 +367,26 @@ class SuumoParser(AbstractPropertyParser):
             for k, v in zip(keys, values):
                 ret[k.get_text(strip=True)] = v.get_text(strip=True)
 
+        return ret
+
+    def _parse_image_links(self) -> Dict[str, str]:
+        ret = dict()
+        selector = self.soup.select("#js-view_gallery-list > li > a > img")
+        for img in selector:
+            name = img["alt"]
+            normalized = [_ for _ in self._image_normalize_pattern if _ in name]
+            if normalized:
+                name = normalized[0]
+            link = img["data-src"]
+            ret[name] = link
+        return ret
+
+    def _parse_image_src(self) -> str:
+        selector = self.soup.select("#js-view_gallery-list > li > a > img")
+        for img in selector:
+            name = img["alt"]
+            if "間取" in name:
+                ret = img["data-src"]
         return ret
 
 
@@ -539,13 +587,33 @@ class HomesParser(AbstractPropertyParser):
                 ret[k.get_text(strip=True)] = v.get_text(strip=True)
         return ret
 
+    def _parse_image_links(self) -> Dict[str, str]:
+        ret = dict()
+        selector = self.soup.select("#photo ul[class='thumbs noscript'] > li > a > img")
+        for img in selector:
+            name = img["alt"]
+            normalized = [_ for _ in self._image_normalize_pattern if _ in name]
+            if normalized:
+                name = normalized[0]
+            link = img["src"]
+            ret[name] = link
+        return ret
+
+    def _parse_image_src(self) -> str:
+        selector = self.soup.select("#photo ul[class='thumbs noscript'] > li > a > img")
+        for img in selector:
+            name = img["alt"]
+            if "間取" in name:
+                ret = img["src"]
+        return ret
+
 
 def download(url: str) -> AbstractPropertyParser:
     if re.match(r"https:\/\/suumo\.jp", url):
         response = requests.get(url, timeout=3)
         html = response.text
         return SuumoParser(html)
-    if re.match(r"https:\/\/www\.homes\.co\.jp\/chintai\/room\/", url):
+    if re.match(r"https:\/\/www\.homes\.co\.jp\/chintai", url):
         user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
         header = {"User-Agent": user_agent}
         response = requests.get(url, headers=header)

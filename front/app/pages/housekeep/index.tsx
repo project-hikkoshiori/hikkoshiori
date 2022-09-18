@@ -1,22 +1,37 @@
-import { Button, Heading, HStack, VStack } from "@chakra-ui/react";
+import { Heading, Text, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
+import { useEffect } from "react";
+import { useSWRConfig } from "swr";
+import {
+  getHouseKeepPath,
+  initHouseKeep,
+  useGetHouseKeeps,
+} from "../../src/api/HousekeepAPI";
 import HouseKeepList from "../../src/components/houseKeep/HouseKeepList";
 
 const HouseKeep: NextPage = () => {
+  const { mutate } = useSWRConfig();
+  const { data, isLoading } = useGetHouseKeeps(
+    "81f981b2-bdfa-4b98-b1a3-b4669f948a12"
+  );
+
+  useEffect(() => {
+    if (!!data && data.length <= 0)
+      initHouseKeep("81f981b2-bdfa-4b98-b1a3-b4669f948a12");
+    mutate(getHouseKeepPath("81f981b2-bdfa-4b98-b1a3-b4669f948a12"));
+  });
+
+  if (isLoading || !data) {
+    return <Text>読み込み中……</Text>;
+  }
+
+  if (data.length <= 0) {
+    return <Text>データ生成中……</Text>;
+  }
   return (
     <VStack>
       <Heading>家計簿試算</Heading>
-      <HStack align="top">
-        <HouseKeepList />
-        <VStack borderLeft="1px" borderColor="gray.300" p={2}>
-          <Button width="210px" colorScheme="brand">
-            保存する
-          </Button>
-          <Button width="210px" colorScheme="brand">
-            最初に戻す
-          </Button>
-        </VStack>
-      </HStack>
+      <HouseKeepList housekeeps={data!} />
     </VStack>
   );
 };

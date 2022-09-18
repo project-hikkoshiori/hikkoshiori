@@ -30,7 +30,8 @@ create table properties (
     floor_num int,
     direction text,
     additional_info jsonb,
-    fetched_at timestamp not null
+    fetched_at timestamp not null,
+    image_src text
 );
 
 create table bookmarks (
@@ -46,14 +47,21 @@ create table housekeeps (
 
 create table housekeep_tables (
     id uuid  primary key,
-    housekeep_id uuid references housekeeps(id),
+    housekeep_id uuid references housekeeps(id) on delete cascade,
     name text not null
 );
 
 create table housekeep_columns (
     id uuid  primary key,
-    table_id uuid references housekeep_tables(id),
+    table_id uuid references housekeep_tables(id) on delete cascade,
     name text not null,
     value int not null,
     is_prepared bool not null
 );
+
+create table property_images (
+    id uuid not null,
+    property_id uuid references properties(id),
+    title text,
+    image_link text not null
+)

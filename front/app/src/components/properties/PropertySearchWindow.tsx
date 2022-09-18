@@ -1,11 +1,59 @@
-import { Box, Flex, Stack, Text, VStack } from "@chakra-ui/react";
-import { Property } from "../../utils/types";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Spacer,
+  Stack,
+  Text,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
+import { MdStar, MdStarOutline } from "react-icons/md";
+import { useSWRConfig } from "swr";
+import {
+  addBookmarkProperty,
+  deleteBookmarkProperty,
+  getBookmaerkedPropertiesPath,
+} from "../../api/BookmarkedPropertyAPI";
+import { useGetUsers } from "../../api/UserAPI";
+import { PropertyWithBookMark } from "../../utils/types";
 
 type Props = {
-  property: Property;
+  property: PropertyWithBookMark;
 };
 
 export const PropertySearchWindow = ({ property }: Props) => {
+  const toast = useToast();
+  const { mutate } = useSWRConfig();
+  const { data: users } = useGetUsers();
+  const { data: session } = useSession();
+  const user = users?.filter((u) => u.name == session?.user?.name)[0];
+
+  const onClickBookmarkButton = () => {
+    if (!user) {
+      toast({
+        title: "ログインしていません",
+        description: "ブックマーク機能を利用するにはログインしてください",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    const user_id = user.id;
+    if (property.is_bookmarked) {
+      deleteBookmarkProperty({ user_id, property }).then((res) => {
+        if (!res.isError) mutate(getBookmaerkedPropertiesPath(user_id));
+      });
+    } else {
+      addBookmarkProperty({ user_id, property }).then((res) => {
+        if (!res.isError) mutate(getBookmaerkedPropertiesPath(user_id));
+      });
+    }
+  };
+
   return (
     <Stack
       backgroundColor="white"
@@ -14,6 +62,21 @@ export const PropertySearchWindow = ({ property }: Props) => {
       borderColor="brand.100"
       borderRadius="4px"
     >
+      <Flex>
+        <Spacer />
+        <IconButton
+          aria-label="Search database"
+          icon={
+            property.is_bookmarked ? (
+              <MdStar color="gold" size="2em" />
+            ) : (
+              <MdStarOutline color="black" size="2em" />
+            )
+          }
+          variant="unstyled"
+          onClick={onClickBookmarkButton}
+        />
+      </Flex>
       <Flex pt="2">
         <Box backgroundColor="brand.300" boxSize="40" ml="5" mr="5">
           ここに画像が入ります

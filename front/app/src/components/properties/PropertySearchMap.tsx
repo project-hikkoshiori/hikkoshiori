@@ -1,9 +1,10 @@
 import dynamic from "next/dynamic";
 import React from "react";
-import { Property } from "../../utils/types";
+import { Property, PropertyWithBookMark } from "../../utils/types";
 
 type Props = {
-  properties: Property[];
+  properties: (Property &
+    Partial<Pick<PropertyWithBookMark, "is_bookmarked">>)[];
 };
 
 export const PropertySearchMap = ({ properties }: Props) => {
