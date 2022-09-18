@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import {
   Box,
   Flex,
@@ -8,24 +9,29 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { MdStar, MdStarOutline } from "react-icons/md";
 import {
   deleteBookmarkProperty,
   addBookmarkProperty,
 } from "../../api/BookmarkedPropertyAPI";
+import { useGetUsers } from "../../api/UserAPI";
 import { Property, PropertyWithBookMark } from "../../utils/types";
-import { MdStar, MdStarOutline } from "react-icons/md";
 
 type Props = {
   property: Property & Partial<Pick<PropertyWithBookMark, "is_bookmarked">>;
 };
 
 export const BookmarkWindow = ({ property }: Props) => {
+  const { data: users } = useGetUsers();
+  const { data: session } = useSession();
+  const user = users?.filter((u) => u.name == session?.user?.name)[0];
+
   const [isBookMarked, setIsBookMarked] = useState(
     property.is_bookmarked ?? true
   );
 
   const onClickBookmarkButton = () => {
-    const user_id = "cf247d02-36df-11ed-b17a-0242ac1f0004";
+    const user_id = user?.id ?? "";
     if (isBookMarked) {
       deleteBookmarkProperty({ user_id, property }).then((res) => {
         if (!res.isError) setIsBookMarked(false);

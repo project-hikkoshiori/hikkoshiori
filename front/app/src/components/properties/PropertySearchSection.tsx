@@ -9,13 +9,19 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { useGetUsers } from "../../api/UserAPI";
 import usePropertyWithBookmark from "../../hook/usePropertyWithBookmark";
 import { PropertyWithBookMark } from "../../utils/types";
 import { PropertySearchMap } from "./PropertySearchMap";
 import { PropertySearchWindow } from "./PropertySearchWindow";
 
 export const PropertySearchSection = () => {
+  const { data: users } = useGetUsers();
+  const { data: session } = useSession();
+  const user = users?.filter((u) => u.name == session?.user?.name)[0];
+
   const [direction, setDirection] = useState("");
   const [leastTwoFloor, setLeastTwoFloor] = useState(false);
   const [initialCostZero, setInitialCostZero] = useState(false);
@@ -43,7 +49,7 @@ export const PropertySearchSection = () => {
     isLoading,
   } = usePropertyWithBookmark({
     filterUrl: url,
-    user_id: "cf247d02-36df-11ed-b17a-0242ac1f0004",
+    user_id: user?.id ?? "",
   });
 
   if (isLoading || !properties) {

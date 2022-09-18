@@ -7,6 +7,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
 import { MdStar, MdStarOutline } from "react-icons/md";
 import { useSWRConfig } from "swr";
 import {
@@ -14,6 +15,7 @@ import {
   deleteBookmarkProperty,
   getBookmaerkedPropertiesPath,
 } from "../../api/BookmarkedPropertyAPI";
+import { useGetUsers } from "../../api/UserAPI";
 import { PropertyWithBookMark } from "../../utils/types";
 
 type Props = {
@@ -21,10 +23,14 @@ type Props = {
 };
 
 export const PropertySearchWindow = ({ property }: Props) => {
+  const { data: users } = useGetUsers();
+  const { data: session } = useSession();
+  const user = users?.filter((u) => u.name == session?.user?.name)[0];
+
   const { mutate } = useSWRConfig();
 
   const onClickBookmarkButton = () => {
-    const user_id = "cf247d02-36df-11ed-b17a-0242ac1f0004";
+    const user_id = user?.id ?? "";
     if (property.is_bookmarked) {
       deleteBookmarkProperty({ user_id, property }).then((res) => {
         if (!res.isError) mutate(getBookmaerkedPropertiesPath(user_id));
