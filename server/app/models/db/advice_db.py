@@ -33,7 +33,6 @@ def get_filtered_advices_db(
             AdviceDB.content,
             AdviceDB.created_at,
             AdviceDB.icon_src,
-            UserDB.name,
             UserDB.gender,
             UserDB.user_type,
             UserDB.work_pattern,

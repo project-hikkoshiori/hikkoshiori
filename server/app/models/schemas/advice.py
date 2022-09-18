@@ -24,7 +24,6 @@ class AdviceCreate(AdviceBase):
 
 
 class AdviceWithUser(Advice):
-    name: str
     gender: str
     user_type: str
     work_pattern: str
