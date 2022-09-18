@@ -69,6 +69,7 @@ erDiagram
         text direction
         json additional_info
         datetime fetched_at
+        text image_src
     }
     
     property_images{
