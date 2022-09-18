@@ -25,6 +25,7 @@ class PropertyDB(Base):
     direction = sqlalchemy.Column("direction", sqlalchemy.String)
     additional_info = sqlalchemy.Column("additional_info", sqlalchemy.dialects.postgresql.JSONB)
     fetched_at = sqlalchemy.Column("fetched_at", sqlalchemy.DateTime)
+    image_src = sqlalchemy.Column("image_src", sqlalchemy.String)
 
 
 class PropertyImageDB(Base):

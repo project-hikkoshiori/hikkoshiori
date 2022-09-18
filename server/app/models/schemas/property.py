@@ -16,6 +16,7 @@ class PropertyBase(BaseModel):
     floor_num: int
     direction: str
     additional_info: dict
+    image_src: str
 
 
 class PropertyCreate(PropertyBase):

@@ -30,7 +30,8 @@ create table properties (
     floor_num int,
     direction text,
     additional_info jsonb,
-    fetched_at timestamp not null
+    fetched_at timestamp not null,
+    image_src text
 );
 
 create table bookmarks (

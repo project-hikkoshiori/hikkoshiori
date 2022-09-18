@@ -9,7 +9,6 @@ from models.db.bookmark_db import (
 )
 from models.db.property_db import (
     create_property_db,
-    create_property_images_db,
     get_filtered_properties_db,
     get_property_images_db,
 )
@@ -32,11 +31,6 @@ class PropertyController:
             parser = download(url)
             property = PropertyCreate(**parser.dict())
             result = create_property_db(db, property)
-            try:
-                msg = create_property_images_db(db, result.id, parser.image_links)
-                logger.info(msg)
-            except Exception as e:
-                logger.warning(e)
             return result
 
         @app.get("/property/get", response_model=List[BookmarkedProperty])
