@@ -1,12 +1,15 @@
 export type HouseKeep = {
   id: string;
-  title: string;
+  name: string;
   value: number;
-  isUserAdded: boolean;
+  is_prepared: boolean;
+  table_name: string;
+  table_id: string;
 };
 
-export type HouseKeeps = {
-  sectionTitle: string;
+export type HouseKeepTable = {
+  name: string;
+  id: string;
   data: HouseKeep[];
 };
 

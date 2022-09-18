@@ -12,12 +12,8 @@ from models.db.housekeep_column_db import (
     update_housekeep_column,
 )
 from models.db.housekeep_table_db import add_housekeep_table
-from models.db.housekeep_db import add_user_housekeep, get_user_housekeeps
-from models.schemas.housekeep_column import (
-    HouseKeepColumnResponse,
-    HouseKeepColumnCreate,
-    HouseKeepColumn,
-)
+from models.db.housekeep_db import add_user_housekeep, get_user_housekeeps, delete_user_housekeeps
+from models.schemas.housekeep_column import HouseKeepColumnResponse, HouseKeepColumnCreate,  HouseKeepColumn
 from models.schemas.housekeep_table import HouseKeepTableCreate
 
 
@@ -34,6 +30,18 @@ class HouseKeepController:
                     detail="[controller/housekeep/get] error while getting advices",
                 )
             return result
+
+        @app.delete("/housekeeps/{user_id}")
+        async def delete_housekeeps(user_id: str, db: Session = Depends(get_db)):
+            try:
+                result = delete_user_housekeeps(db, user_id)
+            except Exception as e:
+                logger.error(e)
+                raise HTTPException(
+                    status_code=404,
+                    detail="[controller/housekeep/delete] error while delete advices",
+                )
+            return {"meg": result}
 
         @app.post("/housekeeps/{user_id}/init")
         async def init_housekeep(user_id: str, db: Session = Depends(get_db)):
@@ -88,20 +96,20 @@ class HouseKeepController:
                 )
             return {"msg": result}
 
-        @app.post("/housekeep-columns/{user_id}")
-        async def post_housekeep_columns(
-            request: HouseKeepColumnCreate, user_id: str, db: Session = Depends(get_db)
-        ):
+        @app.post("/housekeep-columns/{user_id}", response_model=HouseKeepColumn)
+        async def post_housekeep_columns(request: HouseKeepColumnCreate, user_id: str, db: Session = Depends(get_db)):
             try:
                 result = add_housekeep_column(db, request, user_id)
 
+            except HTTPException as e:
+                raise e
             except Exception as e:
                 logger.error(e)
                 raise HTTPException(
                     status_code=404,
                     detail="[controller/housekeep/post] error while posting housekeep-columns",
                 )
-            return {"msg": result}
+            return result
 
         @app.delete("/housekeep-columns/{user_id}")
         async def remove_housekeep_columns(
