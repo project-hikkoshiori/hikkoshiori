@@ -1,1 +1,1 @@
-web: cd app && uvicorn setup:app --host 0.0.0.0 --port $PORT
+web: sudo apt install python3-tk && cd app && uvicorn setup:app --host 0.0.0.0 --port $PORT
