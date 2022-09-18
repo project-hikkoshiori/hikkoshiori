@@ -38,7 +38,7 @@ const RegisterUser: NextPage = () => {
     form.name = session?.user?.name ?? "";
     const { isError } = await postUser(form);
     if (!isError) {
-      router.push("/");
+      router.push("/advice");
       toast({
         title: "ユーザー登録が完了しました",
         status: "success",
