@@ -16,7 +16,7 @@ import { useState } from "react";
 
 const AdvicePage: NextPage = () => {
   const [url, setUrl] = useState("/advices/filter");
-  const { data: advices, isError, isLoading } = useGetAdvices(url);
+  const { data: advices, isError, isLoading } = useGetAdvices("/advices");
 
   if (isError) {
     return <Text>エラーが発生しました。</Text>;
@@ -44,7 +44,7 @@ const AdvicePage: NextPage = () => {
         </NextLink>
         <Heading my={16}>みんなのアドバイス</Heading>
       </Center>
-      <AdviceSearchPanel setUrl={setUrl} />
+      {/* <AdviceSearchPanel setUrl={setUrl} /> */}
       <Box width="80%">
         <Text align="end">{advices!.length}件</Text>
       </Box>
