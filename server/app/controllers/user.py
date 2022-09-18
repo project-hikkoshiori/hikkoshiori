@@ -21,7 +21,7 @@ class UserController:
             except Exception as e:
                 raise HTTPException(
                     status_code=404,
-                    detail="[controller/user/post] error while getting user",
+                    detail="[controller/user/get/me] error while getting user",
                 )
             return result
 
