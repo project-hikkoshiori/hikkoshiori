@@ -21,3 +21,9 @@ class Advice(AdviceBase):
 class AdviceCreate(AdviceBase):
     class Config:
         orm_mode = True
+
+
+class AdviceWithUser(Advice):
+    gender: str
+    user_type: str
+    work_pattern: str

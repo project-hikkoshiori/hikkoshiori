@@ -12,8 +12,8 @@ type postAdviceResult = {
   isError: boolean;
 };
 
-export const useGetAdvices = () => {
-  const { data, error, isValidating } = useSWR<Advice[]>("/advices", fetcher);
+export const useGetAdvices = (url: string) => {
+  const { data, error, isValidating } = useSWR<Advice[]>(url, fetcher);
 
   console.log(data, !data && !error, error, isValidating);
 

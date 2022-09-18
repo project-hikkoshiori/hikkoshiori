@@ -12,9 +12,11 @@ import {
 import AdviceCell from "../../src/components/advice/AdviceCell";
 import AdviceSearchPanel from "../../src/components/advice/AdviceSearchPanel";
 import { useGetAdvices } from "../../src/api/AdviceAPI";
+import { useState } from "react";
 
 const AdvicePage: NextPage = () => {
-  const { data: advices, isError, isLoading } = useGetAdvices();
+  const [url, setUrl] = useState("/advices/filter");
+  const { data: advices, isError, isLoading } = useGetAdvices(url);
 
   if (isError) {
     return <Text>エラーが発生しました。</Text>;
@@ -42,7 +44,7 @@ const AdvicePage: NextPage = () => {
         </NextLink>
         <Heading my={16}>みんなのアドバイス</Heading>
       </Center>
-      <AdviceSearchPanel />
+      <AdviceSearchPanel setUrl={setUrl} />
       <Box width="80%">
         <Text align="end">{advices!.length}件</Text>
       </Box>

@@ -9,7 +9,11 @@ import {
 } from "@chakra-ui/react";
 import { FormEvent, useState } from "react";
 
-const AdviceSearchPanel = () => {
+type Props = {
+  setUrl: (arg: string) => void;
+};
+
+const AdviceSearchPanel = ({ setUrl }: Props) => {
   const [checked, setChecked] = useState<string[]>([]);
   const [freeWord, setFreeWord] = useState("");
 
@@ -25,6 +29,29 @@ const AdviceSearchPanel = () => {
     event.preventDefault();
     // TODO: いい感じに処理
     console.log(`checked: ${checked}, freeword: ${freeWord}`);
+    const query = [];
+    // gender
+    if (checked.includes("女性")) {
+      query.push("gender=WOMAN");
+    } else if (checked.includes("男性")) {
+      query.push("gender=MAN");
+    }
+    // user_type
+    if (checked.includes("学生")) {
+      query.push("user_type=STUDENT");
+    } else if (checked.includes("新社会人")) {
+      query.push("user_type=NEW_WORKER");
+    }
+    // work_pattern
+    if (checked.includes("在宅ワーク")) {
+      query.push("user_type=REMOTE");
+    }
+    // free word
+    if (freeWord != "") {
+      query.push(`free_word=${freeWord}`);
+    }
+    const queryPath = query.join("&");
+    setUrl("/advices/filter" + (queryPath.length != 0 ? "?" + queryPath : ""));
   };
 
   return (
