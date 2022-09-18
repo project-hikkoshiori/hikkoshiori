@@ -6,7 +6,7 @@ import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
-import { Property } from "../../utils/types";
+import { Property, PropertyWithBookMark } from "../../utils/types";
 import { BookmarkWindow } from "./BookmarkWindow";
 
 L.Icon.Default.mergeOptions({
@@ -16,7 +16,8 @@ L.Icon.Default.mergeOptions({
 });
 
 type Props = {
-  properties: Property[];
+  properties: (Property &
+    Partial<Pick<PropertyWithBookMark, "is_bookmarked">>)[];
 };
 
 const Map = ({ properties }: Props) => {

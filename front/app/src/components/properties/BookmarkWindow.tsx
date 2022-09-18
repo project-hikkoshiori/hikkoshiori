@@ -12,18 +12,20 @@ import {
   deleteBookmarkProperty,
   addBookmarkProperty,
 } from "../../api/BookmarkedPropertyAPI";
-import { BookmarkedProperty } from "../../utils/types";
+import { Property, PropertyWithBookMark } from "../../utils/types";
 import { MdStar, MdStarOutline } from "react-icons/md";
 
 type Props = {
-  property: BookmarkedProperty;
+  property: Property & Partial<Pick<PropertyWithBookMark, "is_bookmarked">>;
 };
 
 export const BookmarkWindow = ({ property }: Props) => {
-  const [isBookMarked, setIsBookMarked] = useState(true);
+  const [isBookMarked, setIsBookMarked] = useState(
+    property.is_bookmarked ?? true
+  );
 
   const onClickBookmarkButton = () => {
-    const user_id = property.user_id;
+    const user_id = "cf247d02-36df-11ed-b17a-0242ac1f0004";
     if (isBookMarked) {
       deleteBookmarkProperty({ user_id, property }).then((res) => {
         if (!res.isError) setIsBookMarked(false);
