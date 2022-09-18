@@ -13,6 +13,10 @@ export type HouseKeepTable = {
   data: HouseKeep[];
 };
 
+type AdditionalInfo = {
+  coordinates: number[];
+};
+
 export type Property = {
   id: string;
   location: string;
@@ -29,6 +33,7 @@ export type Property = {
   direction: string;
   fetched_at: string;
   image_src: string;
+  additional_info: AdditionalInfo;
 };
 
 export type BookmarkedProperty = {
