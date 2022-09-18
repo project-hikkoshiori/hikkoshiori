@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Image from "next/image";
 import { useSession } from "next-auth/react";
 import {
   Box,
@@ -17,6 +18,7 @@ import {
 } from "../../api/BookmarkedPropertyAPI";
 import { useGetUsers } from "../../api/UserAPI";
 import { Property, PropertyWithBookMark } from "../../utils/types";
+import iconSrc from "../../../public/icon.png";
 
 type Props = {
   property: Property & Partial<Pick<PropertyWithBookMark, "is_bookmarked">>;
@@ -80,8 +82,14 @@ export const BookmarkWindow = ({ property }: Props) => {
         />
       </Flex>
       <Flex>
-        <Box backgroundColor="brand.300" boxSize="40" ml="5" mr="5">
-          ここに画像が入ります
+        <Box px={2}>
+          <Image
+            src={property.image_src ?? iconSrc}
+            alt={property.location + "の物件の間取り"}
+            width="300px"
+            height="300px"
+            objectFit="contain"
+          />
         </Box>
         <VStack align="left">
           <Text>{property.house_layout}</Text>
