@@ -37,13 +37,22 @@ export const PropertySearchSection = () => {
     setUrl("/property/filter" + (queryPath.length != 0 ? "?" + queryPath : ""));
   };
   // mock
-  const { data: properties, isError } = usePropertyWithBookmark({
+  const {
+    data: properties,
+    isError,
+    isLoading,
+  } = usePropertyWithBookmark({
     filterUrl: url,
     user_id: "cf247d02-36df-11ed-b17a-0242ac1f0004",
   });
-  if (isError || !properties) {
+
+  if (isLoading || !properties) {
+    return <Text>読み込み中……</Text>;
+  }
+  if (isError) {
     return <Text>エラーが発生しました。</Text>;
   }
+
   return (
     <Flex>
       <Box w="45%">

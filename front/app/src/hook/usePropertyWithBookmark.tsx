@@ -11,10 +11,16 @@ const usePropertyWithBookmark = ({
   filterUrl,
   user_id,
 }: usePropertyWithBookmarkProps) => {
-  const { data: properties, isError: isFilterError } =
-    useGetFilteredProperties(filterUrl);
-  const { data: bookmarkedproperties, isError: isBookmarkError } =
-    useGetBookmarkedProperties(user_id);
+  const {
+    data: properties,
+    isError: isFilterError,
+    isLoading: isFilterLoading,
+  } = useGetFilteredProperties(filterUrl);
+  const {
+    data: bookmarkedproperties,
+    isError: isBookmarkError,
+    isLoading: isBookmarkLoading,
+  } = useGetBookmarkedProperties(user_id);
 
   const propertiesWithBookmark: PropertyWithBookMark[] | undefined = properties
     ? properties.map((property) => {
@@ -31,7 +37,8 @@ const usePropertyWithBookmark = ({
 
   return {
     data: propertiesWithBookmark,
-    isError: isFilterError && isBookmarkError,
+    isLoading: isFilterLoading || isBookmarkLoading,
+    isError: isFilterError || isBookmarkError,
   };
 };
 
