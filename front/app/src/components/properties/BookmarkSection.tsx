@@ -67,7 +67,7 @@ export const BookmarkSection = () => {
     router.push("/users/register");
   }
   return (
-    <Stack p="5">
+    <Stack p="5" h="100%">
       <Flex mt="50" mb="5">
         <Spacer />
         <ButtonGroup gap="2">

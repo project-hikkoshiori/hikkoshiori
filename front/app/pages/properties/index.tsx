@@ -34,11 +34,11 @@ const Index: NextPage = () => {
           ブックマークを見る
         </Tab>
       </TabList>
-      <TabPanels backgroundColor="brand.50">
-        <TabPanel>
+      <TabPanels backgroundColor="brand.50" height="calc(100vh - 162px)">
+        <TabPanel height="100%">
           <PropertySearchSection />
         </TabPanel>
-        <TabPanel>
+        <TabPanel height="100%">
           <BookmarkSection />
         </TabPanel>
       </TabPanels>

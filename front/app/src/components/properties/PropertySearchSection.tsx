@@ -69,7 +69,7 @@ export const PropertySearchSection = () => {
   }
 
   return (
-    <Flex>
+    <Flex height="100%">
       <Box w="45%">
         <Stack alignContent="left">
           <Box
@@ -120,7 +120,7 @@ export const PropertySearchSection = () => {
         </Text>
         <Box
           overflowY="auto"
-          maxH="800"
+          height="calc(100% - 250px)"
           sx={{
             "::-webkit-scrollbar": {
               height: "10px",
@@ -139,7 +139,7 @@ export const PropertySearchSection = () => {
         </Box>
       </Box>
       <Spacer />
-      <Box w="50%">
+      <Box w="50%" h="100%">
         <PropertySearchMap properties={properties} />
       </Box>
     </Flex>
