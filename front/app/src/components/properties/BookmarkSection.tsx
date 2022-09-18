@@ -1,5 +1,9 @@
 import { SettingsIcon, ViewIcon } from "@chakra-ui/icons";
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Button,
   ButtonGroup,
   Flex,
@@ -8,7 +12,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useGetUsers } from "../../api/UserAPI";
@@ -28,6 +32,31 @@ export const BookmarkSection = () => {
   const toggleMapMode = () => {
     setMapMode(!mapMode);
   };
+  if (!user) {
+    return (
+      <Alert
+        status="error"
+        variant="subtle"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
+        height="200px"
+      >
+        <AlertIcon boxSize="40px" mr={0} />
+        <AlertTitle mt={4} mb={1} fontSize="lg">
+          ログインしていません
+        </AlertTitle>
+        <AlertDescription maxWidth="sm">
+          この機能をご覧になるには、
+          <Text as="u" cursor="pointer" onClick={() => signIn("google")}>
+            ログイン
+          </Text>
+          してください
+        </AlertDescription>
+      </Alert>
+    );
+  }
   if (isError || isErrorProperty || !bookmarkedProperties) {
     return <Text>エラーが発生しました。</Text>;
   }
