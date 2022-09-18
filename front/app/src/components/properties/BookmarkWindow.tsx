@@ -1,4 +1,4 @@
-import { StarIcon } from "@chakra-ui/icons";
+import { useState } from "react";
 import {
   Box,
   Flex,
@@ -8,31 +8,29 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useSWRConfig } from "swr";
 import {
   deleteBookmarkProperty,
-  getBookmaerkedPropertiesPath,
   addBookmarkProperty,
 } from "../../api/BookmarkedPropertyAPI";
-import { Property } from "../../utils/types";
+import { BookmarkedProperty } from "../../utils/types";
+import { MdStar, MdStarOutline } from "react-icons/md";
 
 type Props = {
-  property: Property;
+  property: BookmarkedProperty;
 };
 
 export const BookmarkWindow = ({ property }: Props) => {
-  const { mutate } = useSWRConfig();
+  const [isBookMarked, setIsBookMarked] = useState(true);
 
   const onClickBookmarkButton = () => {
-    const isBookmarked = true;
-    const user_id = "";
-    if (isBookmarked) {
+    const user_id = property.user_id;
+    if (isBookMarked) {
       deleteBookmarkProperty({ user_id, property }).then((res) => {
-        if (!res.isError) mutate(getBookmaerkedPropertiesPath(user_id));
+        if (!res.isError) setIsBookMarked(false);
       });
     } else {
       addBookmarkProperty({ user_id, property }).then((res) => {
-        if (!res.isError) mutate(getBookmaerkedPropertiesPath(user_id));
+        if (!res.isError) setIsBookMarked(true);
       });
     }
   };
@@ -49,7 +47,13 @@ export const BookmarkWindow = ({ property }: Props) => {
         <Spacer />
         <IconButton
           aria-label="Search database"
-          icon={<StarIcon color="yellow.300" />}
+          icon={
+            isBookMarked ? (
+              <MdStar color="gold" size="2em" />
+            ) : (
+              <MdStarOutline color="black" size="2em" />
+            )
+          }
           variant="unstyled"
           onClick={onClickBookmarkButton}
         />
