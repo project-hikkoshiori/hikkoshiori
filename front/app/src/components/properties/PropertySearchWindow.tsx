@@ -17,7 +17,7 @@ import {
   deleteBookmarkProperty,
   getBookmaerkedPropertiesPath,
 } from "../../api/BookmarkedPropertyAPI";
-import { useGetUsers } from "../../api/UserAPI";
+import { useGetUserByName } from "../../api/UserAPI";
 import { PropertyWithBookMark } from "../../utils/types";
 import iconSrc from "../../../public/icon.png";
 
@@ -28,9 +28,12 @@ type Props = {
 export const PropertySearchWindow = ({ property }: Props) => {
   const toast = useToast();
   const { mutate } = useSWRConfig();
-  const { data: users } = useGetUsers();
   const { data: session } = useSession();
-  const user = users?.filter((u) => u.name == session?.user?.name)[0];
+  const {
+    data: user,
+    isError,
+    isLoading,
+  } = useGetUserByName(session?.user?.name ?? "");
 
   const onClickBookmarkButton = () => {
     if (!user) {

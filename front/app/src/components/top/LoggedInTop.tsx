@@ -3,22 +3,21 @@ import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import TopPageButton from "./TopPageButton";
 import topImageSrc from "../../../public/top.png";
 import { useSession } from "next-auth/react";
-import { useGetUsers } from "../../api/UserAPI";
+import { useGetUserByName } from "../../api/UserAPI";
 import { useRouter } from "next/router";
 
 const LoggedInTop = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const { data: users, isError, isLoading } = useGetUsers();
+  const {
+    data: user,
+    isError,
+    isLoading,
+  } = useGetUserByName(session?.user?.name ?? "");
   if (isError) {
     return <Text>エラーが発生しました。</Text>;
   }
-  // console.log(users?.filter((u) => u.name == session?.user?.name).length == 0);
-  // まだ登録していない
-  if (
-    !isLoading &&
-    users?.filter((u) => u.name == session?.user?.name).length == 0
-  ) {
+  if (!isLoading && !user) {
     router.push("/users/register");
   }
   return (

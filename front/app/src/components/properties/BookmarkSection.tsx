@@ -15,7 +15,7 @@ import {
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useGetUsers } from "../../api/UserAPI";
+import { useGetUserByName } from "../../api/UserAPI";
 import { useGetBookmarkedProperties } from "../../api/BookmarkedPropertyAPI";
 import { BookmarkedProperty } from "../../utils/types";
 import { BookmarkWindow } from "./BookmarkWindow";
@@ -24,8 +24,11 @@ import { PropertySearchMap } from "./PropertySearchMap";
 export const BookmarkSection = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const { data: users, isError, isLoading } = useGetUsers();
-  const user = users?.filter((u) => u.name == session?.user?.name)[0];
+  const {
+    data: user,
+    isError,
+    isLoading,
+  } = useGetUserByName(session?.user?.name ?? "");
   const { data: bookmarkedProperties, isError: isErrorProperty } =
     useGetBookmarkedProperties(user?.id ?? "");
   const [mapMode, setMapMode] = useState(false);
@@ -60,10 +63,7 @@ export const BookmarkSection = () => {
   if (isError || isErrorProperty || !bookmarkedProperties) {
     return <Text>エラーが発生しました。</Text>;
   }
-  if (
-    !isLoading &&
-    users?.filter((u) => u.name == session?.user?.name).length == 0
-  ) {
+  if (!isLoading && !user) {
     router.push("/users/register");
   }
   return (

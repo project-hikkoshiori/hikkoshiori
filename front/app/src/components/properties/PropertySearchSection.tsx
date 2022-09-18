@@ -10,17 +10,22 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import { useGetUsers } from "../../api/UserAPI";
+import { useGetUserByName } from "../../api/UserAPI";
 import usePropertyWithBookmark from "../../hook/usePropertyWithBookmark";
 import { PropertyWithBookMark } from "../../utils/types";
 import { PropertySearchMap } from "./PropertySearchMap";
 import { PropertySearchWindow } from "./PropertySearchWindow";
 
 export const PropertySearchSection = () => {
-  const { data: users } = useGetUsers();
+  const router = useRouter();
   const { data: session } = useSession();
-  const user = users?.filter((u) => u.name == session?.user?.name)[0];
+  const {
+    data: user,
+    isError: isErrorUser,
+    isLoading: isLoadingUser,
+  } = useGetUserByName(session?.user?.name ?? "");
 
   const [direction, setDirection] = useState("");
   const [leastTwoFloor, setLeastTwoFloor] = useState(false);
@@ -57,6 +62,10 @@ export const PropertySearchSection = () => {
   }
   if (isError) {
     return <Text>エラーが発生しました。</Text>;
+  }
+
+  if (!isLoading && !user) {
+    router.push("/users/register");
   }
 
   return (
