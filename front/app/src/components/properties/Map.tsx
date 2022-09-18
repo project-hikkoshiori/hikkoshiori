@@ -28,8 +28,10 @@ const Map = ({ properties }: Props) => {
   // TODO: 常にPopupを出す
   const markers = [];
   for (var i = 0; i < properties.length; i++) {
-    //const pos = L.latLng([properties[i].lat, properties[i].lng]);
-    const pos = L.latLng([defaultLat, defaultLng]);
+    const pos = L.latLng([
+      properties[i].additional_info.coordinates[1],
+      properties[i].additional_info.coordinates[0],
+    ]);
     markers.push(
       <Marker position={pos}>
         <Popup>
