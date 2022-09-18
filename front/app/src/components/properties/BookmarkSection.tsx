@@ -96,7 +96,7 @@ export const BookmarkSection = () => {
       {mapMode ? (
         <PropertySearchMap properties={bookmarkedProperties} />
       ) : (
-        <SimpleGrid columns={3} spacing={10}>
+        <SimpleGrid columns={3} spacing={10} overflowY="auto" px={4}>
           {bookmarkedProperties.map((p: BookmarkedProperty) => (
             <BookmarkWindow key={p.id} property={p} />
           ))}
