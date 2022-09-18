@@ -38,7 +38,8 @@ const usePropertyWithBookmark = ({
   return {
     data: propertiesWithBookmark,
     isLoading: isFilterLoading || isBookmarkLoading,
-    isError: isFilterError || isBookmarkError,
+    isError: isFilterError,
+    isBookmarkError,
   };
 };
 
