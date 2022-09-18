@@ -6,6 +6,7 @@ from db import Base
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from models.schemas.advice import AdviceCreate
+from models.db.user_db import UserDB
 
 
 class AdviceDB(Base):
@@ -19,6 +20,32 @@ class AdviceDB(Base):
 
 def get_advices_db(db: Session):
     return db.query(AdviceDB).all()
+
+
+def get_filtered_advices_db(
+    db: Session, gender: str, user_type: str, work_pattern: str, free_ford: str
+):
+    result = (
+        db.query(
+            AdviceDB,
+            AdviceDB.id,
+            AdviceDB.user_id,
+            AdviceDB.content,
+            AdviceDB.created_at,
+            AdviceDB.icon_src,
+            UserDB.name,
+            UserDB.gender,
+            UserDB.user_type,
+            UserDB.work_pattern,
+        )
+        .join(AdviceDB, AdviceDB.user_id == UserDB.id)
+        .filter(UserDB.gender == gender if gender else True)
+        .filter(UserDB.user_type == user_type if user_type else True)
+        .filter(UserDB.work_pattern == work_pattern if work_pattern else True)
+        .filter(AdviceDB.content.like(f"%{free_ford}%") if free_ford else True)
+        .all()
+    )
+    return result
 
 
 def get_advice_db(advice_id: string, db: Session):

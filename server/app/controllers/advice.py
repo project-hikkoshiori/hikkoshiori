@@ -5,8 +5,13 @@ from fastapi import Depends, HTTPException
 from db import get_db
 from sqlalchemy.orm import Session
 
-from models.schemas.advice import Advice, AdviceCreate
-from models.db.advice_db import get_advices_db, get_advice_db, add_advices_db
+from models.schemas.advice import Advice, AdviceCreate, AdviceWithUser
+from models.db.advice_db import (
+    get_advices_db,
+    get_advice_db,
+    add_advices_db,
+    get_filtered_advices_db,
+)
 
 
 class AdviceController:
@@ -20,6 +25,24 @@ class AdviceController:
                 raise HTTPException(
                     status_code=404,
                     detail="[controller/advice/get] error while getting advices",
+                )
+            return result
+
+        @app.get("/advices/filter", response_model=List[AdviceWithUser])
+        async def get_filtered_advices(
+            gender: str = None,
+            user_type: str = None,
+            work_pattern: str = None,
+            free_word: str = None,
+            db: Session = Depends(get_db),
+        ):
+            try:
+                result = get_filtered_advices_db(db, gender, user_type, work_pattern, free_word)
+            except Exception as e:
+                logger.error(e)
+                raise HTTPException(
+                    status_code=404,
+                    detail="[controller/advice/filter/get] error while getting filtered advice",
                 )
             return result
 
