@@ -19,7 +19,7 @@ class UserDB(Base):
 
 
 def get_user_by_name_db(db: Session, name: str):
-    return db.query(UserDB).filter(UserDB.name == name).one()
+    return db.query(UserDB).filter(UserDB.name == name).first()
 
 
 def post_user_db(db: Session, user: UserCreate):
