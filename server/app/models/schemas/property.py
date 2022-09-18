@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 from uuid import UUID
 
 from pydantic import BaseModel
@@ -16,7 +17,7 @@ class PropertyBase(BaseModel):
     floor_num: int
     direction: str
     additional_info: dict
-    image_src: str
+    image_src: Optional[str]
 
 
 class PropertyCreate(PropertyBase):
