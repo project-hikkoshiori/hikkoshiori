@@ -64,4 +64,4 @@ create table property_images (
     property_id uuid references properties(id),
     title text,
     image_link text not null
-)
+);

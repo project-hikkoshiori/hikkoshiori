@@ -14,9 +14,6 @@ const LoggedInTop = () => {
     isError,
     isLoading,
   } = useGetUserByName(session?.user?.name ?? "");
-  if (isError) {
-    return <Text>エラーが発生しました。</Text>;
-  }
   if (!isLoading && !user) {
     router.push("/users/register");
   }

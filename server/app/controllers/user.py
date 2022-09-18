@@ -16,6 +16,7 @@ class UserController:
         @app.get("/users/me", response_model=User)
         async def get_user_by_name(name: str, db: Session = Depends(get_db)):
             parsed_name = urllib.parse.unquote(name)
+            print(parsed_name)
             try:
                 result = get_user_by_name_db(db, parsed_name)
             except Exception as e:
