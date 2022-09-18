@@ -10,8 +10,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useGetFilteredProperties } from "../../api/PropertyAPI";
-import { Property } from "../../utils/types";
+import usePropertyWithBookmark from "../../hook/usePropertyWithBookmark";
+import { PropertyWithBookMark } from "../../utils/types";
 import { PropertySearchMap } from "./PropertySearchMap";
 import { PropertySearchWindow } from "./PropertySearchWindow";
 
@@ -37,7 +37,10 @@ export const PropertySearchSection = () => {
     setUrl("/property/filter" + (queryPath.length != 0 ? "?" + queryPath : ""));
   };
   // mock
-  const { data: properties, isError } = useGetFilteredProperties(url);
+  const { data: properties, isError } = usePropertyWithBookmark({
+    filterUrl: url,
+    user_id: "cf247d02-36df-11ed-b17a-0242ac1f0004",
+  });
   if (isError || !properties) {
     return <Text>エラーが発生しました。</Text>;
   }
@@ -104,7 +107,7 @@ export const PropertySearchSection = () => {
             },
           }}
         >
-          {properties.map((p: Property) => (
+          {properties.map((p: PropertyWithBookMark) => (
             <Box key={p.id} p="5">
               <PropertySearchWindow property={p} />
             </Box>
