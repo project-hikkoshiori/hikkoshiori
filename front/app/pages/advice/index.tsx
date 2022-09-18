@@ -10,7 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import AdviceCell from "../../src/components/advice/AdviceCell";
-import AdviceSearchPanel from "../../src/components/advice/AdviceSearchPanel";
+//import AdviceSearchPanel from "../../src/components/advice/AdviceSearchPanel";
 import { useGetAdvices } from "../../src/api/AdviceAPI";
 import { useState } from "react";
 
