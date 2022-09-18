@@ -5,6 +5,7 @@ import {
   Spacer,
   Stack,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
@@ -23,14 +24,25 @@ type Props = {
 };
 
 export const PropertySearchWindow = ({ property }: Props) => {
+  const toast = useToast();
+  const { mutate } = useSWRConfig();
   const { data: users } = useGetUsers();
   const { data: session } = useSession();
   const user = users?.filter((u) => u.name == session?.user?.name)[0];
 
-  const { mutate } = useSWRConfig();
-
   const onClickBookmarkButton = () => {
-    const user_id = user?.id ?? "";
+    if (!user) {
+      toast({
+        title: "ログインしていません",
+        description: "ブックマーク機能を利用するにはログインしてください",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    const user_id = user.id;
     if (property.is_bookmarked) {
       deleteBookmarkProperty({ user_id, property }).then((res) => {
         if (!res.isError) mutate(getBookmaerkedPropertiesPath(user_id));

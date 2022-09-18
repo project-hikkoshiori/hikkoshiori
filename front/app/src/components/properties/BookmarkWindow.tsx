@@ -7,6 +7,7 @@ import {
   Spacer,
   Stack,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { MdStar, MdStarOutline } from "react-icons/md";
@@ -22,6 +23,7 @@ type Props = {
 };
 
 export const BookmarkWindow = ({ property }: Props) => {
+  const toast = useToast();
   const { data: users } = useGetUsers();
   const { data: session } = useSession();
   const user = users?.filter((u) => u.name == session?.user?.name)[0];
@@ -31,7 +33,18 @@ export const BookmarkWindow = ({ property }: Props) => {
   );
 
   const onClickBookmarkButton = () => {
-    const user_id = user?.id ?? "";
+    if (!user) {
+      toast({
+        title: "ログインしていません",
+        description: "ブックマーク機能を利用するにはログインしてください",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    const user_id = user.id;
     if (isBookMarked) {
       deleteBookmarkProperty({ user_id, property }).then((res) => {
         if (!res.isError) setIsBookMarked(false);
