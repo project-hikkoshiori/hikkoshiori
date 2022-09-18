@@ -28,6 +28,7 @@ export type Property = {
   floor_num: number;
   direction: string;
   fetched_at: string;
+  image_src: string;
 };
 
 export type BookmarkedProperty = {
