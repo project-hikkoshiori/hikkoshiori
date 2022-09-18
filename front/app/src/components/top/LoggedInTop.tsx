@@ -19,7 +19,19 @@ const LoggedInTop = () => {
   }
   return (
     <Box>
-      <Image src={topImageSrc} alt="ひっこしおり" />
+      <Box
+        height="calc(100vh - 269px)"
+        width="100vw"
+        position="relative"
+        bg="#EFF6EE"
+      >
+        <Image
+          src={topImageSrc}
+          layout="fill"
+          objectFit="cover"
+          alt="ひっこしおり"
+        />
+      </Box>
       <VStack gap={5} my={5}>
         <Box width="60%">
           <Text

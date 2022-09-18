@@ -67,7 +67,7 @@ export const BookmarkSection = () => {
     router.push("/users/register");
   }
   return (
-    <Stack p="5">
+    <Stack p="5" h="100%">
       <Flex mt="50" mb="5">
         <Spacer />
         <ButtonGroup gap="2">
@@ -96,7 +96,7 @@ export const BookmarkSection = () => {
       {mapMode ? (
         <PropertySearchMap properties={bookmarkedProperties} />
       ) : (
-        <SimpleGrid columns={3} spacing={10}>
+        <SimpleGrid columns={3} spacing={10} overflowY="auto" px={4}>
           {bookmarkedProperties.map((p: BookmarkedProperty) => (
             <BookmarkWindow key={p.id} property={p} />
           ))}

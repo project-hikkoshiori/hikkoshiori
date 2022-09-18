@@ -6,7 +6,19 @@ import { signIn } from "next-auth/react";
 
 const LoggedOutTop = () => (
   <Box>
-    <Image src={topImageSrc} alt="ひっこしおり" />
+    <Box
+      height="calc(100vh - 269px)"
+      width="100vw"
+      position="relative"
+      bg="#EFF6EE"
+    >
+      <Image
+        src={topImageSrc}
+        layout="fill"
+        objectFit="cover"
+        alt="ひっこしおり"
+      />
+    </Box>
     <HStack gap={10} justifyContent="center">
       <Flex width="40%" height="200px" flexDirection="column">
         <Heading size="md" my={2}>
