@@ -15,7 +15,7 @@ import {
   deleteBookmarkProperty,
   addBookmarkProperty,
 } from "../../api/BookmarkedPropertyAPI";
-import { useGetUsers } from "../../api/UserAPI";
+import { useGetUserByName } from "../../api/UserAPI";
 import { Property, PropertyWithBookMark } from "../../utils/types";
 
 type Props = {
@@ -24,9 +24,12 @@ type Props = {
 
 export const BookmarkWindow = ({ property }: Props) => {
   const toast = useToast();
-  const { data: users } = useGetUsers();
   const { data: session } = useSession();
-  const user = users?.filter((u) => u.name == session?.user?.name)[0];
+  const {
+    data: user,
+    isError,
+    isLoading,
+  } = useGetUserByName(session?.user?.name ?? "");
 
   const [isBookMarked, setIsBookMarked] = useState(
     property.is_bookmarked ?? true
