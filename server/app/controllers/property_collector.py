@@ -604,7 +604,7 @@ class HomesParser(AbstractPropertyParser):
         for img in selector:
             name = img["alt"]
             if "間取" in name:
-                ret = img["data-src"]
+                ret = img["src"]
         return ret
 
 
@@ -613,7 +613,7 @@ def download(url: str) -> AbstractPropertyParser:
         response = requests.get(url, timeout=3)
         html = response.text
         return SuumoParser(html)
-    if re.match(r"https:\/\/www\.homes\.co\.jp\/chintai\/room\/", url):
+    if re.match(r"https:\/\/www\.homes\.co\.jp\/chintai", url):
         user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
         header = {"User-Agent": user_agent}
         response = requests.get(url, headers=header)
