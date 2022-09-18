@@ -1,12 +1,61 @@
-import { StarIcon } from "@chakra-ui/icons";
-import { Box, Flex, Spacer, Stack, Text, VStack } from "@chakra-ui/react";
-import { Property } from "../../utils/types";
+import { useState } from "react";
+import { useSession } from "next-auth/react";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Spacer,
+  Stack,
+  Text,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
+import { MdStar, MdStarOutline } from "react-icons/md";
+import {
+  deleteBookmarkProperty,
+  addBookmarkProperty,
+} from "../../api/BookmarkedPropertyAPI";
+import { useGetUsers } from "../../api/UserAPI";
+import { Property, PropertyWithBookMark } from "../../utils/types";
 
 type Props = {
-  property: Property;
+  property: Property & Partial<Pick<PropertyWithBookMark, "is_bookmarked">>;
 };
 
 export const BookmarkWindow = ({ property }: Props) => {
+  const toast = useToast();
+  const { data: users } = useGetUsers();
+  const { data: session } = useSession();
+  const user = users?.filter((u) => u.name == session?.user?.name)[0];
+
+  const [isBookMarked, setIsBookMarked] = useState(
+    property.is_bookmarked ?? true
+  );
+
+  const onClickBookmarkButton = () => {
+    if (!user) {
+      toast({
+        title: "ログインしていません",
+        description: "ブックマーク機能を利用するにはログインしてください",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    const user_id = user.id;
+    if (isBookMarked) {
+      deleteBookmarkProperty({ user_id, property }).then((res) => {
+        if (!res.isError) setIsBookMarked(false);
+      });
+    } else {
+      addBookmarkProperty({ user_id, property }).then((res) => {
+        if (!res.isError) setIsBookMarked(true);
+      });
+    }
+  };
+
   return (
     <Stack
       backgroundColor="white"
@@ -17,7 +66,18 @@ export const BookmarkWindow = ({ property }: Props) => {
     >
       <Flex>
         <Spacer />
-        <StarIcon color="yellow.300" />
+        <IconButton
+          aria-label="Search database"
+          icon={
+            isBookMarked ? (
+              <MdStar color="gold" size="2em" />
+            ) : (
+              <MdStarOutline color="black" size="2em" />
+            )
+          }
+          variant="unstyled"
+          onClick={onClickBookmarkButton}
+        />
       </Flex>
       <Flex>
         <Box backgroundColor="brand.300" boxSize="40" ml="5" mr="5">

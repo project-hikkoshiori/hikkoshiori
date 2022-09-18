@@ -9,13 +9,19 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { useGetFilteredProperties } from "../../api/PropertyAPI";
-import { Property } from "../../utils/types";
+import { useGetUsers } from "../../api/UserAPI";
+import usePropertyWithBookmark from "../../hook/usePropertyWithBookmark";
+import { PropertyWithBookMark } from "../../utils/types";
 import { PropertySearchMap } from "./PropertySearchMap";
 import { PropertySearchWindow } from "./PropertySearchWindow";
 
 export const PropertySearchSection = () => {
+  const { data: users } = useGetUsers();
+  const { data: session } = useSession();
+  const user = users?.filter((u) => u.name == session?.user?.name)[0];
+
   const [direction, setDirection] = useState("");
   const [leastTwoFloor, setLeastTwoFloor] = useState(false);
   const [initialCostZero, setInitialCostZero] = useState(false);
@@ -37,10 +43,22 @@ export const PropertySearchSection = () => {
     setUrl("/property/filter" + (queryPath.length != 0 ? "?" + queryPath : ""));
   };
   // mock
-  const { data: properties, isError } = useGetFilteredProperties(url);
-  if (isError || !properties) {
+  const {
+    data: properties,
+    isError,
+    isLoading,
+  } = usePropertyWithBookmark({
+    filterUrl: url,
+    user_id: user?.id ?? "",
+  });
+
+  if (isLoading || !properties) {
+    return <Text>読み込み中……</Text>;
+  }
+  if (isError) {
     return <Text>エラーが発生しました。</Text>;
   }
+
   return (
     <Flex>
       <Box w="45%">
@@ -104,7 +122,7 @@ export const PropertySearchSection = () => {
             },
           }}
         >
-          {properties.map((p: Property) => (
+          {properties.map((p: PropertyWithBookMark) => (
             <Box key={p.id} p="5">
               <PropertySearchWindow property={p} />
             </Box>
