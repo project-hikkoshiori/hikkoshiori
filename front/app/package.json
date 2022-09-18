@@ -15,6 +15,7 @@
     "@emotion/styled": "^11.10.0",
     "@geolonia/normalize-japanese-addresses": "^2.5.8",
     "axios": "^0.27.2",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "chart.js": "^3.9.1",
     "chartjs-plugin-streaming": "^2.0.0",
     "faker": "^5.5.3",
@@ -40,6 +41,7 @@
     "eslint": "8.22.0",
     "eslint-config-next": "12.2.5",
     "eslint-plugin-unused-imports": "^2.0.0",
+    "terser-webpack-plugin": "^5.3.6",
     "typescript": "4.7.4"
   }
 }
