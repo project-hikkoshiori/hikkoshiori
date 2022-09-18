@@ -7,9 +7,12 @@ type addBookmarkProps = {
   property: Property;
 };
 
+export const getBookmaerkedPropertiesPath = (user_id: string) =>
+  `/property/get?user_id=${user_id}`;
+
 export const useGetBookmarkedProperties = (user_id: string) => {
   const { data, error, isValidating } = useSWR<BookmarkedProperty[]>(
-    `/property/get?user_id=${user_id}`,
+    getBookmaerkedPropertiesPath(user_id),
     fetcher
   );
   console.log(data, !data && !error, error, isValidating);

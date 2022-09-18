@@ -8,6 +8,12 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { useSWRConfig } from "swr";
+import {
+  deleteBookmarkProperty,
+  getBookmaerkedPropertiesPath,
+  addBookmarkProperty,
+} from "../../api/BookmarkedPropertyAPI";
 import { Property } from "../../utils/types";
 
 type Props = {
@@ -15,6 +21,22 @@ type Props = {
 };
 
 export const BookmarkWindow = ({ property }: Props) => {
+  const { mutate } = useSWRConfig();
+
+  const onClickBookmarkButton = () => {
+    const isBookmarked = true;
+    const user_id = "";
+    if (isBookmarked) {
+      deleteBookmarkProperty({ user_id, property }).then((res) => {
+        if (!res.isError) mutate(getBookmaerkedPropertiesPath(user_id));
+      });
+    } else {
+      addBookmarkProperty({ user_id, property }).then((res) => {
+        if (!res.isError) mutate(getBookmaerkedPropertiesPath(user_id));
+      });
+    }
+  };
+
   return (
     <Stack
       backgroundColor="white"
@@ -29,6 +51,7 @@ export const BookmarkWindow = ({ property }: Props) => {
           aria-label="Search database"
           icon={<StarIcon color="yellow.300" />}
           variant="unstyled"
+          onClick={onClickBookmarkButton}
         />
       </Flex>
       <Flex>
